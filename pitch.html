@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TuyBox — Rasmiy Investor Pitch Deck | O'zbekiston №1 To'y Ekotizimi</title>
-<meta name="description" content="TuyBox: O'zbekistondagi $2.5 milliardlik to'y bozorini raqamlashtirish bo'yicha rasmiy Pitch Deck taqdimoti. Mobil ilova (APK), ochiq narxlar, smart kalendar va virusli taklifnoma.">
+<title>TuyBox — Rasmiy Investor Pitch Deck | To'y va Barcha Tantanali Tadbirlar Ekotizimi</title>
+<meta name="description" content="TuyBox: To'y, banket va barcha tadbirlar uchun xizmatchilarni 1 joyga yig'uvchi, byudjetni hisoblovchi va tadbirlarni to'liq o'tkazib beruvchi raqamli platforma.">
 
 <!-- Open Graph -->
 <meta property="og:title" content="TuyBox — Rasmiy Pitch Deck Taqdimoti">
-<meta property="og:description" content="To'yni 3 klikda rejalash: $2.5B bozor, mobil ilova (APK), ochiq narxlar va real server ekotizimi.">
+<meta property="og:description" content="To'y va barcha tadbirlarni 1 joyda rejalash, byudjetini hisoblash va o'tkazib berish platformasi.">
 <meta property="og:image" content="https://tuybox.asilbek.tech/static/logo.jpg">
 <meta property="og:url" content="https://tuybox.asilbek.tech/pitch">
 
@@ -26,8 +26,8 @@
 :root {
     --bg: #04060A;
     --bg-alt: #080C14;
-    --card: rgba(14, 20, 34, 0.88);
-    --card-border: rgba(212, 175, 55, 0.24);
+    --card: rgba(14, 20, 34, 0.9);
+    --card-border: rgba(212, 175, 55, 0.25);
     --gold: #D4AF37;
     --gold-light: #FFF2BD;
     --gold-dark: #AA821C;
@@ -91,18 +91,18 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 90px 9vw 80px;
+    padding: 95px 9vw 85px;
     position: relative;
     border-bottom: 1px solid var(--line);
     background: transparent;
 }
 
 .s:nth-child(even) {
-    background: rgba(9, 14, 24, 0.45);
+    background: rgba(8, 12, 22, 0.5);
 }
 
 .container-slide {
-    max-width: 1360px;
+    max-width: 1380px;
     width: 100%;
     margin: 0 auto;
 }
@@ -134,28 +134,28 @@ h1, h2 {
 }
 
 h1 {
-    font-size: clamp(38px, 6vw, 76px);
+    font-size: clamp(36px, 5.5vw, 72px);
     margin-bottom: 22px;
 }
 
 h2 {
-    font-size: clamp(30px, 4.2vw, 54px);
+    font-size: clamp(28px, 4vw, 50px);
     margin-bottom: 24px;
-    max-width: 25ch;
+    max-width: 28ch;
 }
 
 h3 {
     font-family: 'Cinzel', serif;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
     margin-bottom: 10px;
     color: #FFFFFF;
 }
 
 p.lead {
-    font-size: clamp(17px, 1.9vw, 23px);
+    font-size: clamp(17px, 1.8vw, 22px);
     color: var(--text-muted);
-    max-width: 55ch;
+    max-width: 58ch;
     margin-top: 14px;
     font-weight: 400;
     line-height: 1.6;
@@ -186,7 +186,7 @@ p.lead {
 
 @media(max-width: 900px) {
     .two { grid-template-columns: 1fr; }
-    .s { padding: 80px 6vw 75px; }
+    .s { padding: 85px 6vw 80px; }
 }
 
 .c {
@@ -507,27 +507,27 @@ th {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 20px;
-    background: rgba(14, 20, 34, 0.85);
+    padding: 14px 22px;
+    background: rgba(14, 20, 34, 0.88);
     border: 1.5px solid var(--card-border);
     color: #FFFFFF;
     border-radius: 100px;
     cursor: pointer;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
-    font-size: 14px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    font-size: 14.5px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
 }
 
 .deck-arrow-btn:hover {
-    background: rgba(212, 175, 55, 0.18);
+    background: rgba(212, 175, 55, 0.2);
     border-color: var(--gold);
     color: var(--gold);
-    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.45);
     transform: translateY(-50%) scale(1.06);
 }
 
@@ -546,7 +546,7 @@ th {
 
 .arrow-next {
     right: 24px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(14, 20, 34, 0.9));
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.28), rgba(14, 20, 34, 0.92));
     border-color: var(--gold);
     color: var(--gold-light);
 }
@@ -603,8 +603,8 @@ nav.side-dots a.a {
     align-items: center;
     gap: 16px;
     z-index: 80;
-    background: rgba(10, 15, 26, 0.9);
-    padding: 8px 20px;
+    background: rgba(10, 15, 26, 0.92);
+    padding: 8px 22px;
     border-radius: 100px;
     border: 1.5px solid var(--card-border);
     backdrop-filter: blur(14px);
@@ -669,9 +669,6 @@ nav.side-dots a.a {
         <a href="/" class="top-btn btn-outline">
             <i class="fa-solid fa-globe"></i> Web Platforma
         </a>
-        <a href="/invite/jasurbek-madina-2026" target="_blank" class="top-btn btn-purple">
-            <i class="fa-solid fa-envelope-open-text"></i> Taklifnoma Demo
-        </a>
         <a href="https://t.me/asilbek_dev" target="_blank" class="top-btn btn-gold">
             <i class="fa-brands fa-telegram"></i> Bog'lanish
         </a>
@@ -714,27 +711,27 @@ nav.side-dots a.a {
     <section class="s" id="slide-1">
         <div class="container-slide">
             <div class="k"><i class="fa-solid fa-crown"></i> Pre-Seed · Rasmiy Investor Taqdimoti 2026-2027</div>
-            <h1>To'yni <span class="gold-gradient">3 klikda</span><br>rejalang.</h1>
+            <h1>To'y va barcha tadbirlarni<br><span class="gold-gradient">1 joyda rejalang</span> va o'tkazing.</h1>
             <p class="lead">
-                <strong>TuyBox</strong> — O'zbekistondagi to'y va tantanalar uchun ochiq narxli katalog, <strong>mobil ilova (Android APK & iOS)</strong>, bandlik kalendari va to'liq raqamli bron platformasi.
+                <strong>TuyBox</strong> — To'y, banket va tantanalar uchun barcha xizmatchilarni (san'atkorlar, to'yxonalar, foto-video, dekor, kortej) <strong>bitta yagona platformaga</strong> yig'uvchi, byudjetni hisoblovchi va tadbirlarni boshidan oxirigacha mukammal o'tkazib beruvchi raqamli ekotizim.
             </p>
 
             <div class="stats">
                 <div>
-                    <span class="big">$2.5B+</span>
-                    <span class="sub">Yillik To'y Bozori (TAM)</span>
+                    <span class="big">$3.5B+</span>
+                    <span class="sub">Yillik Tadbirlar Bozori (TAM)</span>
                 </div>
                 <div>
-                    <span class="big">350,000+</span>
-                    <span class="sub">Yillik Nikoh To'ylari</span>
+                    <span class="big">850,000+</span>
+                    <span class="sub">Yillik To'y va Banketlar</span>
                 </div>
                 <div>
-                    <span class="big">Mobil Ilova & Web</span>
-                    <span class="sub">APK & Web Platforma</span>
+                    <span class="big">100% Xizmatlar</span>
+                    <span class="sub">Barcha Xizmatchilar 1 Joyda</span>
                 </div>
                 <div>
-                    <span class="big" style="color: #34D399;">Serverda Jonli</span>
-                    <span class="sub">FastAPI Backend & RSVP Tayyor</span>
+                    <span class="big" style="color: #34D399;">Aqlli Byudjet</span>
+                    <span class="sub">Hisoblash & Rejalash Tizimi</span>
                 </div>
             </div>
 
@@ -746,139 +743,142 @@ nav.side-dots a.a {
                 <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
                     <i class="fa-solid fa-compass"></i> Serverdagi Platformani Ko'rish
                 </a>
-                <a class="btn btn-purple" href="/invite/jasurbek-madina-2026" target="_blank">
-                    <i class="fa-solid fa-envelope-open-text"></i> Jonli Taklifnoma Demo
+                <a class="btn btn-purple" href="https://t.me/asilbek_dev" target="_blank">
+                    <i class="fa-brands fa-telegram"></i> Hamkorlik Qilish
                 </a>
             </div>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 2: THE PROBLEM                    -->
+    <!-- SLIDE 2: THE REAL PROBLEM               -->
     <!-- --------------------------------------- -->
     <section class="s" id="slide-2">
         <div class="container-slide">
             <div class="k" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08);">
                 <i class="fa-solid fa-triangle-exclamation"></i> Bozor Muammosi
             </div>
-            <h2>To'y rejalash — oylab sarsonlik va yashirin xarajatlar</h2>
+            <h2>To'y va tadbirlarni tashkil qilishdagi asosiy og'riqlar</h2>
 
             <div class="grid">
-                <div class="c" style="border-left: 3px solid #EF4444;">
+                <div class="c" style="border-left: 3.5px solid #EF4444;">
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3>Bozor tarqoqligi va tartibsizlik</h3>
+                    <p>To'yxona alohida, san'atkor alohida, foto/video, kortej va dekor alohida. Odamlar 10 xil joydan qidirib, har biri bilan alohida kelishishga oylab vaqt yo'qotadi.</p>
+                </div>
+
+                <div class="c" style="border-left: 3.5px solid #EF4444;">
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-coins"></i></div>
+                    <h3>Byudjet nazoratsizligi va kutilmagan qarzlar</h3>
+                    <p>Tadbir qiluvchi oila 100 mln so'm mo'ljallaydi, ammo tarqoq xizmatlar sabab xarajatlar 150-180 mln ga chiqib ketadi. Byudjetni 1 joyda oldindan hisoblab bo'lmaydi.</p>
+                </div>
+
+                <div class="c" style="border-left: 3.5px solid #EF4444;">
                     <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-eye-slash"></i></div>
-                    <h3>Narxlar yopiq va beqaror</h3>
-                    <p>Instagramda "Directga yozing", har kimga har xil narx aytiladi. Shaffoflik yo'q, narx spekulyatsiyasi keng tarqalgan.</p>
+                    <h3>Yopiq narxlar va spekulyatsiya</h3>
+                    <p>Instagramda "Directga yozing", har kimga har xil narx aytiladi. Ochiq narxlar yo'qligi sababli mijozlar aldanadi yoki qimmat vositachilarga tushadi.</p>
                 </div>
 
-                <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-hourglass-half"></i></div>
-                    <h3>1–3 oy, 100+ soat sarsonlik</h3>
-                    <p>O'nlab to'yxonalarga shaxsan borib, ma'mur daftarlaridan bo'sh kunlarni qidirish. Ishdan qolib kunlab vaqt va xarajat ketishi.</p>
-                </div>
-
-                <div class="c" style="border-left: 3px solid #EF4444;">
+                <div class="c" style="border-left: 3.5px solid #EF4444;">
                     <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-calendar-xmark"></i></div>
-                    <h3>Double-Booking xatosi</h3>
-                    <p>To'yxona ma'murlari daftarga noto'g'ri yozib qo'yishi oqibatida bitta kunga 2 ta to'y yozilib ketishi va janjallar kelib chiqishi.</p>
-                </div>
-
-                <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-receipt"></i></div>
-                    <h3>Qog'oz taklifnomalar isrofi</h3>
-                    <p>300 ta qog'oz taklifnomaga 2–4 mln so'm sarflanadi, haftalab tarqatiladi va to'ydan keyin axlatga tashlanadi. RSVP yo'q.</p>
+                    <h3>Kafolatsizlik va Double-Booking</h3>
+                    <p>Kelishuvlar og'zaki bo'ladi. To'yxonalarda bir kunga 2 ta tadbir yozilib ketishi (double-booking) yoki san'atkorlarning to'y kuni kechikishi kabi xatarlar ko'p.</p>
                 </div>
             </div>
 
             <p class="note">
-                <i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Bugungi "bozor" — tartibsiz guruhlar, Instagram stories va og'zaki tavsiyalardan iborat bo'lib, markazlashgan raqamli tizim mavjud emas.
+                <i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Natijada: to'y yoki tadbir qilish xursandchilik o'rniga oylab stress, asab sarsonligi va ortiqcha xarajatlarga aylanadi.
             </p>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 3: THE SOLUTION & REAL BACKEND   -->
+    <!-- SLIDE 3: THE TUYBOX SOLUTION            -->
     <!-- --------------------------------------- -->
     <section class="s" id="slide-3">
         <div class="container-slide">
             <div class="k"><i class="fa-solid fa-wand-magic-sparkles"></i> TuyBox Yechimi</div>
-            <h2>3 qavatli tizim: oddiydan boshlab kuchliga</h2>
+            <h2>Barcha xizmatchilar 1 joyda — Aniq Byudjet, Reja va O'tkazish</h2>
 
             <div class="grid">
-                <!-- Layer 1 -->
+                <!-- Solution 1 -->
                 <div class="c" style="border: 1.5px solid var(--gold); background: linear-gradient(145deg, rgba(20, 28, 48, 0.95), rgba(12, 17, 28, 0.95));">
                     <span class="tag on"><i class="fa-solid fa-check"></i> HOZIR SERVERDA ISHLAYAPTI</span>
-                    <h3>1. Ochiq Katalog + Smart RSVP</h3>
+                    <h3>1. Yagona Katta Xizmatchilar Bazasi</h3>
                     <p>
-                        To'yxonalar, san'atkorlar, foto/video profillari. Narx ochiq, 1-klikda bog'lanish. 
-                        <strong>Double-booking'siz kalendar</strong> va har bir to'y uchun 30 soniyada yaratiladigan interaktiv taklifnoma.
+                        San'atkorlar (xonandalar, sozandalar), to'yxonalar, boshlovchilar, foto/video studiyalar, dekoratorlar, kortej — barchasi bitta platformada shaffof narxlari bilan.
                     </p>
                     <div style="margin-top: 16px; font-size: 13px; color: var(--gold); font-weight: 700;">
-                        <i class="fa-solid fa-mobile-screen"></i> TuyBox Mobil Ilova (APK) & Web Platforma
+                        <i class="fa-solid fa-users"></i> Tasdiqlangan profillar & Double-booking'siz kalendar
                     </div>
                 </div>
 
-                <!-- Layer 2 -->
+                <!-- Solution 2 -->
                 <div class="c">
-                    <span class="tag plan"><i class="fa-solid fa-clock"></i> 4-OYDA ISHGA TUSHADI</span>
-                    <h3>2. Byudjet + Cheklist (Daily Retention)</h3>
+                    <span class="tag plan"><i class="fa-solid fa-calculator"></i> AQLLI KALKULYATOR</span>
+                    <h3>2. Byudjetni Hisoblash & Taqsimlash</h3>
                     <p>
-                        To'y byudjeti kalkulyatori (masalan, 80 mln so'mni to'g'ri taqsimlash), 30 kunlik avtomat vazifalar cheklisti va kelin rejimi. Foydalanuvchi haftasiga bir necha bor ilovaga qaytadi.
+                        Mijoz o'z byudjetini kiritadi (masalan, $7,000 yoki 100 mln so'm) — TuyBox avtomatik ravishda to'yxona, san'atkor, bezak va boshqa xizmatlarga eng mos kombinatsiyalarni hisoblab beradi.
                     </p>
                     <div style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
-                        <i class="fa-solid fa-brain"></i> Avtomatlashtirilgan rejalashtirish
+                        <i class="fa-solid fa-wallet"></i> Ortiqcha isrof va kutilmagan qarzlar yo'qoladi
                     </div>
                 </div>
 
-                <!-- Layer 3 -->
+                <!-- Solution 3 -->
                 <div class="c">
-                    <span class="tag tag-purple"><i class="fa-solid fa-gem"></i> 6-OYDA ISHGA TUSHADI</span>
-                    <h3>3. 3D Zal + To'yona FinTech</h3>
+                    <span class="tag tag-purple"><i class="fa-solid fa-clipboard-check"></i> TO'LIQ O'TKAZIB BERISH</span>
+                    <h3>3. Tadbirlarni Rejalash & O'tkazish</h3>
                     <p>
-                        To'yxonalarga B2B pullik xizmat sifatida zallarning 3D WebGL virtual turi, stollar sxemasi va kela olmagan mehmonlar uchun Click/Payme orqali masofaviy to'yona puli o'tkazish.
+                        To'ylar va banketlarni boshidan oxirigacha rejalashtirish cheklisti, sanalarni kafolatli band qilish va xizmatlarning o'z vaqtida, sifatli o'tishini nazorat qilish.
                     </p>
                     <div style="margin-top: 16px; font-size: 13px; color: var(--purple);">
-                        <i class="fa-solid fa-vr-cardboard"></i> WebGL 3D va FinTech ekvayring
+                        <i class="fa-solid fa-handshake-angle"></i> End-to-End Tadbir Boshqaruvi
                     </div>
                 </div>
             </div>
 
             <p class="note">
-                <i class="fa-solid fa-check-double text-gold"></i> TuyBox — toza, zamonaviy mobil ilova (APK) hamda qulay veb-platforma orqali xalqqa tezkor va ishonchli xizmat ko'rsatadi.
+                <i class="fa-solid fa-check-double text-gold"></i> TuyBox — to'y va banket xarajatlarini 20-30% tejaydi, sarsonlikni 0 ga tushiradi va 1 ta platforma orqali butun tadbirni boshqarish imkonini beradi.
             </p>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 4: VIRAL GROWTH & ZERO CAC        -->
+    <!-- SLIDE 4: SCALING FROM WEDDINGS TO EVENTS-->
     <!-- --------------------------------------- -->
     <section class="s" id="slide-4">
         <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-bolt"></i> Virusli O'sish Dvigateli</div>
+            <div class="k"><i class="fa-solid fa-bullseye"></i> Kengayish Strategiyasi</div>
             <div class="two">
                 <div>
-                    <h2>Har bir to'y — 300 ta yangi faol tanish</h2>
+                    <h2>Hozir to'ydan boshlaymiz, so'ngra barcha tadbirlarni qamraymiz</h2>
                     <p class="lead" style="margin-top: 0; font-size: 18px;">
-                        Klassik loyihalar har bir foydalanuvchini pullik reklama bilan sotib oladi. TuyBox'da esa kelin-kuyov shaxsiy raqamli taklifnomani o'zining 300 ta mehmonga yuboradi.
+                        To'y — har bir oilaning eng katta va eng mas'uliyatli xarajati. Aynan to'y orqali xalqning eng kuchli ishonchini qozonamiz.
                     </p>
                     <p class="note" style="margin-top: 18px; font-size: 15.5px;">
-                        Mehmonlar joylashuv xaritasini ochib, to'yga kelishini tasdiqlaydi va bir zumda TuyBox ilovasi bilan tanishadi. Ularning o'zi ertaga to'y qiladi, yaqiniga tavsiya qiladi.
+                        To'y qilgan mijoz ertaga yubiley, fotiha, tug'ilgan kun, korporativ banket yoki boshqa oilaviy tantanasini ham <strong>faqat TuyBox orqali</strong> o'tkazadi.
                     </p>
-                    <div style="margin-top: 24px; padding: 16px 20px; background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10B981; border-radius: 12px;">
-                        <span style="color: #34D399; font-weight: 700;">Reja (3-oy KPI):</span> 50+ to'y orqali kamida 15,000+ kishilik organik auditoriya qamrovi.
+                    <div style="margin-top: 24px; padding: 16px 20px; background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold); border-radius: 12px;">
+                        <span style="color: var(--gold); font-weight: 700;">Organik Mijoz Oqimi:</span> 1 ta to'yda 300–500 nafar mehmon qatnashadi. Ularning har biri keyingi o'z tadbiriga xizmatchilarni TuyBox'dan tanlaydi!
                     </div>
                 </div>
 
-                <div class="c" style="border: 1.5px solid rgba(16, 185, 129, 0.4); text-align: center; padding: 40px 32px;">
-                    <div class="big" style="color: #34D399; font-size: 52px;">1 to'y &rarr; 300</div>
-                    <p style="margin: 8px 0 20px; font-size: 16px; color: #FFFFFF;">mehmon TuyBox ekotizimi bilan bepul tanishadi</p>
+                <div class="c" style="text-align: center; padding: 40px 32px; border: 1.5px solid var(--gold);">
+                    <div style="font-size: 15px; color: var(--gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Qamrab Olinadigan Tadbirlar</div>
+                    <div class="big" style="color: #FFFFFF; font-size: 42px; margin: 12px 0;">To'y + Barcha Marosimlar</div>
                     
                     <div style="height: 1px; background: var(--line); margin: 20px 0;"></div>
 
-                    <div class="big" style="color: var(--gold); font-size: 52px;">$0 So'm</div>
-                    <p style="margin-top: 8px; font-size: 15px;">Qo'shimcha foydalanuvchi jalb qilish xarajati (Zero CAC)</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left; font-size: 14px;">
+                        <div><i class="fa-solid fa-check text-gold"></i> Nikoh to'ylari</div>
+                        <div><i class="fa-solid fa-check text-gold"></i> Fotiha marosimlari</div>
+                        <div><i class="fa-solid fa-check text-gold"></i> Yubiley va banketlar</div>
+                        <div><i class="fa-solid fa-check text-gold"></i> Korporativ tadbirlar</div>
+                    </div>
 
-                    <div style="margin-top: 24px; font-family: 'Space Grotesk'; font-size: 14px; color: var(--gold); background: rgba(212, 175, 55, 0.12); padding: 10px; border-radius: 10px;">
-                        Virusli Koeffitsiyent: K-Factor &gt; 2.5
+                    <div style="margin-top: 24px; font-family: 'Space Grotesk'; font-size: 14px; color: #34D399; background: rgba(16, 185, 129, 0.12); padding: 10px; border-radius: 10px;">
+                        Mijozning Hayotiy Qiymati (LTV) 3 barobar oshadi
                     </div>
                 </div>
             </div>
@@ -893,29 +893,30 @@ nav.side-dots a.a {
             <div class="k"><i class="fa-solid fa-chart-pie"></i> Bozor Sig'imi</div>
             <div class="two">
                 <div>
-                    <h2>O'zbekistonda to'y — bu madaniyat va ulkan kapital</h2>
+                    <h2>O'zbekistonda to'y va tadbirlar — ulkan kapital bozori</h2>
                     <table>
-                        <tr><th>Ko'rsatkich</th><th>Qiymat</th></tr>
-                        <tr><td>Aholi / Internet foydalanuvchilari</td><td class="highlight">37+ Million / 84%+</td></tr>
+                        <tr><th>Ko'rsatkich</th><th>Hajmi</th></tr>
+                        <tr><td>Aholi soni / Smartfon foydalanuvchilari</td><td class="highlight">37+ Million / 84%+</td></tr>
                         <tr><td>Yillik nikoh to'ylari soni</td><td class="highlight">300,000 – 350,000 ta</td></tr>
-                        <tr><td>Yillik banket, fotiha va marosimlar</td><td class="highlight">500,000+ dan ziyod</td></tr>
-                        <tr><td>O'rtacha bitta to'y byudjeti</td><td class="highlight">$5,000 – $10,000</td></tr>
-                        <tr><td>Yillik to'y bozorining jami aylanmasi</td><td class="highlight" style="color: var(--gold); font-weight: 800; font-size: 18px;">$2.5+ Milliard</td></tr>
+                        <tr><td>Yillik banket, fotiha, yubiley marosimlari</td><td class="highlight">500,000+ dan ortiq</td></tr>
+                        <tr><td>Jami yillik tantanali tadbirlar soni</td><td class="highlight" style="color: #34D399; font-weight: 800;">850,000+ ta tadbir</td></tr>
+                        <tr><td>O'rtacha bitta tadbir byudjeti</td><td class="highlight">$4,000 – $10,000</td></tr>
+                        <tr><td>Umumiy bozor hajmi (TAM)</td><td class="highlight" style="color: var(--gold); font-weight: 800; font-size: 18px;">$3.5+ Milliard</td></tr>
                     </table>
                     <p class="note">
-                        O'zbek oilasi hech qachon to'y xarajatidan chekinmaydi. Bu soha har qanday iqtisodiy tebranishlarda ham barqaror o'sishda davom etadi.
+                        O'zbek xalqi uchun to'y va tadbirlar — eng oliy an'ana. Ushbu bozor hech qachon to'xtamaydi va yildan-yilga o'sib bormoqda.
                     </p>
                 </div>
 
                 <div class="rings">
                     <i style="width:100%;height:100%;background:rgba(212, 175, 55, 0.08);border-color: rgba(212, 175, 55, 0.2);">
-                        TAM $2.5B+ (Umumiy Bozor)
+                        TAM $3.5B+ (Barcha Tadbirlar)
                     </i>
                     <i style="width:68%;height:68%;background:rgba(212, 175, 55, 0.18);border-color: rgba(212, 175, 55, 0.4);">
-                        SAM $350M (Smartfon Foydalanuvchilari)
+                        SAM $600M (Yirik Shaharlar)
                     </i>
                     <i style="width:36%;height:36%;background:var(--gold);color:#070B14;padding-top:10px;font-size:13px;border:none;box-shadow:0 0 25px rgba(212, 175, 55, 0.6);">
-                        SOM 3-Yil<br>$15M+
+                        SOM 3-Yil<br>$25M+
                     </i>
                 </div>
             </div>
@@ -923,36 +924,36 @@ nav.side-dots a.a {
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 6: BUSINESS MODEL & UNIT ECONOMICS-->
+    <!-- SLIDE 6: BUSINESS MODEL & MONETIZATION  -->
     <!-- --------------------------------------- -->
     <section class="s" id="slide-6">
         <div class="container-slide">
             <div class="k"><i class="fa-solid fa-coins"></i> Biznes Model</div>
-            <h2>5 xil barqaror daromad oqimi va yuqori marja</h2>
+            <h2>Ko'p qirrali va barqaror daromad oqimlari</h2>
 
             <div class="grid">
                 <div class="c">
                     <div class="big">B2B</div>
-                    <h3>1. VIP Obuna (SaaS)</h3>
-                    <p>To'yxona va artistlar qidiruvda 1-o'rinda turish va maxsus belgi uchun oyiga 300,000 – 1,000,000 so'm obuna to'laydi.</p>
+                    <h3>1. Xizmatchilar VIP Obunasi</h3>
+                    <p>San'atkorlar, to'yxonalar va ijodkorlar katalogda TOP-o'rin va ko'proq buyurtma olish uchun oylik 300,000 – 1,000,000 so'm obuna to'laydi.</p>
                 </div>
 
                 <div class="c">
                     <div class="big">2–4%</div>
                     <h3>2. Bronlash Komissiyasi</h3>
-                    <p>Platforma orqali amalga oshirilgan to'liq tasdiqlangan buyurtmalardan olinadigan xizmat haqi.</p>
+                    <p>Platforma orqali amalga oshirilgan to'liq tasdiqlangan tadbir buyurtmalari va xizmatchilar to'lovidan xizmat haqi.</p>
                 </div>
 
                 <div class="c">
-                    <div class="big">30–100K</div>
-                    <h3>3. Premium Taklifnomalar</h3>
-                    <p>Shaxsiy musiqiy fon, foto galereya va video-animatsiyali hashamatli taklifnoma shablonlari sotuvi (so'm).</p>
+                    <div class="big">Paketlar</div>
+                    <h3>3. Tayyor Tadbir Paketlari</h3>
+                    <p>"Boshidan-oxirigacha tayyor to'y/banket" (Turnkey packages): xizmatchilarni kompleks birlashtirib o'tkazib berishdan marja.</p>
                 </div>
 
                 <div class="c">
                     <div class="big">3–5 mln</div>
-                    <h3>4. 3D Virtual Zal Skaneri</h3>
-                    <p>To'yxonalar zalini 3D modelga aylantirib berish bo'yicha bir martalik yuqori marjali xizmat (so'm).</p>
+                    <h3>4. 3D Virtual Zallar</h3>
+                    <p>To'yxona va banket zallarini 3D modelga aylantirib berish bo'yicha yuqori marjali bir martalik B2B xizmat (so'm).</p>
                 </div>
             </div>
 
@@ -962,16 +963,16 @@ nav.side-dots a.a {
                     <span class="sub">LTV / CAC Nisbati</span>
                 </div>
                 <div>
-                    <span class="big">$100+</span>
-                    <span class="sub">O'rtacha Daromad / To'y</span>
+                    <span class="big">$120+</span>
+                    <span class="sub">O'rtacha Daromad / Tadbir</span>
                 </div>
                 <div>
-                    <span class="big">$450+</span>
+                    <span class="big">$500+</span>
                     <span class="sub">Yillik Vendor LTV (Obuna)</span>
                 </div>
                 <div>
-                    <span class="big" style="color: #34D399;">1.5%</span>
-                    <span class="sub">To'yona FinTech Ekvayring</span>
+                    <span class="big" style="color: #34D399;">100%</span>
+                    <span class="sub">Shaffof Moliyaviy Oqim</span>
                 </div>
             </div>
         </div>
@@ -989,56 +990,56 @@ nav.side-dots a.a {
                 <div class="c" style="padding: 18px;">
                     <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">1-OY</b>
                     <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Yadro MVP</h4>
-                    <p style="font-size: 13px;">15 ta tekshirilgan to'yxona, barqaror mobil ilova (APK) va veb-platforma.</p>
+                    <p style="font-size: 13px;">To'yxonalar va artistlar bazasi, mobil ilova (APK) va veb-platforma.</p>
                 </div>
                 <div class="c" style="padding: 18px;">
                     <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">2-OY</b>
-                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Baza & Kontent</h4>
-                    <p style="font-size: 13px;">50 to'yxona, 100 ijodkor, 10 ta real to'y sinovi.</p>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Baza & Xizmatchilar</h4>
+                    <p style="font-size: 13px;">50 to'yxona, 150 san'atkor va ijodkorlar bilan hamkorlik.</p>
                 </div>
                 <div class="c" style="padding: 18px;">
                     <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">3-OY</b>
-                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Viral Launch</h4>
-                    <p style="font-size: 13px;">Raqamli taklifnoma orqali 15,000+ mehmon qamrovi.</p>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Byudjet Kalkulyatori</h4>
+                    <p style="font-size: 13px;">Xarajatlarni avtomat hisoblovchi kalkulyatorni to'liq ishga tushirish.</p>
                 </div>
                 <div class="c" style="padding: 18px;">
                     <b style="color: var(--purple); font-size: 13.5px; font-family: 'Space Grotesk';">4-OY</b>
-                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Smart Planner</h4>
-                    <p style="font-size: 13px;">Byudjet kalkulyatori, 3,000 faol foydalanuvchi.</p>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Banket & Marosimlar</h4>
+                    <p style="font-size: 13px;">To'ylardan tashqari barcha marosimlarga buyurtma qabul qilish.</p>
                 </div>
                 <div class="c" style="padding: 18px;">
                     <b style="color: #34D399; font-size: 13.5px; font-family: 'Space Grotesk';">5-OY</b>
                     <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Monetizatsiya</h4>
-                    <p style="font-size: 13px;">VIP obuna, 30 ta pullik hamkor, $4,000 MRR.</p>
+                    <p style="font-size: 13px;">VIP obuna, 50 ta pullik hamkor, $5,000+ MRR.</p>
                 </div>
                 <div class="c" style="padding: 18px;">
                     <b style="color: #34D399; font-size: 13.5px; font-family: 'Space Grotesk';">6-OY</b>
-                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Masshtab & 3D</h4>
-                    <p style="font-size: 13px;">3D zallar, 5 ta viloyat, 10,000+ oylik foydalanuvchi.</p>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Viloyatlar & Masshtab</h4>
+                    <p style="font-size: 13px;">Samarqand va Vodiyga kirish, 15,000+ oylik faol foydalanuvchi.</p>
                 </div>
             </div>
 
             <!-- Financial Projection Chart -->
             <div class="bars" style="margin-top: 36px;">
                 <div>
-                    <b style="height: 16px;"></b>
-                    <em>$15K</em>
+                    <b style="height: 18px;"></b>
+                    <em>$20K</em>
                     1-yil (MVP & Start)
                 </div>
                 <div>
-                    <b style="height: 70px;"></b>
-                    <em>$120K</em>
-                    2-yil (Toshkent + Vodiy)
+                    <b style="height: 75px;"></b>
+                    <em>$150K</em>
+                    2-yil (Toshkent + Viloyatlar)
                 </div>
                 <div>
-                    <b style="height: 190px;"></b>
-                    <em>$520K</em>
+                    <b style="height: 195px;"></b>
+                    <em>$650K</em>
                     3-yil daromad (Respublika)
                 </div>
             </div>
 
             <p class="note">
-                <i class="fa-solid fa-chart-line" style="color: var(--gold);"></i> Konservativ moliyaviy model: 3-yilga borib taxminiy operatsion sof foyda $380,000+ ni tashkil etadi.
+                <i class="fa-solid fa-chart-line" style="color: var(--gold);"></i> Konservativ moliyaviy model: 3-yilga borib taxminiy operatsion sof foyda $420,000+ ni tashkil etadi.
             </p>
         </div>
     </section>
@@ -1055,25 +1056,25 @@ nav.side-dots a.a {
                 <div class="c" style="border-top: 3.5px solid var(--gold);">
                     <div class="big" style="font-size: 38px;">40%</div>
                     <h3>Mahsulot & Mobil Ilova</h3>
-                    <p>TuyBox Android (APK) & iOS mobil ilovasi, backend masshtablash, 3D zallar va avtomatlashtirilgan to'lov tizimlari.</p>
+                    <p>TuyBox Android (APK) & iOS mobil ilovasi, aqlli byudjet tizimi va tadbirlarni boshqarish vositalari.</p>
                 </div>
 
                 <div class="c" style="border-top: 3.5px solid #34D399;">
                     <div class="big" style="font-size: 38px; color: #34D399;">25%</div>
-                    <h3>Marketing & Kontent</h3>
-                    <p>To'y studiyalari bilan kollaboratsiyalar, virusli roliklar va taklifnoma referral dasturlari.</p>
+                    <h3>Marketing & Hamkorlik</h3>
+                    <p>To'y va banket sohasidagi yetakchi ijodkorlar bilan kollaboratsiya va keng auditoriyani qamrab olish.</p>
                 </div>
 
                 <div class="c" style="border-top: 3.5px solid var(--purple);">
                     <div class="big" style="font-size: 38px; color: var(--purple);">20%</div>
                     <h3>Operatsion Xarajatlar</h3>
-                    <p>12–18 oylik runway, serverlar infratuzilmasi, yuridik va xavfsizlik ta'minoti.</p>
+                    <p>12–18 oylik runway, serverlar infratuzilmasi, yuridik shartnomalar va xavfsizlik ta'minoti.</p>
                 </div>
 
                 <div class="c" style="border-top: 3.5px solid #38BDF8;">
                     <div class="big" style="font-size: 38px; color: #38BDF8;">15%</div>
                     <h3>Vendor Onboarding</h3>
-                    <p>To'yxonalar va artistlar portfoliosini professional suratga olish, bazaga kiritish va ta'lim.</p>
+                    <p>Xizmatchilar (san'atkorlar, studiyalar, to'yxonalar) portfoliosini professional tarzda platformaga kiritish.</p>
                 </div>
             </div>
 
@@ -1082,10 +1083,7 @@ nav.side-dots a.a {
                     <i class="fa-brands fa-telegram"></i> Telegramda Asilbek bilan Bog'lanish
                 </a>
                 <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
-                    <i class="fa-solid fa-globe"></i> TuyBox Web Platformani Sinash
-                </a>
-                <a class="btn btn-purple" href="/invite/jasurbek-madina-2026" target="_blank">
-                    <i class="fa-solid fa-envelope-open-text"></i> Namunaviy Taklifnoma (RSVP)
+                    <i class="fa-solid fa-globe"></i> TuyBox Platformani Sinash
                 </a>
             </div>
 
