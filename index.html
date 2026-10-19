@@ -50,9 +50,6 @@
 }
 
 html {
-    height: 100%;
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
     scroll-behavior: smooth;
 }
 
@@ -82,32 +79,153 @@ body {
     z-index: 1;
 }
 
-/* FULLSCREEN SLIDE SECTIONS */
-.s {
-    min-height: 100vh;
-    width: 100vw;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 95px 9vw 85px;
-    position: relative;
-    border-bottom: 1px solid var(--line);
-    background: transparent;
-}
-
-.s:nth-child(even) {
-    background: rgba(8, 12, 22, 0.5);
-}
-
-.container-slide {
-    max-width: 1380px;
+/* Container */
+.container {
+    max-width: 1240px;
     width: 100%;
     margin: 0 auto;
+    padding: 0 24px;
 }
 
-/* Category Pills & Headings */
+/* Header & Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(4, 6, 10, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--card-border);
+    padding: 14px 0;
+    transition: all 0.3s ease;
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.brand-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    object-fit: cover;
+}
+
+.brand-logo span {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 21px;
+    color: #FFFFFF;
+}
+
+.brand-logo span b {
+    color: var(--gold);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+.nav-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-deck-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #FFF3BF, #D4AF37, #9B7618);
+    color: #070B14;
+    font-weight: 800;
+    font-size: 13.5px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-deck-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(212, 175, 55, 0.65);
+}
+
+.nav-outline-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.nav-outline-btn:hover {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: var(--gold);
+}
+
+@media(max-width: 900px) {
+    .nav-links { display: none; }
+}
+
+/* Normal Landing Page Sections */
+.hero {
+    padding: 160px 0 90px;
+    text-align: center;
+    position: relative;
+}
+
+.section {
+    padding: 90px 0;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+}
+
+.section:nth-child(even) {
+    background: rgba(8, 12, 22, 0.45);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
 .k {
     color: var(--gold);
     font-family: 'Space Grotesk', sans-serif;
@@ -134,14 +252,13 @@ h1, h2 {
 }
 
 h1 {
-    font-size: clamp(36px, 5.5vw, 72px);
+    font-size: clamp(36px, 5.2vw, 68px);
     margin-bottom: 22px;
 }
 
 h2 {
-    font-size: clamp(28px, 4vw, 50px);
-    margin-bottom: 24px;
-    max-width: 28ch;
+    font-size: clamp(28px, 3.8vw, 44px);
+    margin-bottom: 20px;
 }
 
 h3 {
@@ -153,10 +270,10 @@ h3 {
 }
 
 p.lead {
-    font-size: clamp(17px, 1.8vw, 22px);
+    font-size: clamp(17px, 1.8vw, 21px);
     color: var(--text-muted);
-    max-width: 58ch;
-    margin-top: 14px;
+    max-width: 780px;
+    margin: 0 auto 36px;
     font-weight: 400;
     line-height: 1.6;
 }
@@ -184,15 +301,14 @@ p.lead {
     margin-top: 24px;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 860px) {
     .two { grid-template-columns: 1fr; }
-    .s { padding: 85px 6vw 80px; }
 }
 
 .c {
     background: var(--card);
     border: 1.5px solid var(--card-border);
-    border-radius: 24px;
+    border-radius: 22px;
     padding: 30px;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -208,13 +324,13 @@ p.lead {
 
 .c p {
     color: var(--text-muted);
-    font-size: 15px;
+    font-size: 14.5px;
     line-height: 1.65;
 }
 
 .big {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(34px, 4.2vw, 50px);
+    font-size: clamp(34px, 4vw, 48px);
     font-weight: 800;
     color: var(--gold);
     line-height: 1.1;
@@ -256,31 +372,41 @@ p.lead {
 /* Stats Row */
 .stats {
     display: flex;
-    gap: 36px;
+    justify-content: center;
+    gap: 28px;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin: 36px 0;
 }
 
-.stats div span.big {
-    display: block;
+.stat-item {
+    background: rgba(14, 20, 34, 0.75);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 18px 26px;
+    text-align: center;
+    min-width: 175px;
 }
 
-.stats div span.sub {
-    display: block;
+.stat-item .big {
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.stat-item .sub {
     color: var(--text-muted);
-    font-size: 13.5px;
+    font-size: 12.5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
-    margin-top: 4px;
 }
 
 /* Action Buttons */
 .btn-group {
     display: flex;
+    justify-content: center;
     gap: 16px;
     flex-wrap: wrap;
-    margin-top: 36px;
+    margin-top: 32px;
 }
 
 .btn {
@@ -335,7 +461,7 @@ p.lead {
 /* Market Rings Visualization */
 .rings {
     position: relative;
-    width: min(380px, 80vw);
+    width: min(360px, 80vw);
     aspect-ratio: 1;
     margin: auto;
 }
@@ -349,7 +475,7 @@ p.lead {
     display: flex;
     justify-content: center;
     padding-top: 16px;
-    font: 800 14px/1.3 'Space Grotesk', sans-serif;
+    font: 800 13px/1.3 'Space Grotesk', sans-serif;
     font-style: normal;
     text-align: center;
     color: #FFFFFF;
@@ -360,8 +486,8 @@ p.lead {
 .bars {
     display: flex;
     align-items: flex-end;
-    gap: 30px;
-    height: 220px;
+    gap: 28px;
+    height: 200px;
     margin-top: 24px;
     padding: 0 16px;
     border-bottom: 1px solid var(--line);
@@ -370,7 +496,7 @@ p.lead {
 .bars div {
     flex: 1;
     text-align: center;
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--text-muted);
 }
 
@@ -387,7 +513,7 @@ p.lead {
     font-family: 'Space Grotesk', sans-serif;
     color: #FFFFFF;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 17px;
     display: block;
 }
 
@@ -395,12 +521,12 @@ p.lead {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 16px;
+    font-size: 15.5px;
     margin-top: 20px;
 }
 
 td, th {
-    padding: 14px 12px;
+    padding: 13px 10px;
     border-bottom: 1px solid var(--line);
     text-align: left;
 }
@@ -409,247 +535,259 @@ th {
     color: var(--gold);
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 13.5px;
+    font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-/* Top Sticky Header */
-.topbar {
+.highlight {
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.note {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* ----------------------------------------------------------------- */
+/* FULLSCREEN PRESENTATION MODE MODAL (SLIDE DECK PLAYER)           */
+/* ----------------------------------------------------------------- */
+.pitch-modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: rgba(3, 5, 9, 0.98);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.pitch-modal.active {
+    display: flex;
+}
+
+.modal-topbar {
+    padding: 16px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 5vw;
-    background: rgba(4, 6, 10, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--card-border);
+    background: rgba(8, 12, 20, 0.9);
 }
 
-.top-brand {
+.modal-brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
-}
-
-.top-brand img {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    border: 1px solid var(--gold);
-    object-fit: cover;
-}
-
-.top-brand span {
     font-family: 'Cinzel', serif;
     font-weight: 800;
-    font-size: 21px;
+    font-size: 19px;
     color: #FFFFFF;
 }
 
-.top-brand span b {
+.modal-brand b {
     color: var(--gold);
 }
 
-.top-nav {
+.modal-controls {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.top-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
+.modal-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.12);
+    padding: 5px 16px;
     border-radius: 100px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s ease;
+    border: 1px solid var(--card-border);
 }
 
-.fullscreen-btn {
+.modal-action-btn {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid var(--card-border);
-    color: var(--gold);
-    width: 38px;
-    height: 38px;
+    color: #FFFFFF;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 15px;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
 }
 
-.fullscreen-btn:hover {
-    background: rgba(212, 175, 55, 0.2);
+.modal-action-btn:hover {
+    background: rgba(212, 175, 55, 0.25);
     border-color: var(--gold);
+    color: var(--gold);
     transform: scale(1.08);
 }
 
-/* --------------------------------------------------- */
-/* GORGEOUS FLOATING PREVIOUS & NEXT NAVIGATION CONTROLS */
-/* --------------------------------------------------- */
-.deck-arrow-btn {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 90;
+.modal-close-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #EF4444;
+    color: #EF4444;
+}
+
+.modal-body {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 14px 22px;
-    background: rgba(14, 20, 34, 0.88);
+    justify-content: center;
+    padding: 30px 90px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.slide-content-box {
+    max-width: 1200px;
+    width: 100%;
+    animation: slideFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideFadeIn {
+    from { opacity: 0; transform: scale(0.98) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-slide {
+    display: none;
+}
+
+.modal-slide.active {
+    display: block;
+}
+
+/* FLOATING OLDINGI & KEYINGI ICONS (ONLY INSIDE PRESENTATION MODE) */
+.slide-arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: rgba(14, 20, 34, 0.92);
     border: 1.5px solid var(--card-border);
     color: #FFFFFF;
     border-radius: 100px;
     cursor: pointer;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
-    font-size: 14.5px;
+    font-size: 15px;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.2);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
 }
 
-.deck-arrow-btn:hover {
-    background: rgba(212, 175, 55, 0.2);
+.slide-arrow-btn:hover {
+    background: rgba(212, 175, 55, 0.22);
     border-color: var(--gold);
     color: var(--gold);
-    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.45);
-    transform: translateY(-50%) scale(1.06);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+    transform: translateY(-50%) scale(1.08);
 }
 
-.deck-arrow-btn i {
-    font-size: 18px;
+.slide-arrow-btn i {
+    font-size: 19px;
     transition: transform 0.2s ease;
 }
 
-.arrow-prev {
-    left: 24px;
+.arrow-left {
+    left: 28px;
 }
 
-.arrow-prev:hover i {
+.arrow-left:hover i {
     transform: translateX(-4px);
 }
 
-.arrow-next {
-    right: 24px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.28), rgba(14, 20, 34, 0.92));
+.arrow-right {
+    right: 28px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(14, 20, 34, 0.95));
     border-color: var(--gold);
     color: var(--gold-light);
 }
 
-.arrow-next:hover i {
+.arrow-right:hover i {
     transform: translateX(4px);
 }
 
 @media(max-width: 900px) {
-    .deck-arrow-btn span { display: none; }
-    .deck-arrow-btn { padding: 12px 14px; border-radius: 50%; }
-    .arrow-prev { left: 12px; }
-    .arrow-next { right: 12px; }
+    .modal-body { padding: 20px 20px 80px; }
+    .slide-arrow-btn span { display: none; }
+    .slide-arrow-btn { padding: 12px 14px; border-radius: 50%; }
+    .arrow-left { left: 10px; }
+    .arrow-right { right: 10px; }
 }
 
-/* Right Dot Navigation */
-nav.side-dots {
-    position: fixed;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
+.modal-footer {
+    padding: 14px 36px;
     display: flex;
-    flex-direction: column;
-    gap: 14px;
-    z-index: 50;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(8, 12, 20, 0.9);
 }
 
-nav.side-dots a {
-    width: 11px;
-    height: 11px;
+.slide-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.slide-dot {
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.2);
-    border: 1.5px solid var(--gold);
+    cursor: pointer;
     transition: all 0.25s ease;
 }
 
-nav.side-dots a.a {
-    background: var(--gold);
-    transform: scale(1.4);
-    box-shadow: 0 0 14px var(--gold);
-}
-
-@media(max-width: 1024px) {
-    nav.side-dots { display: none; }
-}
-
-/* Bottom HUD Navigation Bar */
-.bottom-nav-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    z-index: 80;
-    background: rgba(10, 15, 26, 0.92);
-    padding: 8px 22px;
+.slide-dot.active {
+    width: 26px;
     border-radius: 100px;
-    border: 1.5px solid var(--card-border);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
 }
 
-.bottom-slide-counter {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13.5px;
+/* Footer on landing */
+.footer {
+    padding: 60px 0 40px;
+    text-align: center;
+    background: #030508;
+    border-top: 1px solid var(--card-border);
+}
+
+.footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
     font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 12px;
+}
+
+.footer-logo b {
     color: var(--gold);
 }
 
-.bottom-control-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--card-border);
-    color: #FFFFFF;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s ease;
-}
-
-.bottom-control-btn:hover {
-    background: rgba(212, 175, 55, 0.25);
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-.note {
-    font-size: 14.5px;
-    color: var(--text-muted);
-    margin-top: 20px;
-    line-height: 1.6;
-}
-
-.highlight {
-    color: #FFFFFF;
-    font-weight: 700;
+.footer p {
+    font-size: 13.5px;
+    color: var(--text-dim);
 }
 </style>
 </head>
@@ -659,86 +797,71 @@ nav.side-dots a.a {
 <canvas id="bg-canvas"></canvas>
 
 <!-- Topbar Navigation -->
-<header class="topbar">
-    <a href="/" class="top-brand">
-        <img src="/static/logo.jpg" alt="TuyBox Logo" onerror="this.src='https://via.placeholder.com/38x38/D4AF37/000?text=TB'">
-        <span>TUY<b>BOX</b> PITCH DECK</span>
-    </a>
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="/" class="brand-logo">
+            <img src="/static/logo.jpg" alt="TuyBox Logo" onerror="this.src='https://via.placeholder.com/40x40/D4AF37/000?text=TB'">
+            <span>TUY<b>BOX</b></span>
+        </a>
 
-    <div class="top-nav">
-        <a href="/" class="top-btn btn-outline">
-            <i class="fa-solid fa-globe"></i> Web Platforma
-        </a>
-        <a href="https://t.me/asilbek_dev" target="_blank" class="top-btn btn-gold">
-            <i class="fa-brands fa-telegram"></i> Bog'lanish
-        </a>
-        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="To'liq Ekranga O'tish (F)">
-            <i class="fa-solid fa-expand" id="fs-icon"></i>
-        </button>
+        <ul class="nav-links">
+            <li><a href="#vision">Bozor & Muammo</a></li>
+            <li><a href="#solution">TuyBox Yechimi</a></li>
+            <li><a href="#scale">Kengayish</a></li>
+            <li><a href="#market">Bozor Sig'imi</a></li>
+            <li><a href="#business">Biznes Model</a></li>
+            <li><a href="#roadmap">Reja & Prognoz</a></li>
+        </ul>
+
+        <div class="nav-right-actions">
+            <button class="nav-deck-btn" onclick="openPitchMode()">
+                <i class="fa-solid fa-play"></i>
+                Taqdimot Rejimi
+            </button>
+            <a href="/" class="nav-outline-btn">
+                <i class="fa-solid fa-globe"></i>
+                Web Ilova
+            </a>
+        </div>
     </div>
-</header>
-
-<!-- Floating Next and Previous Icons -->
-<button class="deck-arrow-btn arrow-prev" onclick="prevSlide()" title="Oldingi slayd (&larr;)">
-    <i class="fa-solid fa-arrow-left-long"></i>
-    <span>Oldingi</span>
-</button>
-
-<button class="deck-arrow-btn arrow-next" onclick="nextSlide()" title="Keyingi slayd (&rarr;)">
-    <span>Keyingi</span>
-    <i class="fa-solid fa-arrow-right-long"></i>
-</button>
-
-<!-- Side Slide Dot Nav -->
-<nav class="side-dots" id="nav"></nav>
-
-<!-- Bottom HUD Navigation Bar -->
-<div class="bottom-nav-bar">
-    <button class="bottom-control-btn" onclick="prevSlide()" title="Oldingi (&larr;)">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <div class="bottom-slide-counter" id="ct">TuyBox Pitch · 1 / 8</div>
-    <button class="bottom-control-btn" onclick="nextSlide()" title="Keyingi (&rarr;)">
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
-</div>
+</nav>
 
 <div class="content-wrapper">
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 1: VISION & EXECUTIVE SUMMARY     -->
+    <!-- HERO SECTION (CLEAN LANDING PAGE)       -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-1">
-        <div class="container-slide">
+    <header class="hero">
+        <div class="container">
             <div class="k"><i class="fa-solid fa-crown"></i> Pre-Seed · Rasmiy Investor Taqdimoti 2026-2027</div>
             <h1>To'y va barcha tadbirlarni<br><span class="gold-gradient">1 joyda rejalang</span> va o'tkazing.</h1>
             <p class="lead">
-                <strong>TuyBox</strong> — To'y, banket va tantanalar uchun barcha xizmatchilarni (san'atkorlar, to'yxonalar, foto-video, dekor, kortej) <strong>bitta yagona platformaga</strong> yig'uvchi, byudjetni hisoblovchi va tadbirlarni boshidan oxirigacha mukammal o'tkazib beruvchi raqamli ekotizim.
+                <strong>TuyBox</strong> — To'y, banket va tantanalar uchun barcha xizmatchilarni (san'atkorlar, to'yxonalar, foto-video, dekoratsiya, kortej) <strong>bitta yagona platformaga</strong> jamlovchi, byudjetni aniq hisoblovchi va tadbirlarni boshidan oxirigacha mukammal o'tkazib beruvchi raqamli ekotizim.
             </p>
 
             <div class="stats">
-                <div>
-                    <span class="big">$3.5B+</span>
-                    <span class="sub">Yillik Tadbirlar Bozori (TAM)</span>
+                <div class="stat-item">
+                    <div class="big">$3.5B+</div>
+                    <div class="sub">Yillik Tadbirlar Bozori</div>
                 </div>
-                <div>
-                    <span class="big">850,000+</span>
-                    <span class="sub">Yillik To'y va Banketlar</span>
+                <div class="stat-item">
+                    <div class="big">850,000+</div>
+                    <div class="sub">Yillik To'y & Banketlar</div>
                 </div>
-                <div>
-                    <span class="big">100% Xizmatlar</span>
-                    <span class="sub">Barcha Xizmatchilar 1 Joyda</span>
+                <div class="stat-item">
+                    <div class="big">100% Xizmatlar</div>
+                    <div class="sub">Barcha Xizmatchilar 1 Joyda</div>
                 </div>
-                <div>
-                    <span class="big" style="color: #34D399;">Aqlli Byudjet</span>
-                    <span class="sub">Hisoblash & Rejalash Tizimi</span>
+                <div class="stat-item">
+                    <div class="big" style="color: #34D399;">Aqlli Byudjet</div>
+                    <div class="sub">Hisoblash & Rejalash Tizimi</div>
                 </div>
             </div>
 
             <div class="btn-group">
-                <button class="btn btn-gold" onclick="nextSlide()">
-                    <span>Taqdimotni Boshlash</span>
-                    <i class="fa-solid fa-arrow-right-long"></i>
+                <button class="btn btn-gold" onclick="openPitchMode()">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Taqdimot Rejimi (Slaydlar)</span>
                 </button>
                 <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
                     <i class="fa-solid fa-compass"></i> Serverdagi Platformani Ko'rish
@@ -748,17 +871,20 @@ nav.side-dots a.a {
                 </a>
             </div>
         </div>
-    </section>
+    </header>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 2: THE REAL PROBLEM               -->
+    <!-- SECTION 1: THE REAL PROBLEM             -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-2">
-        <div class="container-slide">
-            <div class="k" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08);">
-                <i class="fa-solid fa-triangle-exclamation"></i> Bozor Muammosi
+    <section class="section" id="vision">
+        <div class="container">
+            <div class="section-header">
+                <div class="k" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08);">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Bozor Muammosi
+                </div>
+                <h2>To'y va tadbirlarni tashkil qilishdagi asosiy og'riqlar</h2>
+                <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto;">Bugungi kunda oila yoki tashkilot tantanali tadbir o'tkazmoqchi bo'lsa, qanday qiyinchiliklarga duch keladi?</p>
             </div>
-            <h2>To'y va tadbirlarni tashkil qilishdagi asosiy og'riqlar</h2>
 
             <div class="grid">
                 <div class="c" style="border-left: 3.5px solid #EF4444;">
@@ -785,23 +911,21 @@ nav.side-dots a.a {
                     <p>Kelishuvlar og'zaki bo'ladi. To'yxonalarda bir kunga 2 ta tadbir yozilib ketishi (double-booking) yoki san'atkorlarning to'y kuni kechikishi kabi xatarlar ko'p.</p>
                 </div>
             </div>
-
-            <p class="note">
-                <i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Natijada: to'y yoki tadbir qilish xursandchilik o'rniga oylab stress, asab sarsonligi va ortiqcha xarajatlarga aylanadi.
-            </p>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 3: THE TUYBOX SOLUTION            -->
+    <!-- SECTION 2: TUYBOX SOLUTION              -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-3">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-wand-magic-sparkles"></i> TuyBox Yechimi</div>
-            <h2>Barcha xizmatchilar 1 joyda — Aniq Byudjet, Reja va O'tkazish</h2>
+    <section class="section" id="solution">
+        <div class="container">
+            <div class="section-header">
+                <div class="k"><i class="fa-solid fa-wand-magic-sparkles"></i> TuyBox Yechimi</div>
+                <h2>Barcha xizmatchilar 1 joyda — Aniq Byudjet, Reja va O'tkazish</h2>
+                <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto;">TuyBox to'y va tadbir xarajatlarini 20-30% tejaydi, sarsonlikni yo'qotadi va barcha jarayonlarni bitta joyda boshqaradi.</p>
+            </div>
 
             <div class="grid">
-                <!-- Solution 1 -->
                 <div class="c" style="border: 1.5px solid var(--gold); background: linear-gradient(145deg, rgba(20, 28, 48, 0.95), rgba(12, 17, 28, 0.95));">
                     <span class="tag on"><i class="fa-solid fa-check"></i> HOZIR SERVERDA ISHLAYAPTI</span>
                     <h3>1. Yagona Katta Xizmatchilar Bazasi</h3>
@@ -813,7 +937,6 @@ nav.side-dots a.a {
                     </div>
                 </div>
 
-                <!-- Solution 2 -->
                 <div class="c">
                     <span class="tag plan"><i class="fa-solid fa-calculator"></i> AQLLI KALKULYATOR</span>
                     <h3>2. Byudjetni Hisoblash & Taqsimlash</h3>
@@ -825,7 +948,6 @@ nav.side-dots a.a {
                     </div>
                 </div>
 
-                <!-- Solution 3 -->
                 <div class="c">
                     <span class="tag tag-purple"><i class="fa-solid fa-clipboard-check"></i> TO'LIQ O'TKAZIB BERISH</span>
                     <h3>3. Tadbirlarni Rejalash & O'tkazish</h3>
@@ -837,36 +959,32 @@ nav.side-dots a.a {
                     </div>
                 </div>
             </div>
-
-            <p class="note">
-                <i class="fa-solid fa-check-double text-gold"></i> TuyBox — to'y va banket xarajatlarini 20-30% tejaydi, sarsonlikni 0 ga tushiradi va 1 ta platforma orqali butun tadbirni boshqarish imkonini beradi.
-            </p>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 4: SCALING FROM WEDDINGS TO EVENTS-->
+    <!-- SECTION 3: SCALING STRATEGY             -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-4">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-bullseye"></i> Kengayish Strategiyasi</div>
+    <section class="section" id="scale">
+        <div class="container">
             <div class="two">
                 <div>
+                    <div class="k"><i class="fa-solid fa-bullseye"></i> Kengayish Strategiyasi</div>
                     <h2>Hozir to'ydan boshlaymiz, so'ngra barcha tadbirlarni qamraymiz</h2>
-                    <p class="lead" style="margin-top: 0; font-size: 18px;">
+                    <p class="lead" style="margin-top: 0; font-size: 17px;">
                         To'y — har bir oilaning eng katta va eng mas'uliyatli xarajati. Aynan to'y orqali xalqning eng kuchli ishonchini qozonamiz.
                     </p>
-                    <p class="note" style="margin-top: 18px; font-size: 15.5px;">
-                        To'y qilgan mijoz ertaga yubiley, fotiha, tug'ilgan kun, korporativ banket yoki boshqa oilaviy tantanasini ham <strong>faqat TuyBox orqali</strong> o'tkazadi.
+                    <p class="note" style="margin-top: 16px;">
+                        To'y qilgan mijoz ertaga yubiley, fotiha, tug'ilgan kun, korporativ banket yoki boshqa tantanasini ham <strong>faqat TuyBox orqali</strong> o'tkazadi.
                     </p>
                     <div style="margin-top: 24px; padding: 16px 20px; background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold); border-radius: 12px;">
                         <span style="color: var(--gold); font-weight: 700;">Organik Mijoz Oqimi:</span> 1 ta to'yda 300–500 nafar mehmon qatnashadi. Ularning har biri keyingi o'z tadbiriga xizmatchilarni TuyBox'dan tanlaydi!
                     </div>
                 </div>
 
-                <div class="c" style="text-align: center; padding: 40px 32px; border: 1.5px solid var(--gold);">
-                    <div style="font-size: 15px; color: var(--gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Qamrab Olinadigan Tadbirlar</div>
-                    <div class="big" style="color: #FFFFFF; font-size: 42px; margin: 12px 0;">To'y + Barcha Marosimlar</div>
+                <div class="c" style="text-align: center; padding: 36px 30px; border: 1.5px solid var(--gold);">
+                    <div style="font-size: 14px; color: var(--gold); font-weight: 800; text-transform: uppercase;">Qamrab Olinadigan Tadbirlar</div>
+                    <div class="big" style="color: #FFFFFF; font-size: 38px; margin: 12px 0;">To'y + Barcha Marosimlar</div>
                     
                     <div style="height: 1px; background: var(--line); margin: 20px 0;"></div>
 
@@ -877,7 +995,7 @@ nav.side-dots a.a {
                         <div><i class="fa-solid fa-check text-gold"></i> Korporativ tadbirlar</div>
                     </div>
 
-                    <div style="margin-top: 24px; font-family: 'Space Grotesk'; font-size: 14px; color: #34D399; background: rgba(16, 185, 129, 0.12); padding: 10px; border-radius: 10px;">
+                    <div style="margin-top: 22px; font-family: 'Space Grotesk'; font-size: 13.5px; color: #34D399; background: rgba(16, 185, 129, 0.12); padding: 10px; border-radius: 10px;">
                         Mijozning Hayotiy Qiymati (LTV) 3 barobar oshadi
                     </div>
                 </div>
@@ -886,13 +1004,13 @@ nav.side-dots a.a {
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 5: MARKET OPPORTUNITY & TAM/SAM   -->
+    <!-- SECTION 4: MARKET SIZE                  -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-5">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-chart-pie"></i> Bozor Sig'imi</div>
+    <section class="section" id="market">
+        <div class="container">
             <div class="two">
                 <div>
+                    <div class="k"><i class="fa-solid fa-chart-pie"></i> Bozor Sig'imi</div>
                     <h2>O'zbekistonda to'y va tadbirlar — ulkan kapital bozori</h2>
                     <table>
                         <tr><th>Ko'rsatkich</th><th>Hajmi</th></tr>
@@ -903,9 +1021,6 @@ nav.side-dots a.a {
                         <tr><td>O'rtacha bitta tadbir byudjeti</td><td class="highlight">$4,000 – $10,000</td></tr>
                         <tr><td>Umumiy bozor hajmi (TAM)</td><td class="highlight" style="color: var(--gold); font-weight: 800; font-size: 18px;">$3.5+ Milliard</td></tr>
                     </table>
-                    <p class="note">
-                        O'zbek xalqi uchun to'y va tadbirlar — eng oliy an'ana. Ushbu bozor hech qachon to'xtamaydi va yildan-yilga o'sib bormoqda.
-                    </p>
                 </div>
 
                 <div class="rings">
@@ -924,12 +1039,15 @@ nav.side-dots a.a {
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 6: BUSINESS MODEL & MONETIZATION  -->
+    <!-- SECTION 5: BUSINESS MODEL               -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-6">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-coins"></i> Biznes Model</div>
-            <h2>Ko'p qirrali va barqaror daromad oqimlari</h2>
+    <section class="section" id="business">
+        <div class="container">
+            <div class="section-header">
+                <div class="k"><i class="fa-solid fa-coins"></i> Biznes Model</div>
+                <h2>Ko'p qirrali va barqaror daromad oqimlari</h2>
+                <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto;">TuyBox nafaqat buyurtmachilardan, balki xizmatchi hamkorlardan ham muntazam B2B daromad oladi.</p>
+            </div>
 
             <div class="grid">
                 <div class="c">
@@ -956,35 +1074,18 @@ nav.side-dots a.a {
                     <p>To'yxona va banket zallarini 3D modelga aylantirib berish bo'yicha yuqori marjali bir martalik B2B xizmat (so'm).</p>
                 </div>
             </div>
-
-            <div class="stats">
-                <div>
-                    <span class="big">20&times;</span>
-                    <span class="sub">LTV / CAC Nisbati</span>
-                </div>
-                <div>
-                    <span class="big">$120+</span>
-                    <span class="sub">O'rtacha Daromad / Tadbir</span>
-                </div>
-                <div>
-                    <span class="big">$500+</span>
-                    <span class="sub">Yillik Vendor LTV (Obuna)</span>
-                </div>
-                <div>
-                    <span class="big" style="color: #34D399;">100%</span>
-                    <span class="sub">Shaffof Moliyaviy Oqim</span>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 7: ROADMAP & FINANCIAL PROJECTION -->
+    <!-- SECTION 6: ROADMAP & PROJECTION         -->
     <!-- --------------------------------------- -->
-    <section class="s" id="slide-7">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-route"></i> Yo'l Xaritasi & Prognoz</div>
-            <h2>6 oylik amaliy reja va 3 yillik moliyaviy o'sish</h2>
+    <section class="section" id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <div class="k"><i class="fa-solid fa-route"></i> Yo'l Xaritasi & Prognoz</div>
+                <h2>6 oylik amaliy reja va 3 yillik moliyaviy o'sish</h2>
+            </div>
 
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
                 <div class="c" style="padding: 18px;">
@@ -1019,7 +1120,7 @@ nav.side-dots a.a {
                 </div>
             </div>
 
-            <!-- Financial Projection Chart -->
+            <!-- Financial Bars -->
             <div class="bars" style="margin-top: 36px;">
                 <div>
                     <b style="height: 18px;"></b>
@@ -1037,128 +1138,374 @@ nav.side-dots a.a {
                     3-yil daromad (Respublika)
                 </div>
             </div>
-
-            <p class="note">
-                <i class="fa-solid fa-chart-line" style="color: var(--gold);"></i> Konservativ moliyaviy model: 3-yilga borib taxminiy operatsion sof foyda $420,000+ ni tashkil etadi.
-            </p>
         </div>
     </section>
 
-    <!-- --------------------------------------- -->
-    <!-- SLIDE 8: THE ASK & CONTACT              -->
-    <!-- --------------------------------------- -->
-    <section class="s" id="slide-8">
-        <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-handshake"></i> Investitsiya va Hamkorlik So'rovi</div>
-            <h2>Pre-Seed Bosqichi: <span class="gold-gradient">$50,000 – $100,000</span></h2>
-
-            <div class="grid">
-                <div class="c" style="border-top: 3.5px solid var(--gold);">
-                    <div class="big" style="font-size: 38px;">40%</div>
-                    <h3>Mahsulot & Mobil Ilova</h3>
-                    <p>TuyBox Android (APK) & iOS mobil ilovasi, aqlli byudjet tizimi va tadbirlarni boshqarish vositalari.</p>
-                </div>
-
-                <div class="c" style="border-top: 3.5px solid #34D399;">
-                    <div class="big" style="font-size: 38px; color: #34D399;">25%</div>
-                    <h3>Marketing & Hamkorlik</h3>
-                    <p>To'y va banket sohasidagi yetakchi ijodkorlar bilan kollaboratsiya va keng auditoriyani qamrab olish.</p>
-                </div>
-
-                <div class="c" style="border-top: 3.5px solid var(--purple);">
-                    <div class="big" style="font-size: 38px; color: var(--purple);">20%</div>
-                    <h3>Operatsion Xarajatlar</h3>
-                    <p>12–18 oylik runway, serverlar infratuzilmasi, yuridik shartnomalar va xavfsizlik ta'minoti.</p>
-                </div>
-
-                <div class="c" style="border-top: 3.5px solid #38BDF8;">
-                    <div class="big" style="font-size: 38px; color: #38BDF8;">15%</div>
-                    <h3>Vendor Onboarding</h3>
-                    <p>Xizmatchilar (san'atkorlar, studiyalar, to'yxonalar) portfoliosini professional tarzda platformaga kiritish.</p>
-                </div>
-            </div>
-
-            <div class="btn-group" style="margin-top: 38px;">
-                <a class="btn btn-gold" href="https://t.me/asilbek_dev" target="_blank">
-                    <i class="fa-brands fa-telegram"></i> Telegramda Asilbek bilan Bog'lanish
-                </a>
-                <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
-                    <i class="fa-solid fa-globe"></i> TuyBox Platformani Sinash
-                </a>
-            </div>
-
-            <p class="note" style="margin-top: 26px;">
-                TuyBox Technologies &copy; 2026. Barcha huquqlar himoyalangan. Muallif: Asilbek Rustamov (@asilbek_dev)
-            </p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">TUY<b>BOX</b></div>
+            <p>To'y va barcha tantanali tadbirlarni 1 joyda rejalashtirish va o'tkazish platformasi.</p>
+            <p style="margin-top: 10px;">TuyBox Technologies &copy; 2026. Barcha huquqlar himoyalangan.</p>
         </div>
-    </section>
+    </footer>
 
 </div>
 
-<!-- Interactive Presentation Navigation Script -->
+<!-- ----------------------------------------------------------------- -->
+<!-- FULLSCREEN PRESENTATION MODE MODAL (ONLY HERE ARE NEXT/PREV ICONS)-->
+<!-- ----------------------------------------------------------------- -->
+<div class="pitch-modal" id="pitchDeckModal">
+    <!-- Topbar -->
+    <div class="modal-topbar">
+        <div class="modal-brand">
+            <img src="/static/logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--gold);" onerror="this.src='https://via.placeholder.com/32x32/D4AF37/000?text=TB'">
+            TUY<b>BOX</b> PITCH DECK
+        </div>
+
+        <div class="modal-controls">
+            <span class="modal-counter" id="modalSlideCounter">1 / 8</span>
+            <button class="modal-action-btn" onclick="toggleModalFullscreen()" title="To'liq ekran (F)">
+                <i class="fa-solid fa-expand" id="modal-fs-icon"></i>
+            </button>
+            <button class="modal-action-btn modal-close-btn" onclick="closePitchMode()" title="Chiqish (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Body with Slide Content and Stylish Floating Arrows -->
+    <div class="modal-body">
+        <!-- Floating Left Arrow -->
+        <button class="slide-arrow-btn arrow-left" onclick="modalPrevSlide()" title="Oldingi slayd (&larr;)">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Oldingi</span>
+        </button>
+
+        <div class="slide-content-box">
+            <!-- Slide 1 -->
+            <div class="modal-slide active" data-slide="1">
+                <div class="k"><i class="fa-solid fa-crown"></i> Pre-Seed · Slayd 1</div>
+                <h1 style="font-size: clamp(34px, 4.5vw, 62px);">To'y va barcha tadbirlarni<br><span class="gold-gradient">1 joyda rejalang</span> va o'tkazing.</h1>
+                <p class="lead" style="margin: 16px 0 28px; max-width: 900px;">
+                    <strong>TuyBox</strong> — To'y, banket va tantanalar uchun barcha xizmatchilarni (san'atkorlar, to'yxonalar, foto-video, dekoratsiya, kortej) bitta yagona platformaga yig'uvchi, byudjetni hisoblovchi va tadbirlarni boshidan oxirigacha mukammal o'tkazib beruvchi raqamli ekotizim.
+                </p>
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="c" style="text-align: center; padding: 20px;">
+                        <div class="big">$3.5B+</div>
+                        <p>Yillik Tadbirlar Bozori</p>
+                    </div>
+                    <div class="c" style="text-align: center; padding: 20px;">
+                        <div class="big">850,000+</div>
+                        <p>Yillik To'y va Banketlar</p>
+                    </div>
+                    <div class="c" style="text-align: center; padding: 20px;">
+                        <div class="big" style="color: #34D399;">100% Xizmatlar</div>
+                        <p>Barcha Xizmatchilar 1 Joyda</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="modal-slide" data-slide="2">
+                <div class="k" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08);"><i class="fa-solid fa-triangle-exclamation"></i> Bozor Muammosi · Slayd 2</div>
+                <h2>To'y va tadbirlarni tashkil qilishdagi asosiy og'riqlar</h2>
+                <div class="grid">
+                    <div class="c" style="border-left: 3.5px solid #EF4444;">
+                        <div style="font-size: 26px; color: #F87171; margin-bottom: 8px;"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3>Bozor tarqoqligi</h3>
+                        <p>San'atkor alohida, to'yxona alohida, foto-video alohida. Odamlar 10 xil joydan qidirib sarson bo'ladi.</p>
+                    </div>
+                    <div class="c" style="border-left: 3.5px solid #EF4444;">
+                        <div style="font-size: 26px; color: #F87171; margin-bottom: 8px;"><i class="fa-solid fa-coins"></i></div>
+                        <h3>Byudjet nazoratsizligi</h3>
+                        <p>100 mln so'm mo'ljallangan to'y 160 mln ga chiqib ketadi. Xarajatlarni oldindan 1 joyda aniq hisoblab bo'lmaydi.</p>
+                    </div>
+                    <div class="c" style="border-left: 3.5px solid #EF4444;">
+                        <div style="font-size: 26px; color: #F87171; margin-bottom: 8px;"><i class="fa-solid fa-eye-slash"></i></div>
+                        <h3>Yopiq narxlar</h3>
+                        <p>Instagramda "Directga yozing", har kimga har xil narx aytiladi. Ochiq narxlar va shaffoflik yo'q.</p>
+                    </div>
+                    <div class="c" style="border-left: 3.5px solid #EF4444;">
+                        <div style="font-size: 26px; color: #F87171; margin-bottom: 8px;"><i class="fa-solid fa-calendar-xmark"></i></div>
+                        <h3>Double-Booking xatosi</h3>
+                        <p>To'yxonalarda bitta kunga 2 ta to'y yozilib ketishi va og'zaki kelishuvlar buzilishi xavfi katta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="modal-slide" data-slide="3">
+                <div class="k"><i class="fa-solid fa-wand-magic-sparkles"></i> TuyBox Yechimi · Slayd 3</div>
+                <h2>Barcha xizmatchilar 1 joyda — Aniq Byudjet, Reja va O'tkazish</h2>
+                <div class="grid">
+                    <div class="c" style="border: 1.5px solid var(--gold);">
+                        <span class="tag on"><i class="fa-solid fa-check"></i> HOZIR ISHLAYAPTI</span>
+                        <h3>1. Katta Xizmatchilar Bazasi</h3>
+                        <p>San'atkorlar, to'yxonalar, foto/video studiyalar, dekoratsiya, kortej — barchasi bitta platformada shaffof narxlari bilan.</p>
+                    </div>
+                    <div class="c">
+                        <span class="tag plan"><i class="fa-solid fa-calculator"></i> AQLLI KALKULYATOR</span>
+                        <h3>2. Byudjetni Hisoblash</h3>
+                        <p>Mijoz o'z byudjetini kiritadi — TuyBox unga mos to'yxona va artistlar kombinatsiyasini hisoblab beradi. Kutilmagan qarzlar yo'qoladi.</p>
+                    </div>
+                    <div class="c">
+                        <span class="tag tag-purple"><i class="fa-solid fa-clipboard-check"></i> END-TO-END</span>
+                        <h3>3. To'liq O'tkazib Berish</h3>
+                        <p>Tadbirlarni boshidan oxirigacha rejalashtirish cheklisti, sanalarni kafolatli band qilish va xizmatlarni sifatli nazorat qilish.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="modal-slide" data-slide="4">
+                <div class="k"><i class="fa-solid fa-bullseye"></i> Kengayish Strategiyasi · Slayd 4</div>
+                <h2>Hozir to'ydan boshlaymiz, so'ngra barcha tadbirlarni qamraymiz</h2>
+                <div class="two">
+                    <div>
+                        <p class="lead" style="margin-top: 0; font-size: 17px;">
+                            To'y — har bir oilaning eng katta xarajati. Aynan to'y orqali xalqning eng mustahkam ishonchini qozonamiz.
+                        </p>
+                        <p class="note" style="margin-top: 14px;">
+                            To'y qilgan mijoz ertaga yubiley, fotiha, tug'ilgan kun, korporativ banket yoki boshqa tantanasini ham <strong>faqat TuyBox orqali</strong> o'tkazadi.
+                        </p>
+                        <div style="margin-top: 20px; padding: 14px 18px; background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold); border-radius: 10px;">
+                            <span style="color: var(--gold); font-weight: 700;">Organik Mijoz Oqimi:</span> 1 ta to'yda 300–500 nafar mehmon qatnashadi. Ularning har biri keyingi o'z tadbiriga xizmatchilarni TuyBox'dan tanlaydi!
+                        </div>
+                    </div>
+                    <div class="c" style="text-align: center; padding: 30px;">
+                        <div style="font-size: 13px; color: var(--gold); font-weight: 800; text-transform: uppercase;">Qamrov</div>
+                        <div class="big" style="color: #FFF; font-size: 34px; margin: 8px 0;">To'y + Barcha Marosimlar</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; font-size: 13.5px; margin-top: 14px;">
+                            <div><i class="fa-solid fa-check text-gold"></i> Nikoh to'ylari</div>
+                            <div><i class="fa-solid fa-check text-gold"></i> Fotihalar</div>
+                            <div><i class="fa-solid fa-check text-gold"></i> Banket & Yubileylar</div>
+                            <div><i class="fa-solid fa-check text-gold"></i> Korporativlar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="modal-slide" data-slide="5">
+                <div class="k"><i class="fa-solid fa-chart-pie"></i> Bozor Sig'imi · Slayd 5</div>
+                <h2>O'zbekistonda to'y va tadbirlar — ulkan kapital bozori</h2>
+                <div class="two">
+                    <div>
+                        <table>
+                            <tr><th>Ko'rsatkich</th><th>Hajmi</th></tr>
+                            <tr><td>Yillik nikoh to'ylari soni</td><td class="highlight">300,000 – 350,000 ta</td></tr>
+                            <tr><td>Yillik banket, fotiha, yubileylar</td><td class="highlight">500,000+ dan ortiq</td></tr>
+                            <tr><td>Jami yillik tantanali tadbirlar</td><td class="highlight" style="color: #34D399; font-weight: 800;">850,000+ ta tadbir</td></tr>
+                            <tr><td>O'rtacha bitta tadbir byudjeti</td><td class="highlight">$4,000 – $10,000</td></tr>
+                            <tr><td>Umumiy bozor hajmi (TAM)</td><td class="highlight" style="color: var(--gold); font-weight: 800;">$3.5+ Milliard</td></tr>
+                        </table>
+                    </div>
+                    <div class="rings">
+                        <i style="width:100%;height:100%;background:rgba(212, 175, 55, 0.08);">TAM $3.5B+ (Barcha Tadbirlar)</i>
+                        <i style="width:68%;height:68%;background:rgba(212, 175, 55, 0.18);">SAM $600M (Yirik Shaharlar)</i>
+                        <i style="width:36%;height:36%;background:var(--gold);color:#070B14;padding-top:10px;">SOM 3-Yil<br>$25M+</i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="modal-slide" data-slide="6">
+                <div class="k"><i class="fa-solid fa-coins"></i> Biznes Model · Slayd 6</div>
+                <h2>Ko'p qirrali va barqaror daromad oqimlari</h2>
+                <div class="grid">
+                    <div class="c">
+                        <div class="big">B2B</div>
+                        <h3>1. VIP Obuna (SaaS)</h3>
+                        <p>Xizmatchilar katalogda TOP-o'rin va ko'proq buyurtma olish uchun oylik 300K – 1M so'm obuna to'laydi.</p>
+                    </div>
+                    <div class="c">
+                        <div class="big">2–4%</div>
+                        <h3>2. Bronlash Komissiyasi</h3>
+                        <p>Platforma orqali amalga oshirilgan to'liq tasdiqlangan tadbir buyurtmalaridan xizmat haqi.</p>
+                    </div>
+                    <div class="c">
+                        <div class="big">Paketlar</div>
+                        <h3>3. Tayyor Tadbir Paketlari</h3>
+                        <p>Boshidan-oxirigacha tayyor to'y va banket to'plamlari orqali xizmatlarni o'tkazib berishdan marja.</p>
+                    </div>
+                    <div class="c">
+                        <div class="big">3–5 mln</div>
+                        <h3>4. 3D Virtual Zallar</h3>
+                        <p>To'yxona va banket zallarini 3D modelga aylantirib berish bo'yicha yuqori marjali bir martalik xizmat.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="modal-slide" data-slide="7">
+                <div class="k"><i class="fa-solid fa-route"></i> Yo'l Xaritasi · Slayd 7</div>
+                <h2>6 oylik amaliy reja va 3 yillik moliyaviy o'sish</h2>
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: var(--gold); font-size: 13px;">1-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Yadro MVP</h4>
+                        <p style="font-size: 12px;">Xizmatchilar bazasi, ilova va veb-platforma.</p>
+                    </div>
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: var(--gold); font-size: 13px;">2-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Baza & Hamkorlar</h4>
+                        <p style="font-size: 12px;">50 to'yxona, 150 san'atkor bilan shartnomalar.</p>
+                    </div>
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: var(--gold); font-size: 13px;">3-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Byudjet Tizimi</h4>
+                        <p style="font-size: 12px;">Xarajatlarni hisoblovchi aqlli kalkulyator.</p>
+                    </div>
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: var(--purple); font-size: 13px;">4-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Banketlar</h4>
+                        <p style="font-size: 12px;">Barcha tantanalarga to'liq buyurtma olish.</p>
+                    </div>
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: #34D399; font-size: 13px;">5-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Monetizatsiya</h4>
+                        <p style="font-size: 12px;">VIP obuna, 50 ta pullik hamkor, $5,000 MRR.</p>
+                    </div>
+                    <div class="c" style="padding: 14px;">
+                        <b style="color: #34D399; font-size: 13px;">6-OY</b>
+                        <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Masshtab</h4>
+                        <p style="font-size: 12px;">Samarqand va Vodiy, 15,000+ oylik foydalanuvchi.</p>
+                    </div>
+                </div>
+                <div class="bars" style="margin-top: 24px; height: 160px;">
+                    <div><b style="height: 14px;"></b><em>$20K</em>1-yil</div>
+                    <div><b style="height: 55px;"></b><em>$150K</em>2-yil</div>
+                    <div><b style="height: 140px;"></b><em>$650K</em>3-yil daromad</div>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="modal-slide" data-slide="8">
+                <div class="k"><i class="fa-solid fa-handshake"></i> Hamkorlik So'rovi · Slayd 8</div>
+                <h2>Pre-Seed Bosqichi: <span class="gold-gradient">$50,000 – $100,000</span></h2>
+                <div class="grid">
+                    <div class="c" style="border-top: 3.5px solid var(--gold);">
+                        <div class="big" style="font-size: 34px;">40%</div>
+                        <h3>Mahsulot & Ilova</h3>
+                        <p>TuyBox Android (APK) & iOS ilovasi, aqlli byudjet tizimi va boshqaruv.</p>
+                    </div>
+                    <div class="c" style="border-top: 3.5px solid #34D399;">
+                        <div class="big" style="font-size: 34px; color: #34D399;">25%</div>
+                        <h3>Marketing</h3>
+                        <p>Yetakchi ijodkorlar bilan kollaboratsiya va keng auditoriyani qamrab olish.</p>
+                    </div>
+                    <div class="c" style="border-top: 3.5px solid var(--purple);">
+                        <div class="big" style="font-size: 34px; color: var(--purple);">20%</div>
+                        <h3>Operatsion</h3>
+                        <p>12–18 oylik runway, serverlar infratuzilmasi va xavfsizlik ta'minoti.</p>
+                    </div>
+                    <div class="c" style="border-top: 3.5px solid #38BDF8;">
+                        <div class="big" style="font-size: 34px; color: #38BDF8;">15%</div>
+                        <h3>Vendor Onboarding</h3>
+                        <p>Xizmatchilar portfoliosini professional tarzda platformaga kiritish.</p>
+                    </div>
+                </div>
+                <div class="btn-group" style="margin-top: 26px;">
+                    <a class="btn btn-gold" href="https://t.me/asilbek_dev" target="_blank">
+                        <i class="fa-brands fa-telegram"></i> Telegramda Asilbek bilan Bog'lanish
+                    </a>
+                    <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
+                        <i class="fa-solid fa-globe"></i> TuyBox Platformani Sinash
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Right Arrow -->
+        <button class="slide-arrow-btn arrow-right" onclick="modalNextSlide()" title="Keyingi slayd (&rarr;)">
+            <span>Keyingi</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+        </button>
+    </div>
+
+    <!-- Modal Footer with Dots -->
+    <div class="modal-footer">
+        <div style="font-size: 13px; color: var(--text-dim);">
+            Klaviaturada boshqarish: &larr; &rarr; yoki Bo'shliq (Space) • Chiqish: Esc
+        </div>
+        <div class="slide-dots" id="modalSlideDots">
+            <!-- Dots generated by JS -->
+        </div>
+    </div>
+</div>
+
+<!-- Interactive Navigation & Presentation Script -->
 <script>
 (function() {
-    var S = [].slice.call(document.querySelectorAll('.s'));
-    var nav = document.getElementById('nav');
-    var ct = document.getElementById('ct');
-    var cur = 0;
+    // -------------------------------------------------------------
+    // FULLSCREEN PRESENTATION MODE LOGIC
+    // -------------------------------------------------------------
+    var modal = document.getElementById('pitchDeckModal');
+    var slides = [].slice.call(document.querySelectorAll('.modal-slide'));
+    var dotsContainer = document.getElementById('modalSlideDots');
+    var counter = document.getElementById('modalSlideCounter');
+    var currentSlide = 1;
+    var totalSlides = slides.length;
 
-    // Generate Side Dots
-    S.forEach(function(s, i) {
-        var a = document.createElement('a');
-        a.href = '#' + s.id;
-        a.title = 'Slayd ' + (i + 1);
-        a.onclick = function(e) {
-            e.preventDefault();
-            s.scrollIntoView({ behavior: 'smooth' });
+    // Generate Dots
+    dotsContainer.innerHTML = '';
+    slides.forEach(function(s, i) {
+        var dot = document.createElement('div');
+        dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = function() {
+            goToSlide(i + 1);
         };
-        nav.appendChild(a);
+        dotsContainer.appendChild(dot);
     });
 
-    // Update active slide on scroll
-    function updateActiveSlide() {
-        var midY = window.innerHeight / 2;
-        var activeIndex = 0;
-        S.forEach(function(s, idx) {
-            var rect = s.getBoundingClientRect();
-            if (rect.top <= midY) {
-                activeIndex = idx;
+    window.openPitchMode = function() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        goToSlide(1);
+    };
+
+    window.closePitchMode = function() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    function goToSlide(num) {
+        currentSlide = num;
+        slides.forEach(function(slide, idx) {
+            if (idx === currentSlide - 1) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
             }
         });
-        cur = activeIndex;
 
-        // Update dots
-        [].forEach.call(nav.children, function(dot, idx) {
-            dot.className = (idx === activeIndex) ? 'a' : '';
+        counter.textContent = currentSlide + ' / ' + totalSlides;
+
+        var dots = [].slice.call(dotsContainer.children);
+        dots.forEach(function(dot, idx) {
+            dot.className = 'slide-dot' + (idx === currentSlide - 1 ? ' active' : '');
         });
-
-        // Update footer text
-        ct.textContent = 'TuyBox Pitch · ' + (activeIndex + 1) + ' / ' + S.length;
     }
 
-    window.addEventListener('scroll', updateActiveSlide, { passive: true });
-    updateActiveSlide();
-
-    // Next / Prev slide functions exposed to global scope
-    window.nextSlide = function() {
-        if (cur < S.length - 1) {
-            S[cur + 1].scrollIntoView({ behavior: 'smooth' });
+    window.modalNextSlide = function() {
+        if (currentSlide < totalSlides) {
+            goToSlide(currentSlide + 1);
         } else {
-            S[0].scrollIntoView({ behavior: 'smooth' });
+            goToSlide(1);
         }
     };
 
-    window.prevSlide = function() {
-        if (cur > 0) {
-            S[cur - 1].scrollIntoView({ behavior: 'smooth' });
+    window.modalPrevSlide = function() {
+        if (currentSlide > 1) {
+            goToSlide(currentSlide - 1);
         } else {
-            S[S.length - 1].scrollIntoView({ behavior: 'smooth' });
+            goToSlide(totalSlides);
         }
     };
 
-    // Fullscreen Toggle function
-    window.toggleFullscreen = function() {
-        var icon = document.getElementById('fs-icon');
+    window.toggleModalFullscreen = function() {
+        var icon = document.getElementById('modal-fs-icon');
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen().then(function() {
                 icon.className = 'fa-solid fa-compress';
@@ -1174,52 +1521,54 @@ nav.side-dots a.a {
         }
     };
 
-    // Keyboard slide navigation (Arrow keys, Spacebar, PageUp/Down, 'F' for fullscreen)
+    // Keyboard navigation when in presentation mode
     window.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-        var delta = 0;
-        if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].indexOf(e.key) > -1) {
-            delta = 1;
-        } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].indexOf(e.key) > -1) {
-            delta = -1;
-        } else if (e.key === 'f' || e.key === 'F') {
-            window.toggleFullscreen();
+        // If 'P' is pressed on landing, open presentation
+        if (!modal.classList.contains('active')) {
+            if (e.key === 'p' || e.key === 'P') {
+                window.openPitchMode();
+            }
             return;
         }
 
-        if (delta !== 0) {
+        // Inside presentation mode
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'ArrowDown') {
             e.preventDefault();
-            var nextIndex = Math.max(0, Math.min(S.length - 1, cur + delta));
-            S[nextIndex].scrollIntoView({ behavior: 'smooth' });
+            window.modalNextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            window.modalPrevSlide();
+        } else if (e.key === 'Escape') {
+            window.closePitchMode();
+        } else if (e.key === 'f' || e.key === 'F') {
+            window.toggleModalFullscreen();
         }
     });
 
-    // Touch Swipe Support for Mobile / Tablets
-    var touchStartY = 0;
+    // Touch Swipe Support for Presentation Mode
     var touchStartX = 0;
-    window.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
+    modal.addEventListener('touchstart', function(e) {
         touchStartX = e.touches[0].clientX;
     }, { passive: true });
 
-    window.addEventListener('touchend', function(e) {
-        var touchEndY = e.changedTouches[0].clientY;
+    modal.addEventListener('touchend', function(e) {
         var touchEndX = e.changedTouches[0].clientX;
-        var diffY = touchStartY - touchEndY;
         var diffX = touchStartX - touchEndX;
 
-        // Horizontal swipe or significant vertical swipe
-        if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (Math.abs(diffX) > 60) {
             if (diffX > 0) {
-                window.nextSlide();
+                window.modalNextSlide();
             } else {
-                window.prevSlide();
+                window.modalPrevSlide();
             }
         }
     }, { passive: true });
 
-    // Three.js Ambient Particle Background
+    // -------------------------------------------------------------
+    // THREE.JS PARTICLES BACKGROUND
+    // -------------------------------------------------------------
     var canvas = document.getElementById('bg-canvas');
     if (canvas && window.THREE) {
         var scene = new THREE.Scene();
