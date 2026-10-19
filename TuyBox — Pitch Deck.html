@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TuyBox — Pitch Deck</title>
+<style>
+:root{--bg:#fbf6ea;--bg2:#f3e9d2;--card:#fffdf8;--ink:#2b2418;--mut:#7a6d56;--gold:#b8893a;--gold2:#e2bf72;--line:#e6d8b8;--ok:#2f7d4f;--warn:#b5651d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14110b;--bg2:#1d1810;--card:#221c12;--ink:#f4ead2;--mut:#b3a584;--gold:#e2bf72;--gold2:#b8893a;--line:#3a2f1a;--ok:#6fcf97;--warn:#f2a65a}}
+:root[data-theme="dark"]{--bg:#14110b;--bg2:#1d1810;--card:#221c12;--ink:#f4ead2;--mut:#b3a584;--gold:#e2bf72;--gold2:#b8893a;--line:#3a2f1a;--ok:#6fcf97;--warn:#f2a65a}
+*{box-sizing:border-box;margin:0}
+html{height:100%;scroll-snap-type:y mandatory;overflow-y:scroll;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.s{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:72px 7vw;position:relative;border-bottom:1px solid var(--line)}
+.s:nth-child(even){background:var(--bg2)}
+.k{color:var(--gold);letter-spacing:.18em;font-size:12px;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:700;line-height:1.1}
+h1{font-size:clamp(40px,7vw,84px)}h2{font-size:clamp(30px,4.4vw,52px);margin-bottom:28px;max-width:20ch}
+h3{font-family:Georgia,serif;font-size:21px;margin-bottom:6px}
+p.l{font-size:clamp(18px,2vw,23px);color:var(--mut);max-width:44ch;margin-top:20px}
+.g{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.c{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.c p{color:var(--mut);font-size:15px}
+.big{font-family:Georgia,serif;font-size:clamp(32px,4vw,48px);color:var(--gold);line-height:1}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:.06em;margin-bottom:10px}
+.on{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.plan{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:40px}
+.stats div span{display:block;color:var(--mut);font-size:14px}
+.btn{display:inline-block;margin-top:30px;padding:14px 26px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1b1407;font-weight:700;text-decoration:none}
+.rings{position:relative;width:min(380px,80vw);aspect-ratio:1;margin:auto}
+.rings i{position:absolute;border-radius:50%;left:50%;transform:translateX(-50%);bottom:0;display:flex;justify-content:center;padding-top:12px;font:700 13px/1.3 system-ui;font-style:normal;text-align:center;color:var(--ink)}
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+@media(max-width:800px){.two{grid-template-columns:1fr}.s{padding:64px 6vw}}
+.bars{display:flex;align-items:flex-end;gap:22px;height:220px;margin-top:10px}
+.bars div{flex:1;text-align:center;font-size:13px;color:var(--mut)}
+.bars b{display:block;border-radius:10px 10px 0 0;background:linear-gradient(var(--gold2),var(--gold));margin-bottom:6px}
+.bars em{font-style:normal;color:var(--ink);font-weight:700;display:block}
+table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:600}
+.tl{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.tl .c b{color:var(--gold);font-size:13px}
+nav{position:fixed;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:5}
+nav a{width:9px;height:9px;border-radius:50%;background:var(--line);border:1px solid var(--gold)}nav a.a{background:var(--gold)}
+@media(max-width:600px){nav{display:none}}
+.foot{position:fixed;left:7vw;bottom:calc(14px + env(safe-area-inset-bottom,0px));font-size:12px;color:var(--mut);z-index:5}
+.note{font-size:13px;color:var(--mut);margin-top:18px}
+</style>
+</head>
+<body>
+<nav id="nav"></nav><div class="foot" id="ct">TuyBox · 1 / 8</div>
+
+<section class="s">
+<div class="k">Pre-Seed · 2027</div>
+<h1>To’yni <span class="g">3 klikda</span><br>rejalang.</h1>
+<p class="l">TuyBox — O’zbekistondagi to’y va tadbirlar uchun ochiq narxli katalog, raqamli taklifnoma va bron platformasi.</p>
+<div class="stats"><div><span class="big">$1.9B</span><span>yillik bozor (TAM)</span></div><div><span class="big">300K+</span><span>to’y har yili</span></div><div><span class="big">25M</span><span>Telegram foydalanuvchisi</span></div></div>
+<a class="btn" href="https://tuybox.asilbek.tech/download">APK yuklab olish</a>
+</section>
+
+<section class="s">
+<div class="k">Muammo</div>
+<h2>To’y rejalash — oylab sarsonlik</h2>
+<div class="grid">
+<div class="c"><h3>Narx yopiq</h3><p>Instagramda "Directga yozing". Har kimga har xil narx aytiladi.</p></div>
+<div class="c"><h3>3–6 oy, 100+ soat</h3><p>O’nlab to’yxonaga borib, bo’sh sanalarni daftardan so’rash.</p></div>
+<div class="c"><h3>Kafolat yo’q</h3><p>Vendor bekor qilsa yoki depozit qaytmasa, pul yo’qoladi.</p></div>
+<div class="c"><h3>Qog’oz taklifnoma</h3><p>300 ta taklifnomaga 2–3 mln so’m va kunlab tarqatish.</p></div>
+</div>
+<p class="note">Bugungi "bozor" — tartibsiz Telegram kanallar, Instagram va og’zaki tavsiya.</p>
+</section>
+
+<section class="s">
+<div class="k">Yechim</div>
+<h2>3 qavatli tizim: oddiydan kuchliga</h2>
+<div class="grid">
+<div class="c"><span class="tag on">HOZIR BOR</span><h3>1. Katalog + Taklifnoma</h3><p>To’yxonalar, san’atkorlar, foto/video. Narx ochiq, 1 klikda qo’ng’iroq. Telegram orqali 30 soniyada raqamli taklifnoma.</p></div>
+<div class="c"><span class="tag plan">REJADA · 4-oy</span><h3>2. Byudjet + Cheklist</h3><p>Byudjet kalkulyatori, 30 kunlik vazifalar, kelin rejimi. Foydalanuvchi har hafta qaytadi.</p></div>
+<div class="c"><span class="tag plan">REJADA · 6-oy</span><h3>3. 3D zal + Stollar</h3><p>To’yxonalarga B2B xizmat sifatida: virtual tur va stollar sxemasi.</p></div>
+</div>
+<p class="note">Telegram bot/Mini App, escrow va BNPL — keyingi bosqichlar (2027 regulyatsiyasini kutib, FinTech hamkor orqali).</p>
+</section>
+
+<section class="s">
+<div class="k">Virusli o’sish</div>
+<div class="two">
+<div><h2>Har bir to’y — 300 ta yangi tanish</h2>
+<p class="l" style="margin-top:0">Kelin-kuyov taklifnomani Telegramda 300 mehmonga yuboradi. Mehmonlarning o’zi ertaga to’y qiladi, tug’ilgan kun nishonlaydi yoki tanishlariga tavsiya qiladi. Reklama byudjeti kerak emas.</p>
+<p class="note">Reja: 3-oyda 50+ to’y, 15,000+ taklifnoma ko’rishi.</p></div>
+<div class="c"><div class="big">1 to’y → 300</div><p style="margin:8px 0 18px">mehmon TuyBox bilan tanishadi</p><div class="big">$0</div><p style="margin-top:8px">qo’shimcha marketing xarajati</p></div>
+</div>
+</section>
+
+<section class="s">
+<div class="k">Bozor</div>
+<div class="two">
+<div><h2>O’zbekistonda to’y — madaniyat va katta biznes</h2>
+<table><tr><th>Ko’rsatkich</th><th>Qiymat</th></tr>
+<tr><td>Aholi / internet</td><td>35.7M / 83%</td></tr>
+<tr><td>Yillik to’ylar</td><td>300K+</td></tr>
+<tr><td>Yillik banket va tadbirlar</td><td>500K+</td></tr>
+<tr><td>O’rtacha to’y xarajati</td><td>$5,000</td></tr></table>
+<p class="note">To’ylar soni va xarajatlar hozircha hisob-kitob va taxmin; CustDev intervyularida tekshiriladi.</p></div>
+<div class="rings">
+<i style="width:100%;height:100%;background:color-mix(in srgb,var(--gold) 14%,transparent)">TAM $1.9B</i>
+<i style="width:66%;height:66%;background:color-mix(in srgb,var(--gold) 28%,transparent)">SAM $190M</i>
+<i style="width:34%;height:34%;background:var(--gold);color:#1b1407;padding-top:8px;font-size:12px">SOM Y3<br>$9.5M</i>
+</div></div>
+</section>
+
+<section class="s">
+<div class="k">Biznes model</div>
+<h2>Bosqichma-bosqich daromad</h2>
+<div class="grid">
+<div class="c"><div class="big">B2B</div><h3>VIP obuna</h3><p>Katalogda 1-o’rin. Oyiga 300K–1M so’m.</p></div>
+<div class="c"><div class="big">2–4%</div><h3>Bron komissiyasi</h3><p>Tasdiqlangan bronlardan. Dastlabki 6 oy 0%.</p></div>
+<div class="c"><div class="big">30–100K</div><h3>Premium taklifnoma</h3><p>Musiqa va video bilan shablonlar (so’m).</p></div>
+<div class="c"><div class="big">3–5 mln</div><h3>3D virtual tur</h3><p>To’yxonalarga bir martalik xizmat (so’m).</p></div>
+</div>
+<div class="stats"><div><span class="big">20×</span><span>LTV/CAC (to’y egasi)</span></div><div><span class="big">$100</span><span>daromad / to’y</span></div><div><span class="big">$450</span><span>vendor LTV (obuna)</span></div></div>
+</section>
+
+<section class="s">
+<div class="k">Yo’l xaritasi va prognoz</div>
+<h2>6 oy ichida pullik hamkorlargacha</h2>
+<div class="tl">
+<div class="c"><b>1-OY</b><p>Oddiy interfeys, 15 ta tekshirilgan xizmat</p></div>
+<div class="c"><b>2-OY</b><p>50 to’yxona, 100 ijodkor</p></div>
+<div class="c"><b>3-OY</b><p>Taklifnoma orqali viral o’sish</p></div>
+<div class="c"><b>4-OY</b><p>Byudjet va cheklist, 3,000 foydalanuvchi</p></div>
+<div class="c"><b>5-OY</b><p>VIP obuna, 30 pullik hamkor</p></div>
+<div class="c"><b>6-OY</b><p>3D tur, 5 viloyat, 10,000 MAU</p></div>
+</div>
+<div class="bars" style="margin-top:34px">
+<div><b style="height:6px"></b><em>$9K</em>1-yil</div>
+<div><b style="height:44px"></b><em>$95K</em>2-yil</div>
+<div><b style="height:210px"></b><em>$455K</em>3-yil daromad</div>
+</div>
+<p class="note">Konservativ model: xarajat $5.7K → $54K → $120K; 3-yilda taxminiy sof foyda $335K.</p>
+</section>
+
+<section class="s">
+<div class="k">So’rov</div>
+<h2>Pre-Seed: <span class="g">$50–100K</span></h2>
+<div class="grid">
+<div class="c"><div class="big">40%</div><h3>Mahsulot</h3><p>Mobil ilova, backend, to’lov integratsiyasi</p></div>
+<div class="c"><div class="big">25%</div><h3>Marketing</h3><p>Kontent, referral, foydalanuvchi jalb qilish</p></div>
+<div class="c"><div class="big">20%</div><h3>Operatsion</h3><p>12–18 oylik runway</p></div>
+<div class="c"><div class="big">15%</div><h3>Vendor onboarding</h3><p>Fotosessiya, hamkorlik dasturi</p></div>
+</div>
+<div><a class="btn" href="https://t.me/asilbek_dev">Telegramda bog’lanish</a> &nbsp; <a class="btn" href="https://tuybox.asilbek.tech/">Web App</a></div>
+</section>
+
+<script>
+(function(){
+var S=[].slice.call(document.querySelectorAll('.s')),nav=document.getElementById('nav'),ct=document.getElementById('ct'),cur=0;
+S.forEach(function(s,i){var a=document.createElement('a');a.href='#';a.onclick=function(e){e.preventDefault();s.scrollIntoView({behavior:'smooth'})};nav.appendChild(a)});
+function up(){var y=innerHeight/2,i=0;S.forEach(function(s,n){if(s.getBoundingClientRect().top<=y)i=n});cur=i;[].forEach.call(nav.children,function(a,n){a.className=n==i?'a':''});ct.textContent='TuyBox · '+(i+1)+' / '+S.length}
+addEventListener('scroll',up,{passive:true});up();
+addEventListener('keydown',function(e){var d=0;if(['ArrowDown','ArrowRight','PageDown',' '].indexOf(e.key)>-1)d=1;if(['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key)>-1)d=-1;if(d){e.preventDefault();var n=Math.max(0,Math.min(S.length-1,cur+d));S[n].scrollIntoView({behavior:'smooth'})}});
+})();
+</script>
+</body>
+</html>
