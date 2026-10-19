@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TuyBox — Rasmiy Investor Pitch Deck | O'zbekiston №1 To'y Ekotizimi</title>
-<meta name="description" content="TuyBox: O'zbekistondagi $2.5 milliardlik to'y bozorini raqamlashtirish bo'yicha rasmiy Pitch Deck taqdimoti. Muammo, yechim, bozor tahlili, virusli o'sish va moliyaviy strategiya.">
+<meta name="description" content="TuyBox: O'zbekistondagi $2.5 milliardlik to'y bozorini raqamlashtirish bo'yicha rasmiy Pitch Deck taqdimoti. Mobil ilova (APK), ochiq narxlar, smart kalendar va virusli taklifnoma.">
 
 <!-- Open Graph -->
 <meta property="og:title" content="TuyBox — Rasmiy Pitch Deck Taqdimoti">
-<meta property="og:description" content="To'yni 3 klikda rejalash: $2.5B bozor, ochiq narxlar, Telegram smart taklifnoma va real server ekotizimi.">
+<meta property="og:description" content="To'yni 3 klikda rejalash: $2.5B bozor, mobil ilova (APK), ochiq narxlar va real server ekotizimi.">
 <meta property="og:image" content="https://tuybox.asilbek.tech/static/logo.jpg">
 <meta property="og:url" content="https://tuybox.asilbek.tech/pitch">
 
@@ -24,17 +24,18 @@
 
 <style>
 :root {
-    --bg: #05080E;
-    --bg-alt: #090E18;
+    --bg: #04060A;
+    --bg-alt: #080C14;
     --card: rgba(14, 20, 34, 0.88);
-    --card-border: rgba(212, 175, 55, 0.22);
+    --card-border: rgba(212, 175, 55, 0.24);
     --gold: #D4AF37;
     --gold-light: #FFF2BD;
     --gold-dark: #AA821C;
+    --gold-glow: rgba(212, 175, 55, 0.35);
     --purple: #C084FC;
     --purple-glow: rgba(192, 132, 252, 0.25);
     --emerald: #10B981;
-    --emerald-glow: rgba(16, 185, 129, 0.2);
+    --emerald-glow: rgba(16, 185, 129, 0.25);
     --text-main: #FFFFFF;
     --text-muted: #94A3B8;
     --text-dim: #64748B;
@@ -81,14 +82,16 @@ body {
     z-index: 1;
 }
 
-/* Slide Section Styling */
+/* FULLSCREEN SLIDE SECTIONS */
 .s {
     min-height: 100vh;
+    width: 100vw;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 85px 8vw;
+    align-items: center;
+    padding: 90px 9vw 80px;
     position: relative;
     border-bottom: 1px solid var(--line);
     background: transparent;
@@ -99,7 +102,7 @@ body {
 }
 
 .container-slide {
-    max-width: 1200px;
+    max-width: 1360px;
     width: 100%;
     margin: 0 auto;
 }
@@ -109,17 +112,18 @@ body {
     color: var(--gold);
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.16em;
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     font-weight: 800;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(212, 175, 55, 0.1);
-    padding: 6px 14px;
+    background: rgba(212, 175, 55, 0.12);
+    padding: 7px 18px;
     border-radius: 100px;
     border: 1px solid var(--card-border);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
 h1, h2 {
@@ -130,28 +134,28 @@ h1, h2 {
 }
 
 h1 {
-    font-size: clamp(36px, 5.8vw, 68px);
-    margin-bottom: 20px;
+    font-size: clamp(38px, 6vw, 76px);
+    margin-bottom: 22px;
 }
 
 h2 {
-    font-size: clamp(28px, 4vw, 48px);
-    margin-bottom: 22px;
+    font-size: clamp(30px, 4.2vw, 54px);
+    margin-bottom: 24px;
     max-width: 25ch;
 }
 
 h3 {
     font-family: 'Cinzel', serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #FFFFFF;
 }
 
 p.lead {
-    font-size: clamp(16px, 1.8vw, 21px);
+    font-size: clamp(17px, 1.9vw, 23px);
     color: var(--text-muted);
-    max-width: 52ch;
+    max-width: 55ch;
     margin-top: 14px;
     font-weight: 400;
     line-height: 1.6;
@@ -167,67 +171,68 @@ p.lead {
 /* Grids & Cards */
 .grid {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    margin-top: 24px;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-top: 28px;
 }
 
 .two {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 48px;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
-@media(max-width: 860px) {
+@media(max-width: 900px) {
     .two { grid-template-columns: 1fr; }
-    .s { padding: 75px 6vw; }
+    .s { padding: 80px 6vw 75px; }
 }
 
 .c {
     background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 26px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    border: 1.5px solid var(--card-border);
+    border-radius: 24px;
+    padding: 30px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .c:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     border-color: var(--gold);
+    box-shadow: 0 15px 45px rgba(212, 175, 55, 0.2);
 }
 
 .c p {
     color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
 }
 
 .big {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(30px, 3.8vw, 44px);
+    font-size: clamp(34px, 4.2vw, 50px);
     font-weight: 800;
     color: var(--gold);
     line-height: 1.1;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 /* Status Tags */
 .tag {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 11px;
+    gap: 6px;
+    font-size: 11.5px;
     font-weight: 800;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 99px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .on {
@@ -251,9 +256,9 @@ p.lead {
 /* Stats Row */
 .stats {
     display: flex;
-    gap: 32px;
+    gap: 36px;
     flex-wrap: wrap;
-    margin-top: 36px;
+    margin-top: 40px;
 }
 
 .stats div span.big {
@@ -263,7 +268,7 @@ p.lead {
 .stats div span.sub {
     display: block;
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 13.5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
@@ -273,19 +278,19 @@ p.lead {
 /* Action Buttons */
 .btn-group {
     display: flex;
-    gap: 14px;
+    gap: 16px;
     flex-wrap: wrap;
-    margin-top: 32px;
+    margin-top: 36px;
 }
 
 .btn {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 14px 28px;
+    gap: 10px;
+    padding: 15px 32px;
     border-radius: 100px;
     font-weight: 800;
-    font-size: 14.5px;
+    font-size: 15px;
     text-decoration: none;
     transition: all 0.25s ease;
     cursor: pointer;
@@ -295,17 +300,17 @@ p.lead {
 .btn-gold {
     background: linear-gradient(135deg, #FFF3BF, #D4AF37, #9B7618);
     color: #070B14;
-    box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
+    box-shadow: 0 6px 26px rgba(212, 175, 55, 0.45);
 }
 
 .btn-gold:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(212, 175, 55, 0.65);
+    box-shadow: 0 10px 36px rgba(212, 175, 55, 0.65);
 }
 
 .btn-outline {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--card-border);
+    border: 1.5px solid var(--card-border);
     color: #FFFFFF;
 }
 
@@ -317,7 +322,7 @@ p.lead {
 
 .btn-purple {
     background: rgba(168, 85, 247, 0.12);
-    border: 1px solid var(--purple-glow);
+    border: 1.5px solid var(--purple-glow);
     color: #E9D5FF;
 }
 
@@ -330,7 +335,7 @@ p.lead {
 /* Market Rings Visualization */
 .rings {
     position: relative;
-    width: min(340px, 75vw);
+    width: min(380px, 80vw);
     aspect-ratio: 1;
     margin: auto;
 }
@@ -343,38 +348,38 @@ p.lead {
     bottom: 0;
     display: flex;
     justify-content: center;
-    padding-top: 14px;
-    font: 800 13px/1.3 'Space Grotesk', sans-serif;
+    padding-top: 16px;
+    font: 800 14px/1.3 'Space Grotesk', sans-serif;
     font-style: normal;
     text-align: center;
     color: #FFFFFF;
-    border: 1px solid var(--card-border);
+    border: 1.5px solid var(--card-border);
 }
 
 /* Financial Bars */
 .bars {
     display: flex;
     align-items: flex-end;
-    gap: 24px;
-    height: 190px;
-    margin-top: 16px;
-    padding: 0 10px;
+    gap: 30px;
+    height: 220px;
+    margin-top: 24px;
+    padding: 0 16px;
     border-bottom: 1px solid var(--line);
 }
 
 .bars div {
     flex: 1;
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-muted);
 }
 
 .bars b {
     display: block;
-    border-radius: 8px 8px 0 0;
+    border-radius: 10px 10px 0 0;
     background: linear-gradient(to top, var(--gold-dark), var(--gold), #FFF3BF);
-    margin-bottom: 8px;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    margin-bottom: 10px;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
 }
 
 .bars em {
@@ -382,7 +387,7 @@ p.lead {
     font-family: 'Space Grotesk', sans-serif;
     color: #FFFFFF;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 18px;
     display: block;
 }
 
@@ -390,12 +395,12 @@ p.lead {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15px;
-    margin-top: 16px;
+    font-size: 16px;
+    margin-top: 20px;
 }
 
 td, th {
-    padding: 12px 10px;
+    padding: 14px 12px;
     border-bottom: 1px solid var(--line);
     text-align: left;
 }
@@ -404,8 +409,9 @@ th {
     color: var(--gold);
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 13.5px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Top Sticky Header */
@@ -418,8 +424,8 @@ th {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 4vw;
-    background: rgba(5, 8, 14, 0.85);
+    padding: 14px 5vw;
+    background: rgba(4, 6, 10, 0.88);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--card-border);
@@ -433,8 +439,8 @@ th {
 }
 
 .top-brand img {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
     border: 1px solid var(--gold);
     object-fit: cover;
@@ -443,7 +449,7 @@ th {
 .top-brand span {
     font-family: 'Cinzel', serif;
     font-weight: 800;
-    font-size: 20px;
+    font-size: 21px;
     color: #FFFFFF;
 }
 
@@ -454,74 +460,191 @@ th {
 .top-nav {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
 }
 
 .top-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 16px;
+    gap: 8px;
+    padding: 8px 18px;
     border-radius: 100px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
+.fullscreen-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
+    color: var(--gold);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+.fullscreen-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--gold);
+    transform: scale(1.08);
+}
+
+/* --------------------------------------------------- */
+/* GORGEOUS FLOATING PREVIOUS & NEXT NAVIGATION CONTROLS */
+/* --------------------------------------------------- */
+.deck-arrow-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: rgba(14, 20, 34, 0.85);
+    border: 1.5px solid var(--card-border);
+    color: #FFFFFF;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+.deck-arrow-btn:hover {
+    background: rgba(212, 175, 55, 0.18);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.deck-arrow-btn i {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.arrow-prev {
+    left: 24px;
+}
+
+.arrow-prev:hover i {
+    transform: translateX(-4px);
+}
+
+.arrow-next {
+    right: 24px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(14, 20, 34, 0.9));
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+.arrow-next:hover i {
+    transform: translateX(4px);
+}
+
+@media(max-width: 900px) {
+    .deck-arrow-btn span { display: none; }
+    .deck-arrow-btn { padding: 12px 14px; border-radius: 50%; }
+    .arrow-prev { left: 12px; }
+    .arrow-next { right: 12px; }
+}
+
 /* Right Dot Navigation */
 nav.side-dots {
     position: fixed;
-    right: 20px;
+    right: 30px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     z-index: 50;
 }
 
 nav.side-dots a {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.2);
-    border: 1px solid var(--gold);
+    border: 1.5px solid var(--gold);
     transition: all 0.25s ease;
 }
 
 nav.side-dots a.a {
     background: var(--gold);
-    transform: scale(1.35);
-    box-shadow: 0 0 10px var(--gold);
+    transform: scale(1.4);
+    box-shadow: 0 0 14px var(--gold);
 }
 
-@media(max-width: 700px) {
+@media(max-width: 1024px) {
     nav.side-dots { display: none; }
 }
 
-/* Bottom HUD */
-.foot {
+/* Bottom HUD Navigation Bar */
+.bottom-nav-bar {
     position: fixed;
-    left: 4vw;
-    bottom: 18px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gold);
-    z-index: 50;
-    background: rgba(14, 20, 34, 0.85);
-    padding: 6px 16px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 80;
+    background: rgba(10, 15, 26, 0.9);
+    padding: 8px 20px;
     border-radius: 100px;
+    border: 1.5px solid var(--card-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-slide-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.bottom-control-btn {
+    background: rgba(255, 255, 255, 0.08);
     border: 1px solid var(--card-border);
-    backdrop-filter: blur(10px);
+    color: #FFFFFF;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.bottom-control-btn:hover {
+    background: rgba(212, 175, 55, 0.25);
+    border-color: var(--gold);
+    color: var(--gold);
 }
 
 .note {
-    font-size: 13.5px;
+    font-size: 14.5px;
     color: var(--text-muted);
-    margin-top: 18px;
-    line-height: 1.5;
+    margin-top: 20px;
+    line-height: 1.6;
 }
 
 .highlight {
@@ -538,13 +661,13 @@ nav.side-dots a.a {
 <!-- Topbar Navigation -->
 <header class="topbar">
     <a href="/" class="top-brand">
-        <img src="/static/logo.jpg" alt="TuyBox Logo" onerror="this.src='https://via.placeholder.com/36x36/D4AF37/000?text=TB'">
-        <span>TUY<b>BOX</b> PITCH</span>
+        <img src="/static/logo.jpg" alt="TuyBox Logo" onerror="this.src='https://via.placeholder.com/38x38/D4AF37/000?text=TB'">
+        <span>TUY<b>BOX</b> PITCH DECK</span>
     </a>
 
     <div class="top-nav">
         <a href="/" class="top-btn btn-outline">
-            <i class="fa-solid fa-globe"></i> Web Ilova (Jonli)
+            <i class="fa-solid fa-globe"></i> Web Platforma
         </a>
         <a href="/invite/jasurbek-madina-2026" target="_blank" class="top-btn btn-purple">
             <i class="fa-solid fa-envelope-open-text"></i> Taklifnoma Demo
@@ -552,26 +675,48 @@ nav.side-dots a.a {
         <a href="https://t.me/asilbek_dev" target="_blank" class="top-btn btn-gold">
             <i class="fa-brands fa-telegram"></i> Bog'lanish
         </a>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="To'liq Ekranga O'tish (F)">
+            <i class="fa-solid fa-expand" id="fs-icon"></i>
+        </button>
     </div>
 </header>
+
+<!-- Floating Next and Previous Icons -->
+<button class="deck-arrow-btn arrow-prev" onclick="prevSlide()" title="Oldingi slayd (&larr;)">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    <span>Oldingi</span>
+</button>
+
+<button class="deck-arrow-btn arrow-next" onclick="nextSlide()" title="Keyingi slayd (&rarr;)">
+    <span>Keyingi</span>
+    <i class="fa-solid fa-arrow-right-long"></i>
+</button>
 
 <!-- Side Slide Dot Nav -->
 <nav class="side-dots" id="nav"></nav>
 
-<!-- Bottom Slide Indicator HUD -->
-<div class="foot" id="ct">TuyBox Pitch · 1 / 8</div>
+<!-- Bottom HUD Navigation Bar -->
+<div class="bottom-nav-bar">
+    <button class="bottom-control-btn" onclick="prevSlide()" title="Oldingi (&larr;)">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="bottom-slide-counter" id="ct">TuyBox Pitch · 1 / 8</div>
+    <button class="bottom-control-btn" onclick="nextSlide()" title="Keyingi (&rarr;)">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+</div>
 
 <div class="content-wrapper">
 
     <!-- --------------------------------------- -->
-    <!-- SLIDE 1: VISION & SUMMARY               -->
+    <!-- SLIDE 1: VISION & EXECUTIVE SUMMARY     -->
     <!-- --------------------------------------- -->
     <section class="s" id="slide-1">
         <div class="container-slide">
-            <div class="k"><i class="fa-solid fa-crown"></i> Pre-Seed · Rasmiy Taqdimot 2026-2027</div>
+            <div class="k"><i class="fa-solid fa-crown"></i> Pre-Seed · Rasmiy Investor Taqdimoti 2026-2027</div>
             <h1>To'yni <span class="gold-gradient">3 klikda</span><br>rejalang.</h1>
             <p class="lead">
-                <strong>TuyBox</strong> — O'zbekistondagi to'y va tantanalar uchun ochiq narxli katalog, bandlik kalendari, Telegram orqali virusli tarqaluvchi raqamli taklifnoma va to'liq bron ekotizimi.
+                <strong>TuyBox</strong> — O'zbekistondagi to'y va tantanalar uchun ochiq narxli katalog, <strong>mobil ilova (Android APK & iOS)</strong>, bandlik kalendari va to'liq raqamli bron platformasi.
             </p>
 
             <div class="stats">
@@ -584,24 +729,25 @@ nav.side-dots a.a {
                     <span class="sub">Yillik Nikoh To'ylari</span>
                 </div>
                 <div>
-                    <span class="big">25M+</span>
-                    <span class="sub">Telegram Foydalanuvchilari</span>
+                    <span class="big">Mobil Ilova & Web</span>
+                    <span class="sub">APK & Web Platforma</span>
                 </div>
                 <div>
                     <span class="big" style="color: #34D399;">Serverda Jonli</span>
-                    <span class="sub">Backend, RSVP & Bot Tayyor</span>
+                    <span class="sub">FastAPI Backend & RSVP Tayyor</span>
                 </div>
             </div>
 
             <div class="btn-group">
-                <a class="btn btn-gold" href="#slide-2">
-                    <i class="fa-solid fa-arrow-down"></i> Taqdimotni Boshlash
-                </a>
+                <button class="btn btn-gold" onclick="nextSlide()">
+                    <span>Taqdimotni Boshlash</span>
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                </button>
                 <a class="btn btn-outline" href="https://tuybox.asilbek.tech/" target="_blank">
                     <i class="fa-solid fa-compass"></i> Serverdagi Platformani Ko'rish
                 </a>
                 <a class="btn btn-purple" href="/invite/jasurbek-madina-2026" target="_blank">
-                    <i class="fa-solid fa-envelope-open-text"></i> Jonli Taklifnoma (RSVP)
+                    <i class="fa-solid fa-envelope-open-text"></i> Jonli Taklifnoma Demo
                 </a>
             </div>
         </div>
@@ -619,32 +765,32 @@ nav.side-dots a.a {
 
             <div class="grid">
                 <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 26px; color: #F87171; margin-bottom: 10px;"><i class="fa-solid fa-eye-slash"></i></div>
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-eye-slash"></i></div>
                     <h3>Narxlar yopiq va beqaror</h3>
                     <p>Instagramda "Directga yozing", har kimga har xil narx aytiladi. Shaffoflik yo'q, narx spekulyatsiyasi keng tarqalgan.</p>
                 </div>
 
                 <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 26px; color: #F87171; margin-bottom: 10px;"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-hourglass-half"></i></div>
                     <h3>1–3 oy, 100+ soat sarsonlik</h3>
-                    <p>O'nlab to'yxonalarga shaxsan borib, ma'mur daftarlaridan bo'sh kunlarni qidirish. Ishdan qolib vaqt va benzin ketishi.</p>
+                    <p>O'nlab to'yxonalarga shaxsan borib, ma'mur daftarlaridan bo'sh kunlarni qidirish. Ishdan qolib kunlab vaqt va xarajat ketishi.</p>
                 </div>
 
                 <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 26px; color: #F87171; margin-bottom: 10px;"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-calendar-xmark"></i></div>
                     <h3>Double-Booking xatosi</h3>
                     <p>To'yxona ma'murlari daftarga noto'g'ri yozib qo'yishi oqibatida bitta kunga 2 ta to'y yozilib ketishi va janjallar kelib chiqishi.</p>
                 </div>
 
                 <div class="c" style="border-left: 3px solid #EF4444;">
-                    <div style="font-size: 26px; color: #F87171; margin-bottom: 10px;"><i class="fa-solid fa-receipt"></i></div>
+                    <div style="font-size: 28px; color: #F87171; margin-bottom: 12px;"><i class="fa-solid fa-receipt"></i></div>
                     <h3>Qog'oz taklifnomalar isrofi</h3>
                     <p>300 ta qog'oz taklifnomaga 2–4 mln so'm sarflanadi, haftalab tarqatiladi va to'ydan keyin axlatga tashlanadi. RSVP yo'q.</p>
                 </div>
             </div>
 
             <p class="note">
-                <i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Bugungi "bozor" — tartibsiz Telegram kanallar, Instagram stories va og'zaki tavsiyalardan iborat bo'lib, markazlashgan raqamli tizim mavjud emas.
+                <i class="fa-solid fa-circle-info" style="color: var(--gold);"></i> Bugungi "bozor" — tartibsiz guruhlar, Instagram stories va og'zaki tavsiyalardan iborat bo'lib, markazlashgan raqamli tizim mavjud emas.
             </p>
         </div>
     </section>
@@ -664,10 +810,10 @@ nav.side-dots a.a {
                     <h3>1. Ochiq Katalog + Smart RSVP</h3>
                     <p>
                         To'yxonalar, san'atkorlar, foto/video profillari. Narx ochiq, 1-klikda bog'lanish. 
-                        <strong>Double-booking'siz kalendar</strong> va Telegram orqali 30 soniyada jo'natiladigan interaktiv taklifnoma.
+                        <strong>Double-booking'siz kalendar</strong> va har bir to'y uchun 30 soniyada yaratiladigan interaktiv taklifnoma.
                     </p>
-                    <div style="margin-top: 14px; font-size: 12px; color: var(--gold);">
-                        <i class="fa-solid fa-server"></i> FastAPI Backend, PostgreSQL/SQLite, WebApp
+                    <div style="margin-top: 16px; font-size: 13px; color: var(--gold); font-weight: 700;">
+                        <i class="fa-solid fa-mobile-screen"></i> TuyBox Mobil Ilova (APK) & Web Platforma
                     </div>
                 </div>
 
@@ -678,7 +824,7 @@ nav.side-dots a.a {
                     <p>
                         To'y byudjeti kalkulyatori (masalan, 80 mln so'mni to'g'ri taqsimlash), 30 kunlik avtomat vazifalar cheklisti va kelin rejimi. Foydalanuvchi haftasiga bir necha bor ilovaga qaytadi.
                     </p>
-                    <div style="margin-top: 14px; font-size: 12px; color: var(--text-muted);">
+                    <div style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
                         <i class="fa-solid fa-brain"></i> Avtomatlashtirilgan rejalashtirish
                     </div>
                 </div>
@@ -690,14 +836,14 @@ nav.side-dots a.a {
                     <p>
                         To'yxonalarga B2B pullik xizmat sifatida zallarning 3D WebGL virtual turi, stollar sxemasi va kela olmagan mehmonlar uchun Click/Payme orqali masofaviy to'yona puli o'tkazish.
                     </p>
-                    <div style="margin-top: 14px; font-size: 12px; color: var(--purple);">
+                    <div style="margin-top: 16px; font-size: 13px; color: var(--purple);">
                         <i class="fa-solid fa-vr-cardboard"></i> WebGL 3D va FinTech ekvayring
                     </div>
                 </div>
             </div>
 
             <p class="note">
-                <i class="fa-solid fa-check-double text-gold"></i> TuyBox ortiqcha ilova yuklatishni talab qilmaydi: Telegram WebApp, Telegram Bot (@tuyboxbot) va zamonaviy veb-platforma orqali darhol ochiladi.
+                <i class="fa-solid fa-check-double text-gold"></i> TuyBox — toza, zamonaviy mobil ilova (APK) hamda qulay veb-platforma orqali xalqqa tezkor va ishonchli xizmat ko'rsatadi.
             </p>
         </div>
     </section>
@@ -711,27 +857,27 @@ nav.side-dots a.a {
             <div class="two">
                 <div>
                     <h2>Har bir to'y — 300 ta yangi faol tanish</h2>
-                    <p class="lead" style="margin-top: 0; font-size: 17px;">
-                        Klassik loyihalar har bir foydalanuvchini pullik reklama bilan sotib oladi. TuyBox'da esa kelin-kuyov raqamli taklifnomani Telegramda o'zining 300 ta mehmonga yuboradi.
+                    <p class="lead" style="margin-top: 0; font-size: 18px;">
+                        Klassik loyihalar har bir foydalanuvchini pullik reklama bilan sotib oladi. TuyBox'da esa kelin-kuyov shaxsiy raqamli taklifnomani o'zining 300 ta mehmonga yuboradi.
                     </p>
-                    <p class="note" style="margin-top: 16px; font-size: 15px;">
-                        Mehmonlar joylashuv xaritasini ochib, to'yga kelishini tasdiqlaydi va bir zumda TuyBox bilan tanishadi. Ularning o'zi ertaga to'y qiladi, yaqiniga tavsiya qiladi.
+                    <p class="note" style="margin-top: 18px; font-size: 15.5px;">
+                        Mehmonlar joylashuv xaritasini ochib, to'yga kelishini tasdiqlaydi va bir zumda TuyBox ilovasi bilan tanishadi. Ularning o'zi ertaga to'y qiladi, yaqiniga tavsiya qiladi.
                     </p>
-                    <div style="margin-top: 24px; padding: 14px 18px; background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10B981; border-radius: 10px;">
+                    <div style="margin-top: 24px; padding: 16px 20px; background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10B981; border-radius: 12px;">
                         <span style="color: #34D399; font-weight: 700;">Reja (3-oy KPI):</span> 50+ to'y orqali kamida 15,000+ kishilik organik auditoriya qamrovi.
                     </div>
                 </div>
 
-                <div class="c" style="border: 1.5px solid rgba(16, 185, 129, 0.4); text-align: center; padding: 36px 28px;">
-                    <div class="big" style="color: #34D399; font-size: 48px;">1 to'y &rarr; 300</div>
-                    <p style="margin: 8px 0 20px; font-size: 15px; color: #FFFFFF;">mehmon TuyBox ekotizimi bilan bepul tanishadi</p>
+                <div class="c" style="border: 1.5px solid rgba(16, 185, 129, 0.4); text-align: center; padding: 40px 32px;">
+                    <div class="big" style="color: #34D399; font-size: 52px;">1 to'y &rarr; 300</div>
+                    <p style="margin: 8px 0 20px; font-size: 16px; color: #FFFFFF;">mehmon TuyBox ekotizimi bilan bepul tanishadi</p>
                     
                     <div style="height: 1px; background: var(--line); margin: 20px 0;"></div>
 
-                    <div class="big" style="color: var(--gold); font-size: 48px;">$0 So'm</div>
-                    <p style="margin-top: 8px; font-size: 14px;">Qo'shimcha foydalanuvchi jalb qilish xarajati (Zero CAC)</p>
+                    <div class="big" style="color: var(--gold); font-size: 52px;">$0 So'm</div>
+                    <p style="margin-top: 8px; font-size: 15px;">Qo'shimcha foydalanuvchi jalb qilish xarajati (Zero CAC)</p>
 
-                    <div style="margin-top: 20px; font-family: 'Space Grotesk'; font-size: 13px; color: var(--gold); background: rgba(212, 175, 55, 0.1); padding: 8px; border-radius: 8px;">
+                    <div style="margin-top: 24px; font-family: 'Space Grotesk'; font-size: 14px; color: var(--gold); background: rgba(212, 175, 55, 0.12); padding: 10px; border-radius: 10px;">
                         Virusli Koeffitsiyent: K-Factor &gt; 2.5
                     </div>
                 </div>
@@ -754,10 +900,10 @@ nav.side-dots a.a {
                         <tr><td>Yillik nikoh to'ylari soni</td><td class="highlight">300,000 – 350,000 ta</td></tr>
                         <tr><td>Yillik banket, fotiha va marosimlar</td><td class="highlight">500,000+ dan ziyod</td></tr>
                         <tr><td>O'rtacha bitta to'y byudjeti</td><td class="highlight">$5,000 – $10,000</td></tr>
-                        <tr><td>Yillik to'y bozorining jami aylanmasi</td><td class="highlight" style="color: var(--gold); font-weight: 800;">$2.5+ Milliard</td></tr>
+                        <tr><td>Yillik to'y bozorining jami aylanmasi</td><td class="highlight" style="color: var(--gold); font-weight: 800; font-size: 18px;">$2.5+ Milliard</td></tr>
                     </table>
                     <p class="note">
-                        O'zbek oilasi hech qachon to'y xarajatidan chekinmaydi. Bu soha har qanday iqtisodiy tebranishlarda ham o'sishda davom etadi.
+                        O'zbek oilasi hech qachon to'y xarajatidan chekinmaydi. Bu soha har qanday iqtisodiy tebranishlarda ham barqaror o'sishda davom etadi.
                     </p>
                 </div>
 
@@ -768,7 +914,7 @@ nav.side-dots a.a {
                     <i style="width:68%;height:68%;background:rgba(212, 175, 55, 0.18);border-color: rgba(212, 175, 55, 0.4);">
                         SAM $350M (Smartfon Foydalanuvchilari)
                     </i>
-                    <i style="width:36%;height:36%;background:var(--gold);color:#070B14;padding-top:10px;font-size:12px;border:none;box-shadow:0 0 25px rgba(212, 175, 55, 0.6);">
+                    <i style="width:36%;height:36%;background:var(--gold);color:#070B14;padding-top:10px;font-size:13px;border:none;box-shadow:0 0 25px rgba(212, 175, 55, 0.6);">
                         SOM 3-Yil<br>$15M+
                     </i>
                 </div>
@@ -839,53 +985,53 @@ nav.side-dots a.a {
             <div class="k"><i class="fa-solid fa-route"></i> Yo'l Xaritasi & Prognoz</div>
             <h2>6 oylik amaliy reja va 3 yillik moliyaviy o'sish</h2>
 
-            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
-                <div class="c" style="padding: 16px;">
-                    <b style="color: var(--gold); font-size: 13px; font-family: 'Space Grotesk';">1-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Yadro MVP</h4>
-                    <p style="font-size: 12px;">15 ta tekshirilgan to'yxona, barqaror WebApp va bot.</p>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                <div class="c" style="padding: 18px;">
+                    <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">1-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Yadro MVP</h4>
+                    <p style="font-size: 13px;">15 ta tekshirilgan to'yxona, barqaror mobil ilova (APK) va veb-platforma.</p>
                 </div>
-                <div class="c" style="padding: 16px;">
-                    <b style="color: var(--gold); font-size: 13px; font-family: 'Space Grotesk';">2-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Baza & Kontent</h4>
-                    <p style="font-size: 12px;">50 to'yxona, 100 ijodkor, 10 ta real to'y sinovi.</p>
+                <div class="c" style="padding: 18px;">
+                    <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">2-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Baza & Kontent</h4>
+                    <p style="font-size: 13px;">50 to'yxona, 100 ijodkor, 10 ta real to'y sinovi.</p>
                 </div>
-                <div class="c" style="padding: 16px;">
-                    <b style="color: var(--gold); font-size: 13px; font-family: 'Space Grotesk';">3-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Viral Launch</h4>
-                    <p style="font-size: 12px;">Telegram RSVP orqali 15,000+ mehmon qamrovi.</p>
+                <div class="c" style="padding: 18px;">
+                    <b style="color: var(--gold); font-size: 13.5px; font-family: 'Space Grotesk';">3-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Viral Launch</h4>
+                    <p style="font-size: 13px;">Raqamli taklifnoma orqali 15,000+ mehmon qamrovi.</p>
                 </div>
-                <div class="c" style="padding: 16px;">
-                    <b style="color: var(--purple); font-size: 13px; font-family: 'Space Grotesk';">4-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Smart Planner</h4>
-                    <p style="font-size: 12px;">Byudjet kalkulyatori, 3,000 faol foydalanuvchi.</p>
+                <div class="c" style="padding: 18px;">
+                    <b style="color: var(--purple); font-size: 13.5px; font-family: 'Space Grotesk';">4-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Smart Planner</h4>
+                    <p style="font-size: 13px;">Byudjet kalkulyatori, 3,000 faol foydalanuvchi.</p>
                 </div>
-                <div class="c" style="padding: 16px;">
-                    <b style="color: #34D399; font-size: 13px; font-family: 'Space Grotesk';">5-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Monetizatsiya</h4>
-                    <p style="font-size: 12px;">VIP obuna, 30 ta pullik hamkor, $4,000 MRR.</p>
+                <div class="c" style="padding: 18px;">
+                    <b style="color: #34D399; font-size: 13.5px; font-family: 'Space Grotesk';">5-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Monetizatsiya</h4>
+                    <p style="font-size: 13px;">VIP obuna, 30 ta pullik hamkor, $4,000 MRR.</p>
                 </div>
-                <div class="c" style="padding: 16px;">
-                    <b style="color: #34D399; font-size: 13px; font-family: 'Space Grotesk';">6-OY</b>
-                    <h4 style="color:#FFF; font-size: 14px; margin: 4px 0;">Masshtab & 3D</h4>
-                    <p style="font-size: 12px;">3D zallar, 5 ta viloyat, 10,000+ oylik foydalanuvchi.</p>
+                <div class="c" style="padding: 18px;">
+                    <b style="color: #34D399; font-size: 13.5px; font-family: 'Space Grotesk';">6-OY</b>
+                    <h4 style="color:#FFF; font-size: 15px; margin: 4px 0;">Masshtab & 3D</h4>
+                    <p style="font-size: 13px;">3D zallar, 5 ta viloyat, 10,000+ oylik foydalanuvchi.</p>
                 </div>
             </div>
 
             <!-- Financial Projection Chart -->
-            <div class="bars" style="margin-top: 32px;">
+            <div class="bars" style="margin-top: 36px;">
                 <div>
-                    <b style="height: 14px;"></b>
+                    <b style="height: 16px;"></b>
                     <em>$15K</em>
                     1-yil (MVP & Start)
                 </div>
                 <div>
-                    <b style="height: 65px;"></b>
+                    <b style="height: 70px;"></b>
                     <em>$120K</em>
                     2-yil (Toshkent + Vodiy)
                 </div>
                 <div>
-                    <b style="height: 180px;"></b>
+                    <b style="height: 190px;"></b>
                     <em>$520K</em>
                     3-yil daromad (Respublika)
                 </div>
@@ -906,32 +1052,32 @@ nav.side-dots a.a {
             <h2>Pre-Seed Bosqichi: <span class="gold-gradient">$50,000 – $100,000</span></h2>
 
             <div class="grid">
-                <div class="c" style="border-top: 3px solid var(--gold);">
-                    <div class="big" style="font-size: 36px;">40%</div>
-                    <h3>Mahsulot & Texnologiya</h3>
-                    <p>Telegram Mini App, backend masshtablash, 3D zallar va avtomatlashtirilgan to'lov tizimlari.</p>
+                <div class="c" style="border-top: 3.5px solid var(--gold);">
+                    <div class="big" style="font-size: 38px;">40%</div>
+                    <h3>Mahsulot & Mobil Ilova</h3>
+                    <p>TuyBox Android (APK) & iOS mobil ilovasi, backend masshtablash, 3D zallar va avtomatlashtirilgan to'lov tizimlari.</p>
                 </div>
 
-                <div class="c" style="border-top: 3px solid #34D399;">
-                    <div class="big" style="font-size: 36px; color: #34D399;">25%</div>
+                <div class="c" style="border-top: 3.5px solid #34D399;">
+                    <div class="big" style="font-size: 38px; color: #34D399;">25%</div>
                     <h3>Marketing & Kontent</h3>
                     <p>To'y studiyalari bilan kollaboratsiyalar, virusli roliklar va taklifnoma referral dasturlari.</p>
                 </div>
 
-                <div class="c" style="border-top: 3px solid var(--purple);">
-                    <div class="big" style="font-size: 36px; color: var(--purple);">20%</div>
+                <div class="c" style="border-top: 3.5px solid var(--purple);">
+                    <div class="big" style="font-size: 38px; color: var(--purple);">20%</div>
                     <h3>Operatsion Xarajatlar</h3>
                     <p>12–18 oylik runway, serverlar infratuzilmasi, yuridik va xavfsizlik ta'minoti.</p>
                 </div>
 
-                <div class="c" style="border-top: 3px solid #38BDF8;">
-                    <div class="big" style="font-size: 36px; color: #38BDF8;">15%</div>
+                <div class="c" style="border-top: 3.5px solid #38BDF8;">
+                    <div class="big" style="font-size: 38px; color: #38BDF8;">15%</div>
                     <h3>Vendor Onboarding</h3>
-                    <p>To'yxonalar va artistlar portfoliosini professional suratga olish, bazaga bepul kiritish va ta'lim.</p>
+                    <p>To'yxonalar va artistlar portfoliosini professional suratga olish, bazaga kiritish va ta'lim.</p>
                 </div>
             </div>
 
-            <div class="btn-group" style="margin-top: 35px;">
+            <div class="btn-group" style="margin-top: 38px;">
                 <a class="btn btn-gold" href="https://t.me/asilbek_dev" target="_blank">
                     <i class="fa-brands fa-telegram"></i> Telegramda Asilbek bilan Bog'lanish
                 </a>
@@ -943,7 +1089,7 @@ nav.side-dots a.a {
                 </a>
             </div>
 
-            <p class="note" style="margin-top: 24px;">
+            <p class="note" style="margin-top: 26px;">
                 TuyBox Technologies &copy; 2026. Barcha huquqlar himoyalangan. Muallif: Asilbek Rustamov (@asilbek_dev)
             </p>
         </div>
@@ -995,22 +1141,85 @@ nav.side-dots a.a {
     window.addEventListener('scroll', updateActiveSlide, { passive: true });
     updateActiveSlide();
 
-    // Keyboard slide navigation (Arrow keys, Spacebar, PageUp/Down)
+    // Next / Prev slide functions exposed to global scope
+    window.nextSlide = function() {
+        if (cur < S.length - 1) {
+            S[cur + 1].scrollIntoView({ behavior: 'smooth' });
+        } else {
+            S[0].scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    window.prevSlide = function() {
+        if (cur > 0) {
+            S[cur - 1].scrollIntoView({ behavior: 'smooth' });
+        } else {
+            S[S.length - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    // Fullscreen Toggle function
+    window.toggleFullscreen = function() {
+        var icon = document.getElementById('fs-icon');
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().then(function() {
+                icon.className = 'fa-solid fa-compress';
+            }).catch(function(err) {
+                console.log(err);
+            });
+        } else {
+            document.exitFullscreen().then(function() {
+                icon.className = 'fa-solid fa-expand';
+            }).catch(function(err) {
+                console.log(err);
+            });
+        }
+    };
+
+    // Keyboard slide navigation (Arrow keys, Spacebar, PageUp/Down, 'F' for fullscreen)
     window.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
         var delta = 0;
         if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].indexOf(e.key) > -1) {
             delta = 1;
         } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].indexOf(e.key) > -1) {
             delta = -1;
+        } else if (e.key === 'f' || e.key === 'F') {
+            window.toggleFullscreen();
+            return;
         }
 
         if (delta !== 0) {
-            // Prevent default page jump on space / arrow
             e.preventDefault();
             var nextIndex = Math.max(0, Math.min(S.length - 1, cur + delta));
             S[nextIndex].scrollIntoView({ behavior: 'smooth' });
         }
     });
+
+    // Touch Swipe Support for Mobile / Tablets
+    var touchStartY = 0;
+    var touchStartX = 0;
+    window.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', function(e) {
+        var touchEndY = e.changedTouches[0].clientY;
+        var touchEndX = e.changedTouches[0].clientX;
+        var diffY = touchStartY - touchEndY;
+        var diffX = touchStartX - touchEndX;
+
+        // Horizontal swipe or significant vertical swipe
+        if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+                window.nextSlide();
+            } else {
+                window.prevSlide();
+            }
+        }
+    }, { passive: true });
 
     // Three.js Ambient Particle Background
     var canvas = document.getElementById('bg-canvas');
