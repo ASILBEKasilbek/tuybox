@@ -1,0 +1,526 @@
+{% load humanize %}
+<!-- SORT DROPDOWN -->
+<div class="d-flex justify-content-end mb-4">
+    <div class="dropdown">
+        <button class="btn btn-gradient-primary dropdown-toggle shadow-lg rounded-pill px-4 py-2 fw-bold" 
+                type="button" 
+                id="sortDropdown"
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+            Tartiblash
+        </button>
+        <ul class="dropdown-menu shadow-lg border-0 rounded-4 p-2" aria-labelledby="sortDropdown">
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3" 
+                   href="?sort=popular{% for key, value in request.GET.items %}{% if key != 'sort' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                    <span class="sticker zurrroq bg-gradient-danger shadow-sm">
+                        <i class="bi bi-fire"></i>
+                    </span>
+                    Ommabop
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3" 
+                   href="?sort=cheap{% for key, value in request.GET.items %}{% if key != 'sort' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                    <span class="sticker zurrroq bg-gradient-success shadow-sm">
+                        <i class="bi bi-cash"></i>
+                    </span>
+                    Arzon
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3" 
+                   href="?sort=expensive{% for key, value in request.GET.items %}{% if key != 'sort' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                    <span class="sticker zurrroq bg-gradient-warning shadow-sm">
+                        <i class="bi bi-gem"></i>
+                    </span>
+                    Qimmat
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3" 
+                   href="?sort=top-rated{% for key, value in request.GET.items %}{% if key != 'sort' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                    <span class="sticker zurrroq bg-gradient-primary shadow-sm">
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                    Yuqori baholangan
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- 3D Cube Container -->
+<div class="cube-container" role="region" aria-label="Xizmatlar karuseli">
+    <div class="cube" id="cube" tabindex="0">
+        {% for service in services|slice:":6" %}
+        <div class="cube-face" style="--index: {{ forloop.counter0 }}; --num-faces: {{ services|slice:":6"|length }};">
+            <div class="card h-100 border-0 shadow-sm d-flex flex-column position-relative overflow-hidden"
+                 aria-labelledby="service-{{ service.slug }}-title">
+                <!-- Image or placeholder -->
+                <div class="position-relative card-img-wrapper">
+                    {% if service.image1 %}
+                    <img src="{{ service.image1.url }}" 
+                         class="card-img-top w-100 h-100" 
+                         alt="{{ service.title }} rasm" 
+                         loading="lazy" 
+                         decoding="async" 
+                         style="object-fit: cover;">
+                    {% else %}
+                    <div class="placeholder-img bg-light d-flex align-items-center justify-content-center w-100 h-100">
+                        <span class="text-muted">Rasm yo'q</span>
+                    </div>
+                    {% endif %}
+
+                    {% if service.is_verified %}
+                    <div class="verified-star" title="MyPlatform'da tasdiqlangan">
+                        <i class="bi bi-patch-check-fill" aria-hidden="true"></i>
+                        <span class="visually-hidden">Tasdiqlangan</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Price badge -->
+                    <span class="badge position-absolute top-2 start-2 px-3 py-1 rounded-pill shadow-sm d-flex align-items-center justify-content-center">
+                        {% if service.price %}
+                            {{ service.price|floatformat:0|intcomma }} so'm
+                        {% else %}
+                            Kelishilgan
+                        {% endif %}
+                    </span>
+                </div>
+
+                <!-- Card body -->
+                <div class="card-body d-flex flex-column p-3">
+                    <h6 id="service-{{ service.slug }}-title" class="card-title fw-bold mb-2 text-truncate">
+                        {{ service.title|default:"Xizmat nomi yo'q" }}
+                    </h6>
+
+                    {% if service.description %}
+                    <p class="text-muted small mb-3 text-truncate-2">
+                        {{ service.description|truncatewords:15 }}
+                    </p>
+                    {% else %}
+                    <p class="text-muted small mb-3">Tavsif yo'q</p>
+                    {% endif %}
+
+                    {% if service.created_at %}
+                    <p class="text-muted small mb-2 custom-date" aria-label="Yaratilgan sana: {{ service.created_at|date:'d M Y' }}">
+                        {{ service.created_at|date:"d M Y" }}
+                    </p>
+                    {% endif %}
+
+                    <a href="{% url 'service_detail' slug=service.slug|default:'#' %}" class="btn btn-gradient-primary btn-sm w-100 mt-auto rounded-pill" role="button">
+                        Batafsil →
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center text-muted p-5" role="alert">Hech qanday xizmat topilmadi.</div>
+        {% endfor %}
+    </div>
+    <!-- Live region for accessibility -->
+    <div id="cube-live-region" class="visually-hidden" aria-live="polite"></div>
+</div>
+
+<!-- PAGINATION -->
+{% if services.has_other_pages %}
+<nav aria-label="Sahifalar navigatsiyasi" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if services.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Oldingi sahifa">Oldingi</a>
+        </li>
+        {% endif %}
+        {% for num in services.paginator.page_range %}
+        <li class="page-item {% if services.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-current="{% if services.number == num %}page{% else %}false{% endif %}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        {% if services.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Keyingi sahifa">Keyingi</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<style>
+/* General Reset and Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    touch-action: none; /* Prevent default touch scrolling on cube */
+}
+
+/* Enhanced Cube Styling */
+.cube-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    perspective: 1200px;
+    margin: 2rem 0;
+    overflow: hidden;
+    position: relative;
+    touch-action: none; /* Prevent page scroll during cube interaction */
+}
+
+.cube {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Cube faces */
+.cube-face {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    backface-visibility: hidden;
+    transform: rotateY(calc(var(--index) * 360deg / var(--num-faces))) translateZ(540px);
+}
+
+/* Card styling */
+.card {
+    background: linear-gradient(145deg, #ffffff, #f0f4ff);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.card:hover, .card:focus {
+    transform: scale(1.06) translateZ(30px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.25);
+}
+
+.card-img-wrapper {
+    position: relative;
+    height: 220px;
+    background: #f0f4ff;
+    overflow: hidden;
+}
+.card-img-top {
+    transition: transform 0.4s ease;
+}
+.card:hover .card-img-top, .card:focus .card-img-top {
+    transform: scale(1.12);
+}
+
+.placeholder-img {
+    height: 100%;
+    font-size: 1.3rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Verified star */
+.verified-star {
+    font-size: 28px;
+    color: #ffd700;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transition: transform 0.4s ease, text-shadow 0.4s ease;
+}
+.verified-star:hover, .verified-star:focus {
+    transform: rotate(30deg) scale(1.4) translateZ(12px);
+    text-shadow: 0 0 12px #ffd700, 0 0 24px #ff8c00;
+}
+
+/* Price badge */
+.badge {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 10px 18px;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(0,123,255,0.95), rgba(59,130,246,0.85));
+    border: 2px solid rgba(255,255,255,0.7);
+    border-radius: 24px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.card:hover .badge, .card:focus .badge {
+    transform: scale(1.12) translateZ(18px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Button styling */
+.btn-gradient-primary {
+    background: linear-gradient(90deg, #4f46e5, #3b82f6);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.4s ease, transform 0.4s ease;
+}
+.btn-gradient-primary:hover, .btn-gradient-primary:focus {
+    background: linear-gradient(90deg, #3b82f6, #4f46e5);
+    transform: scale(1.06) translateZ(12px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Dropdown and pagination enhancements */
+.dropdown-menu {
+    min-width: 220px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.dropdown-item {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+.sticker.zurrroq {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.pagination .page-link {
+    border: none;
+    color: #4f46e5;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.pagination .page-item.active .page-link {
+    background-color: #4f46e5;
+    color: white;
+}
+.pagination .page-link:hover, .pagination .page-link:focus {
+    background-color: #e0e7ff;
+    transform: scale(1.05);
+}
+
+/* Text styling */
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e3a8a;
+}
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.custom-date {
+    font-size: 0.9rem;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+}
+
+/* Visually hidden class for accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Animation for empty state */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.text-center.text-muted {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive tweaks */
+@media (max-width: 767.98px) {
+    .cube-container {
+        height: 480px;
+    }
+    .cube, .cube-face {
+        width: 300px;
+        height: 300px;
+    }
+    .cube-face {
+        transform: rotateY(calc(var(--index) * 360deg / var(--num-faces))) translateZ(420px);
+    }
+    .card-img-wrapper {
+        height: 180px;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    .badge {
+        font-size: 0.85rem;
+        padding: 8px 14px;
+    }
+    .dropdown-menu {
+        min-width: 200px;
+    }
+    .btn-gradient-primary {
+        padding: 0.6rem 1.2rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cube-container {
+        height: 400px;
+    }
+    .cube, .cube-face {
+        width: 260px;
+        height: 260px;
+    }
+    .cube-face {
+        transform: rotateY(calc(var(--index) * 360deg / var(--num-faces))) translateZ(360px);
+    }
+    .card-img-wrapper {
+        height: 150px;
+    }
+    .card-title {
+        font-size: 1rem;
+    }
+    .badge {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+    .btn-gradient-primary {
+        padding: 0.5rem 1rem;
+    }
+}
+</style>
+
+<script>
+// Scroll, touch, and keyboard-based cube rotation
+const cube = document.getElementById('cube');
+const numFaces = document.querySelectorAll('.cube-face').length;
+const anglePerFace = numFaces > 0 ? 360 / numFaces : 0;
+let rotation = 0;
+let autoRotateInterval;
+let isInteracting = false;
+const liveRegion = document.getElementById('cube-live-region');
+
+// Function to update cube rotation
+function updateRotation() {
+    if (numFaces > 0) {
+        rotation = ((rotation % 360) + 360) % 360;
+        cube.style.transform = `rotateY(${rotation}deg)`;
+        // Announce current face to screen readers
+        const activeFace = Math.round(rotation / anglePerFace) % numFaces;
+        const activeCard = document.querySelector(`.cube-face:nth-child(${activeFace + 1}) .card-title`);
+        if (activeCard) {
+            liveRegion.textContent = `Hozirgi xizmat: ${activeCard.textContent}`;
+        }
+    }
+}
+
+// Snap to nearest face
+function snapToFace() {
+    rotation = Math.round(rotation / anglePerFace) * anglePerFace;
+    updateRotation();
+}
+
+// Mouse wheel scroll (horizontal and vertical)
+cube.addEventListener('wheel', (event) => {
+    if (numFaces > 0) {
+        event.preventDefault();
+        // Handle both vertical (deltaY) and horizontal (deltaX) scrolling
+        const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+        rotation += delta > 0 ? anglePerFace : -anglePerFace;
+        snapToFace();
+        clearInterval(autoRotateInterval);
+        isInteracting = true;
+    }
+}, { passive: false });
+
+// Touch swipe support (horizontal and vertical)
+let touchStartX = 0;
+let touchStartY = 0;
+cube.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    clearInterval(autoRotateInterval);
+    isInteracting = true;
+});
+cube.addEventListener('touchmove', (e) => {
+    if (numFaces > 0) {
+        e.preventDefault();
+        const deltaX = e.touches[0].clientX - touchStartX;
+        const deltaY = e.touches[0].clientY - touchStartY;
+        // Determine dominant swipe direction
+        const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
+        rotation -= delta * 0.3; // Unified sensitivity for both directions
+        updateRotation();
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+}, { passive: false });
+cube.addEventListener('touchend', () => {
+    snapToFace();
+    setTimeout(() => { isInteracting = false; startAutoRotate(); }, 5000);
+});
+
+// Keyboard navigation for accessibility
+cube.addEventListener('keydown', (e) => {
+    if (numFaces > 0 && !isInteracting) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            rotation -= anglePerFace;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            rotation += anglePerFace;
+        } else {
+            return;
+        }
+        snapToFace();
+        clearInterval(autoRotateInterval);
+        isInteracting = true;
+        setTimeout(() => { isInteracting = false; startAutoRotate(); }, 5000);
+    }
+});
+
+// Auto-rotation
+function startAutoRotate() {
+    if (!isInteracting && numFaces > 0) {
+        autoRotateInterval = setInterval(() => {
+            rotation -= anglePerFace;
+            snapToFace();
+        }, 3000);
+    }
+}
+startAutoRotate();
+
+// Pause auto-rotation on hover or focus
+cube.addEventListener('mouseenter', () => {
+    clearInterval(autoRotateInterval);
+    isInteracting = true;
+});
+cube.addEventListener('mouseleave', () => {
+    isInteracting = false;
+    startAutoRotate();
+});
+cube.addEventListener('focus', () => {
+    clearInterval(autoRotateInterval);
+    isInteracting = true;
+});
+cube.addEventListener('blur', () => {
+    isInteracting = false;
+    startAutoRotate();
+});
+
+// Initial rotation update
+updateRotation();
+</script>

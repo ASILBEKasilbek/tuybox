@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Xizmat ko‘rsatuvchilar{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Xizmat ko‘rsatuvchilar</h2>
+<div class="row g-4">
+    {% for provider in providers %}
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <img src="{{ provider.avatar.url }}" class="card-img-top" alt="{{ provider.user.username }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ provider.user.username }}</h5>
+                    <p class="card-text text-muted">{{ provider.get_service_type_display }}</p>
+                    <p class="card-text">{{ provider.bio|truncatewords:15 }}</p>
+                    <a href="{% url 'profile_detail' provider.user.username %}" class="btn btn-primary btn-sm">Profilni ko‘rish</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center">Hozircha xizmat ko‘rsatuvchilar yo‘q.</p>
+    {% endfor %}
+</div>
+{% endblock %}

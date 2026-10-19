@@ -1,0 +1,184 @@
+{% load static %}
+
+<!-- Donat / Reklama (20%) -->
+<div class="col-lg-3 col-md-4 order-2">
+  <aside class="card shadow-lg rounded-4 sticky-lg-top p-0" style="top: 24px; overflow: hidden;">
+    <div class="card-body text-center p-4">
+
+      <!-- Title -->
+      <h5 class="fw-bold text-gradient mb-3 animate-gradient">
+        🎁 Donat / Reklama
+      </h5>
+      <p class="text-muted small mb-4">Bu yerda sizni reklamangiz bo‘lishi mumkin edi</p>
+
+      <!-- Buttons -->
+      <a href="{% url 'send_money' %}" class="btn btn-gradient w-100 mb-2" data-bs-toggle="tooltip" title="Siz bizga yordam berasiz!">
+        💳 Donat qilish
+      </a>
+      <a href="#" class="btn btn-outline-primary w-100 mb-3">
+        Batafsil →
+      </a>
+
+      <!-- Progress -->
+      {% if goal %}
+      <div class="progress mb-2" style="height: 12px; border-radius: 10px; overflow: hidden;">
+        <div class="progress-bar" role="progressbar" 
+             style="width: {{ goal.progress_percent|floatformat:0 }}%;" 
+             aria-valuenow="{{ goal.progress_percent|floatformat:0 }}" aria-valuemin="0" aria-valuemax="100">
+          {{ goal.progress_percent|floatformat:0 }}%
+        </div>
+      </div>
+      <p class="small text-muted">
+        Maqsad: ${{ goal.target_amount }} — Hozircha: ${{ goal.current_amount }}
+      </p>
+      {% endif %}
+
+      <!-- QR Code + Copy Link -->
+      <div class="mb-3 qr-container position-relative">
+        <img src="{% static 'images/qr-donate.png' %}" alt="QR Donat" class="img-fluid rounded-3 shadow-sm mb-2">
+        <button class="btn btn-sm btn-outline-secondary copy-link" data-link="1234 1234 1234 1234" title="Linkni nusxalash">
+          🔗 Nusxalash
+        </button>
+        <p class="small text-muted mt-1">📱 QR orqali tezkor to‘lov</p>
+      </div>
+
+      <!-- Recent Donors -->
+      <h6 class="fw-semibold text-dark mb-2">So‘nggi donatorlar:</h6>
+      <div class="donor-list mb-3">
+        <div class="donor-item d-flex justify-content-between align-items-center p-2 mb-2 shadow-sm rounded-3">
+          <span class="donor-name">✅ Asilbek</span>
+          <span class="donor-amount">$15</span>
+        </div>
+        {% for donor in donors %}
+        <div class="donor-item d-flex justify-content-between align-items-center p-2 mb-2 shadow-sm rounded-3">
+          <span class="donor-name">✅ {{ donor.name }}</span>
+          <span class="donor-amount">$ {{ donor.amount }}</span>
+        </div>
+        {% empty %}
+        <div class="donor-item p-2 shadow-sm rounded-3 text-center text-muted">
+          Hozircha donatorlar yo‘q
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Carousel -->
+      {% if banners %}
+      <div id="adCarousel" class="carousel slide carousel-fade rounded-4 shadow-sm overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner">
+          {% for banner in banners %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ banner.image.url }}" class="d-block w-100" alt="{{ banner.alt_text }}" style="object-fit: cover; height: 180px;">
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </aside>
+</div>
+
+<!-- Custom Styles -->
+<style>
+/* Gradient text animation */
+.animate-gradient {
+  background: linear-gradient(90deg,#0d6efd,#6610f2,#0d6efd);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 3s linear infinite;
+}
+@keyframes gradientMove {
+  0%{background-position:0% 0%;}
+  100%{background-position:200% 0%;}
+}
+
+/* Gradient button */
+.btn-gradient {
+  background: linear-gradient(135deg,#28a745,#20c997);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s;
+}
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(40,167,69,0.3);
+}
+
+/* Outline button hover */
+.btn-outline-primary {
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+  border-radius: 50px;
+  transition: all 0.3s;
+}
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg,#0d6efd,#6610f2);
+  color: white;
+  border-color: transparent;
+}
+
+/* Progress bar gradient */
+.progress-bar {
+  background: linear-gradient(90deg,#28a745,#20c997);
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* QR + Copy */
+.qr-container .copy-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+/* Donor list hover */
+.donor-item {
+  background: #fff;
+  transition: all 0.3s;
+  cursor: default;
+}
+.donor-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(13,110,253,0.15);
+}
+.donor-name { font-weight: 500; color: #0d6efd; }
+.donor-amount { font-weight: 600; color: #28a745; }
+
+/* Scrollbar styling */
+.donor-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+.donor-list::-webkit-scrollbar { width: 6px; }
+.donor-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
+.donor-list::-webkit-scrollbar-track { background: transparent; }
+
+/* Carousel image */
+.carousel-inner img { border-radius: 0.75rem; }
+
+/* Card */
+aside.card { border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 8px 20px rgba(0,0,0,0.08); overflow: hidden; }
+</style>
+
+<!-- Copy Link JS -->
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const copyBtns = document.querySelectorAll('.copy-link');
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', function(){
+      const link = btn.getAttribute('data-link');
+      navigator.clipboard.writeText(link).then(()=>{
+        btn.innerText = '✅ Nusxalandi';
+        setTimeout(()=>{ btn.innerText = '🔗 Nusxalash'; },1500);
+      });
+    });
+  });
+});
+</script>

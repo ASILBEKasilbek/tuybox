@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Xizmat qo‘shish{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">➕ Yangi xizmat qo‘shish</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        {{ form.non_field_errors }}
+
+                        <!-- Asosiy ma'lumotlar -->
+                        <h6 class="fw-bold text-primary mb-3">📌 Asosiy ma'lumotlar</h6>
+                        {% for field in form %}
+                            {% if not field.name|slice:":5" == "image" %}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="form-text">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="text-danger small">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Rasmlar bo'limi -->
+                        <h6 class="fw-bold text-primary mt-4 mb-3">🖼 Rasmlar</h6>
+                        <div class="row">
+                            {% for field in form %}
+                                {% if field.name|slice:":5" == "image" %}
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Tugmalar -->
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="{% url 'profile_detail' pk=request.user.id %}" class="btn btn-outline-secondary">
+                                🔙 Bekor qilish
+                            </a>
+
+                            <button type="submit" class="btn btn-success">
+                                ✅ Saqlash
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

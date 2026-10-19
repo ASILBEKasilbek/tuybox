@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+
+{% block title %}Tadbirlar ro‘yxati{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <!-- ================= KATEGORIYA PILL BAR ================= -->
+        <div class="col-12 mb-3">
+            <h6 class="mb-2 fw-bold text-primary">Tadbir turlari</h6>
+            <div class="overflow-auto overflow-y-hidden text-nowrap px-1 py-2 border-bottom category-bar">
+                <div id="event-type-bar" class="d-inline-flex gap-2">
+                    <a href="{% url 'event_list' %}" 
+                       class="btn btn-light border rounded-pill px-3 shadow-sm fw-semibold">
+                        🌐 Barchasi
+                    </a>
+                    {% for event_type in event_types %}
+                        <button type="button" 
+                                class="btn btn-light border event-type-btn rounded-pill px-3 shadow-sm fw-semibold" 
+                                data-event-type-id="{{ event_type.id }}">
+                            {{ event_type.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SIDEBAR ================= -->
+        <div class="col-12 col-md-3 mb-4">
+            <div class="border rounded-3 shadow-sm p-3 bg-white sticky-top" style="top: 16px;">
+                <h6 class="fw-bold text-primary mb-3">🔎 Filtrlash</h6>
+                <form method="get" class="d-flex flex-column gap-3">
+                    <div class="form-floating">
+                        <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ request.GET.q }}">
+                        <label>🔍 Qidirish</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="min_price" class="form-control" placeholder="Minimal narx" value="{{ request.GET.min_price }}">
+                        <label>💵 Minimal narx</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="max_price" class="form-control" placeholder="Maksimal narx" value="{{ request.GET.max_price }}">
+                        <label>💵 Maksimal narx</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="min_rating" class="form-control" min="1" max="5" value="{{ request.GET.min_rating }}">
+                        <label>⭐ Minimal baho</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2 w-100 shadow-sm">Filtrlash</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="col-12 col-md-9">
+            <!-- SORT DROPDOWN -->
+            <div class="d-flex justify-content-end mb-3">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
+                        Tartiblash
+                    </button>
+                    <ul class="dropdown-menu shadow">
+                        <li><a class="dropdown-item" href="?sort=popular">🔥 Ommabop</a></li>
+                        <li><a class="dropdown-item" href="?sort=cheap">💸 Arzon</a></li>
+                        <li><a class="dropdown-item" href="?sort=expensive">💎 Qimmat</a></li>
+                        <li><a class="dropdown-item" href="?sort=top-rated">⭐ Yuqori baholangan</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ================= SUBCATEGORY HORIZONTAL CAROUSEL ================= -->
+            {% for event_type in event_types %}
+            <div class="subcategory-panel {% if forloop.first %}show{% endif %}" data-event-type-id="{{ event_type.id }}">
+                <div class="subcategory-horizontal-scroll d-flex gap-3 overflow-auto pb-3">
+                    {% for service_category in event_type.service_categories.all %}
+                    <div class="subcategory-column" style="min-width: 260px; flex: 0 0 auto;">
+                        <h6 class="text-center mb-3 fw-semibold text-secondary">{{ service_category.name }}</h6>
+                        <div class="vertical-carousel-wrapper position-relative text-center">
+                            <button class="carousel-btn prev shadow-sm" onclick="rotateCarousel('{{ service_category.id }}', -1)">▲</button>
+                            <div class="vertical-carousel" id="carousel-{{ service_category.id }}">
+                                {% for service in service_category.services.all %}
+                                <div class="carousel-card hover-shadow">
+                                    {% if service.provider.profile.image %}
+                                    <img src="{{ service.provider.profile.image.url }}" alt="{{ service.title }}" loading="lazy">
+                                    {% endif %}
+                                    <div class="carousel-card-body">
+                                        <h6 class="fw-bold mb-2">{{ service.title }}</h6>
+                                        <p class="text-muted small mb-3">{{ service.description|truncatewords:12 }}</p>
+                                        <a href="{% url 'service_detail' slug=service.slug %}" 
+                                           class="btn btn-outline-primary btn-sm">Batafsil →</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-btn next shadow-sm" onclick="rotateCarousel('{{ service_category.id }}', 1)">▼</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= STYLES ================= -->
+<style>
+/* Base styles */
+body {
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+}
+
+/* Category pill bar */
+.category-bar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+}
+.category-bar::-webkit-scrollbar { display: none; }
+.category-bar .btn {
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Hover shadow and animations */
+.hover-shadow {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+}
+.hover-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* Active category button */
+.event-type-btn.active, .event-type-btn:hover {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(13,110,253,0.3);
+}
+
+/* Subcategory panels */
+.subcategory-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+.subcategory-panel.show { display: block; }
+
+/* Horizontal scroll */
+.subcategory-horizontal-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+.subcategory-horizontal-scroll::-webkit-scrollbar { display: none; }
+
+/* Carousel card */
+.carousel-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 8px 0;
+    text-align: center;
+    transition: all 0.3s ease;
+    user-select: none;
+    cursor: grab;
+    width: 100%;
+}
+.carousel-card:active { cursor: grabbing; }
+.carousel-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.carousel-card-body {
+    padding: 12px;
+}
+
+/* Carousel buttons */
+.carousel-btn {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 6px auto;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.carousel-btn:hover { background: #084298; }
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sticky-top { position: relative; top: auto !important; }
+    .subcategory-column { min-width: 240px; }
+    .carousel-card img { height: 120px; }
+    .form-floating input { font-size: 14px; }
+    .carousel-btn { width: 32px; height: 32px; font-size: 14px; }
+}
+
+/* High-density displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .carousel-card { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+}
+</style>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // ================= EVENT TYPE BUTTONS =================
+    const buttons = document.querySelectorAll('.event-type-btn');
+    const subPanels = document.querySelectorAll('.subcategory-panel');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(){
+            const typeId = this.dataset.eventTypeId;
+            subPanels.forEach(p => p.classList.remove('show'));
+            const panel = document.querySelector(`.subcategory-panel[data-event-type-id="${typeId}"]`);
+            if (panel) panel.classList.add('show');
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    if (buttons.length > 0) {
+        buttons[0].classList.add("active");
+        const firstPanel = document.querySelector(`.subcategory-panel[data-event-type-id="${buttons[0].dataset.eventTypeId}"]`);
+        if (firstPanel) firstPanel.classList.add("show");
+    }
+
+    // ================= VERTICAL CAROUSELS =================
+    const carousels = document.querySelectorAll('.vertical-carousel');
+    carousels.forEach(c => {
+        const cards = c.querySelectorAll('.carousel-card');
+        c.dataset.currIndex = 0;
+        updateCarousel(c, cards);
+
+        // Smooth wheel scroll
+        let lastScroll = 0;
+        c.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const now = Date.now();
+            if (now - lastScroll < 100) return;
+            lastScroll = now;
+            
+            const dir = e.deltaY > 0 ? 1 : -1;
+            let index = parseInt(c.dataset.currIndex);
+            const total = cards.length;
+            index = (index + dir + total) % total;
+            c.dataset.currIndex = index;
+            updateCarousel(c, cards);
+        });
+
+        // Touch swipe support
+        let touchStartY = 0;
+        c.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+        c.addEventListener('touchmove', (e) => {
+            const touchY = e.touches[0].clientY;
+            const deltaY = touchStartY - touchY;
+            if (Math.abs(deltaY) > 50) {
+                const dir = deltaY > 0 ? 1 : -1;
+                let index = parseInt(c.dataset.currIndex);
+                const total = cards.length;
+                index = (index + dir + total) % total;
+                c.dataset.currIndex = index;
+                updateCarousel(c, cards);
+                touchStartY = touchY;
+            }
+        });
+    });
+
+    window.rotateCarousel = function(catId, dir) {
+        const carousel = document.getElementById('carousel-' + catId);
+        const cards = carousel.querySelectorAll('.carousel-card');
+        let index = parseInt(carousel.dataset.currIndex);
+        const total = cards.length;
+        index = (index + dir + total) % total;
+        carousel.dataset.currIndex = index;
+        updateCarousel(carousel, cards);
+    }
+
+    function updateCarousel(carousel, cards) {
+        const curr = parseInt(carousel.dataset.currIndex);
+        cards.forEach((card, i) => {
+            const offset = i - curr;
+            card.style.transform = `translateY(${offset * 220}px) scale(${i === curr ? 1 : 0.9})`;
+            card.style.opacity = i === curr ? 1 : 0.6;
+            card.style.zIndex = i === curr ? 10 : 5;
+            card.style.transition = 'all 0.3s ease';
+        });
+    }
+
+    // ================= HORIZONTAL DRAG SCROLL =================
+    document.querySelectorAll('.subcategory-horizontal-scroll').forEach(scrollContainer => {
+        let isDown = false;
+        let startX, scrollLeft;
+
+        scrollContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - scrollContainer.offsetLeft;
+            scrollLeft = scrollContainer.scrollLeft;
+            scrollContainer.classList.add('dragging');
+        });
+
+        scrollContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            scrollContainer.classList.remove('dragging');
+        });
+
+        scrollContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            scrollContainer.classList.remove('dragging');
+        });
+
+        scrollContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollContainer.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            scrollContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Enhanced touch scroll
+        let touchStartX = 0;
+        scrollContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].pageX;
+            scrollLeft = scrollContainer.scrollLeft;
+        });
+        scrollContainer.addEventListener('touchmove', (e) => {
+            const touchX = e.touches[0].pageX;
+            const walk = (touchX - touchStartX) * 1.5;
+            scrollContainer.scrollLeft = scrollLeft - walk;
+        });
+    });
+});
+</script>
+{% endblock %}

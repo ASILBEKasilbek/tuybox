@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Profilni tahrirlash{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-5 text-center fw-bold">Profilni tahrirlash</h2>
+
+    <div class="card shadow-lg border-0 rounded-4 p-4 mx-auto" style="max-width: 800px;">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Avatar -->
+            <div class="text-center mb-4">
+                <div class="position-relative d-inline-block">
+                    <!-- Avatar rasmi -->
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                        {% if form.instance.avatar %}
+                            <img id="avatarPreview" src="{{ form.instance.avatar.url }}" 
+                                class="rounded-circle shadow-sm avatar-hover" 
+                                width="140" height="140" alt="Avatar">
+                        {% else %}
+                            <img id="avatarPreview" src="{% static 'img/default-avatar.png' %}" 
+                                class="rounded-circle shadow-sm avatar-hover" 
+                                width="140" height="140" alt="Avatar">
+                        {% endif %}
+                    </a>
+
+                    <!-- Upload tugma -->
+                    <label for="id_avatar" 
+                        class="btn btn-outline-primary btn-sm position-absolute bottom-0 end-0 rounded-pill">
+                        📷 Rasm yuklash
+                    </label>
+                    {{ form.avatar|add_class:"d-none" }}
+                </div>
+            </div>
+
+            <!-- Avatar modal -->
+            <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avatarModalLabel">Profil rasmi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalAvatarPreview" src="{% if form.instance.avatar %}{{ form.instance.avatar.url }}{% else %}{% static 'img/default-avatar.png' %}{% endif %}" 
+                         class="img-fluid rounded shadow-sm" alt="Avatar">
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Section: Shaxsiy ma'lumotlar -->
+            <h5 class="fw-bold text-primary mb-3">👤 Shaxsiy ma’lumotlar</h5>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Telefon</label>
+                    {{ form.phone|add_class:"form-control" }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Shahar</label>
+                    {{ form.location|add_class:"form-control" }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label">O‘zingiz haqida</label>
+                    {{ form.bio|add_class:"form-control" }}
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Section: Xizmat ma'lumotlari -->
+            <h5 class="fw-bold text-primary mb-3">💼 Xizmat ma’lumotlari</h5>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Xizmat turi</label>
+                    {{ form.service_type|add_class:"form-select" }}
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Tajriba (yil)</label>
+                    {{ form.experience_years|add_class:"form-control" }}
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Narx oralig‘i</label>
+                    {{ form.price_range|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="form-check form-switch mt-3">
+                {{ form.is_provider|add_class:"form-check-input" }}
+                <label class="form-check-label">Xizmat ko‘rsatadi</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                {{ form.is_public|add_class:"form-check-input" }}
+                <label class="form-check-label">Profilni ochiq qilish</label>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Section: Ijtimoiy tarmoqlar -->
+            <h5 class="fw-bold text-primary mb-3">🌐 Ijtimoiy tarmoqlar</h5>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Instagram</label>
+                    {{ form.instagram|add_class:"form-control" }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Telegram</label>
+                    {{ form.telegram|add_class:"form-control" }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Facebook</label>
+                    {{ form.facebook|add_class:"form-control" }}
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-success btn-lg rounded-pill shadow-sm">
+                    💾 Saqlash
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.avatar-hover {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.avatar-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+</style>
+
+<!-- Live preview script -->
+<script>
+const avatarInput = document.getElementById("id_avatar");
+const avatarPreview = document.getElementById("avatarPreview");
+const modalAvatarPreview = document.getElementById("modalAvatarPreview");
+
+avatarInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            avatarPreview.src = e.target.result;
+            modalAvatarPreview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
+{% endblock %}

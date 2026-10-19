@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Tadbirlar ro‘yxati{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row g-4">
+      
+      {% include "event_list_file/categoriyalar.html" %}
+
+      <!-- Asosiy kontent (filter + main) -->
+      <div class="col-12 col-lg-9 order-1 order-md-1">
+        <div class="row g-3">
+          <!-- Filter (chap tomoni) -->
+          <div class="col-12 col-md-4 col-lg-3">
+            {% include "event_list_file/filtr.html" %}
+          </div>
+
+          <!-- Main content (o‘ng tomoni) -->
+          <div class="col-12 col-md-8 col-lg-9">
+            {% include "event_list_file/service-cart.html" %}
+          </div>
+        </div>
+      </div>
+
+      {% include "event_list_file/donat.html" %}
+
+  </div>
+</div>
+
+<style>
+/* Base styles */
+body {
+    overscroll-behavior: none;
+}
+
+/* Category buttons */
+.event-type-btn.active, .event-type-btn:hover {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(13,110,253,0.3);
+}
+
+/* Card styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 16px;
+}
+.hover-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Pagination */
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 4px;
+    color: #0d6efd;
+}
+.pagination .page-item.active .page-link {
+    background: #0d6efd;
+    border-color: #0d6efd;
+}
+.pagination .page-link:hover {
+    background: #e9ecef;
+}
+
+/* Responsive tweaks */
+@media (max-width: 991.98px) { /* planshet va kichikroq */
+    .card-img-top { height: 160px; }
+}
+
+@media (max-width: 767.98px) { /* telefon */
+    .sticky-lg-top { position: relative !important; top: auto !important; }
+    .card-img-top { height: 140px; }
+    .card-body { padding: 12px; }
+    .btn-sm { font-size: 0.85rem; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const filterForm = document.getElementById('filter-form');
+    const filterContainer = document.querySelector('#filter-results');
+
+    filterForm.addEventListener('change', () => applyFilters());
+
+    document.body.addEventListener('click', e => {
+        if (e.target.matches('.event-type-btn')) {
+            const eventTypeId = e.target.dataset.eventTypeId;
+            document.getElementById('event-type-input').value = eventTypeId;
+
+            document.querySelectorAll('.event-type-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            applyFilters();
+        }
+    });
+
+    async function applyFilters() {
+        const formData = new FormData(filterForm);
+        const queryString = new URLSearchParams(formData).toString();
+
+        try {
+            const response = await fetch(`?${queryString}`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const html = await response.text();
+
+            if (filterContainer) {
+                filterContainer.innerHTML = html;
+            } else {
+                window.location.search = queryString;
+            }
+        } catch (error) {
+            console.error('Filter xatolik:', error);
+        }
+    }
+});
+</script>
+{% endblock %}

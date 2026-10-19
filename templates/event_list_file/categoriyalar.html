@@ -1,0 +1,33 @@
+<div class="col-12 mb-3">
+    <h6 class="mb-2 fw-bold text-primary">Tadbir turlari</h6>
+    <div class="category-bar overflow-auto overflow-y-hidden text-nowrap px-2 py-3">
+        <div id="event-type-bar" class="d-inline-flex gap-2">
+            <a href="{% url 'event_list' %}" 
+                class="btn btn-light border rounded-pill px-3 shadow-sm fw-semibold">
+                🌐 Barchasi
+            </a>
+            {% for event_type in event_types %}
+                <button type="button" 
+                        class="btn btn-light border event-type-btn rounded-pill px-3 shadow-sm fw-semibold" 
+                        data-event-type-id="{{ event_type.id }}">
+                    {{ event_type.name }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .category-bar {
+    background: linear-gradient(to right, #e9f0ff, #d0e3ff);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+.category-bar::-webkit-scrollbar { display: none; }
+.event-type-btn {
+    transition: all 0.3s ease;
+    background: #fff;
+    border: 1px solid var(--primary);
+}
+</style>

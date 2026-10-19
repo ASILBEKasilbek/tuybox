@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row g-4">
+
+        <!-- Asosiy qism -->
+        <div class="col-lg-8 col-md-7">
+
+            <!-- Xizmat kartasi -->
+            <div class="card mb-4 shadow-sm">
+                <!-- Rasm carousel -->
+                <div id="serviceCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% if service.image1 %}
+                        <div class="carousel-item active">
+                            <img src="{{ service.image1.url }}" class="d-block w-100 rounded" alt="Rasm 1">
+                        </div>
+                        {% endif %}
+                        {% if service.image2 %}
+                        <div class="carousel-item">
+                            <img src="{{ service.image2.url }}" class="d-block w-100 rounded" alt="Rasm 2">
+                        </div>
+                        {% endif %}
+                        {% if service.image3 %}
+                        <div class="carousel-item">
+                            <img src="{{ service.image3.url }}" class="d-block w-100 rounded" alt="Rasm 3">
+                        </div>
+                        {% endif %}
+                        {% if service.image4 %}
+                        <div class="carousel-item">
+                            <img src="{{ service.image4.url }}" class="d-block w-100 rounded" alt="Rasm 4">
+                        </div>
+                        {% endif %}
+                        {% if service.image5 %}
+                        <div class="carousel-item">
+                            <img src="{{ service.image5.url }}" class="d-block w-100 rounded" alt="Rasm 5">
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if service.image2 or service.image3 or service.image4 or service.image5 %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#serviceCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#serviceCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                    {% endif %}
+                </div>
+
+                <div class="card-body">
+                    <h2 class="card-title">{{ service.title }}</h2>
+                    <p class="card-text">{{ service.description }}</p>
+
+                    <ul class="list-unstyled">
+                        <li><strong>Narx:</strong> {{ service.price|default:"N/A" }} so'm</li>
+                        <li><strong>Kategoriya:</strong> {{ service.service_category.name }}</li>
+                        <li><strong>Tadbir turi:</strong> {{ service.event_type.name }}</li>
+                        <li>
+                            <strong>Provider:</strong>
+                            {% if service.provider and service.provider.profile %}
+                                <a href="{% url 'profile_detail' service.provider.profile.pk %}">
+                                    {{ service.provider.username }}
+                                </a>
+                            {% else %}
+                                Noma'lum
+                            {% endif %}
+                        </li>
+
+                        <li><strong>Holat:</strong>
+                            {% if service.is_verified %}
+                                ✅ Tasdiqlangan
+                            {% else %}
+                                ❌ Tasdiqlanmagan
+                            {% endif %}
+                        </li>
+                    </ul>
+
+                    <p class="text-muted small mb-0">
+                        Qo‘shilgan: {{ service.created_at|date:"d.m.Y H:i" }}
+                    </p>
+
+                    {% if service.telegram_username %}
+                    <div class="mt-3">
+                        <a href="https://t.me/{{ service.telegram_username }}" class="btn btn-primary btn-sm" target="_blank">
+                            Telegram orqali yozish ✈️
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Subkategoriyalar -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">🔹 Subkategoriyalar</h4>
+                </div>
+                <div class="card-body">
+                    {% if service.subcategories.all %}
+                        <ul class="list-unstyled">
+                            {% for sub in service.subcategories.all %}
+                                <li>• {{ sub.name }}</li>
+                            {% empty %}
+                                <p class="text-muted">Subkategoriyalar mavjud emas.</p>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- SMS va Telefon -->
+            <div class="d-grid gap-3 my-4">
+                <a href="sms:{{ phone_number|default:'998888648807' }}" class="btn btn-lg btn-outline-success w-100">
+                    📩 SMS yuborish
+                </a>
+                <a href="tel:{{ phone_number|default:'998888648807' }}" class="btn btn-lg btn-outline-primary w-100">
+                    📞 Telefon qilish
+                </a>
+            </div>
+
+            <!-- 📍 Xaritada joylashuv -->
+            {% if service.latitude and service.longitude %}
+            <div class="card mb-4 shadow-lg border-0">
+                <div class="card-header text-white d-flex justify-content-between align-items-center"
+                    style="background: linear-gradient(135deg, #0d6efd, #20c997);">
+                    <h5 class="mb-0">📍 Xizmat joylashuvi</h5>
+                    <span class="badge bg-light text-dark px-3 py-2 rounded-pill shadow-sm">
+                        {{ service.event_type.name }}
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <!-- Xarita qismi -->
+                    <div id="map" style="height: 400px; border-radius: 0 0 15px 15px; overflow: hidden;"></div>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a href="https://yandex.uz/maps/?rtext=~{{ service.latitude }},{{ service.longitude }}"
+                    target="_blank"
+                    class="btn btn-success btn-lg w-100 fw-bold shadow-sm">
+                        🚗 Manzilga borish
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Yon panel (Reklama joyi) -->
+        <div class="col-lg-4 col-md-5">
+            <div class="card shadow-sm border-dashed">
+                <div class="card-header bg-info text-white text-center">
+                    <h5 class="mb-0">📢 Reklama joyi</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p class="text-muted mb-3">
+                        Bu yerda sizni reklamangiz bo‘lishi mumkin edi 😏
+                    </p>
+                    <a href="https://t.me/dasturch1_asilbek" class="btn btn-outline-info btn-sm" target="_blank">
+                        Batafsil✈️
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    {% if service.latitude and service.longitude %}
+    var serviceLat = {{ service.latitude }};
+    var serviceLng = {{ service.longitude }};
+
+    // Xarita yaratish
+    var map = L.map("map").setView([serviceLat, serviceLng], 15);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap"
+    }).addTo(map);
+
+    // Maxsus marker ikonkasi
+    var customIcon = L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -35]
+    });
+
+    // Xizmat markeri
+    var serviceMarker = L.marker([serviceLat, serviceLng], {icon: customIcon}).addTo(map)
+        .bindPopup(`
+            <div style="text-align:center; font-size:14px; line-height:1.4;">
+                <b style="font-size:16px; color:#0d6efd;">{{ service.title }}</b><br>
+                <span style="color:green; font-weight:bold;">💵 {{ service.price|default:"N/A" }}</span><br>
+                <em style="color:#6c757d;">{{ service.service_category.name }}</em><br>
+                <a href="https://yandex.uz/maps/?rtext=~{{ service.latitude }},{{ service.longitude }}"
+                   target="_blank"
+                   style="display:inline-block; margin-top:5px; padding:5px 10px; background:#20c997; color:white; border-radius:6px; text-decoration:none; font-size:13px;">
+                   🚗 Borish
+                </a>
+            </div>
+        `);
+
+    // Foydalanuvchi joylashuvi
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            var userLat = pos.coords.latitude;
+            var userLng = pos.coords.longitude;
+
+            var userMarker = L.circleMarker([userLat, userLng], {
+                radius: 9,
+                fillColor: "#ff4757",
+                color: "#fff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).addTo(map)
+              .bindPopup("📍 Sizning joyingiz");
+
+            // Xarita ikkalasini ham qamrab oladi
+            var group = new L.featureGroup([serviceMarker, userMarker]);
+            map.fitBounds(group.getBounds(), {padding: [50, 50]});
+        });
+    }
+    {% endif %}
+});
+</script>
+
+
+{% endblock %}

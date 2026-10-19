@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Ro‘yxatdan o‘tish{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" 
+     style="min-height: calc(100vh - 70px); background-color: #f8f9fa; padding-top: 70px;">
+
+    <div class="col-11 col-sm-10 col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            
+            <h2 class="text-center mb-4">Ro‘yxatdan o‘tish</h2>
+
+            <!-- Register form -->
+            <form method="post" class="d-flex flex-column gap-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <!-- Rol tanlash (mijoz / xizmat ko‘rsatuvchi) -->
+                <div class="mb-2">
+                    <label for="role" class="form-label">Rolni tanlang</label>
+                    <select name="role" id="role" class="form-select rounded-3">
+                        <option value="customer">🙋 Mijoz</option>
+                        <option value="provider">🛠️ Xizmat ko‘rsatuvchi</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 mt-2 rounded-3">
+                    Ro‘yxatdan o‘tish
+                </button>
+            </form>
+
+            <!-- Yoki ajratgich -->
+            <div class="d-flex align-items-center my-3">
+                <hr class="flex-grow-1">
+                <span class="mx-2 text-muted">yoki</span>
+                <hr class="flex-grow-1">
+            </div>
+
+            <!-- Ijtimoiy / Telegram orqali -->
+            <div class="d-grid gap-2">
+                <!-- Google -->
+                <a href="#" class="btn btn-outline-danger py-2 rounded-3">
+                    <i class="bi bi-google me-2"></i> Google orqali davom etish
+                </a>
+                <!-- Telegram -->
+                <a href="https://t.me/Tasdiqlashrobot" class="btn btn-info py-2 rounded-3">
+                    📲 Telegram orqali kirish
+                </a>
+            </div>
+
+            <!-- Login link -->
+            <div class="text-center mt-3">
+                <p class="mb-2">Avval ro‘yxatdan o‘tganmisiz?</p>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary w-100 py-2 rounded-3">
+                    Tizimga kirish
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons (ijtimoiy ikonka uchun) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+{% endblock %}

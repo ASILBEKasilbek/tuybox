@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuyBox — Boshqaruv Paneli (Admin)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-page: #FAF7F2;
+            --bg-card: #FFFFFF;
+            --gold-gradient: linear-gradient(135deg, #FFD54F 0%, #FFA000 50%, #D47A00 100%);
+            --gold-primary: #E6A10A;
+            --gold-border: rgba(230, 162, 10, 0.28);
+            --gold-glow: 0 8px 24px rgba(255, 160, 0, 0.35);
+            --text-dark: #241E19;
+            --text-muted: #786C60;
+            --shadow-card: 0 8px 26px rgba(140, 105, 50, 0.08);
+            --radius-card: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* Top Navbar */
+        .admin-nav {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--gold-border);
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-monogram {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 26px;
+            color: var(--gold-primary);
+        }
+
+        .brand-crest {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.35));
+        }
+
+        .brand-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text-dark);
+        }
+
+        .brand-badge {
+            background: #F7EEDB;
+            color: var(--gold-primary);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-view-app {
+            background: #FAF7F2;
+            border: 1px solid var(--gold-border);
+            color: var(--gold-primary);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-view-app:hover {
+            background: var(--gold-gradient);
+            color: #FFFFFF;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 24px auto 0;
+            padding: 0 20px;
+        }
+
+        /* KPI Stats Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-card);
+            padding: 20px;
+            border: 1px solid var(--gold-border);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kpi-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: #F7EEDB;
+            color: var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .kpi-info h4 {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .kpi-info .kpi-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* Navigation Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #EAE3D5;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: var(--gold-gradient);
+            color: #FFFFFF;
+            box-shadow: var(--gold-glow);
+        }
+
+        /* Table Card */
+        .content-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--gold-border);
+            box-shadow: var(--shadow-card);
+            padding: 24px;
+        }
+
+        .card-header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            border: none;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--gold-glow);
+            transition: transform 0.15s ease;
+        }
+
+        .btn-gold:active {
+            transform: scale(0.97);
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: #FDFBF8;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 12px 14px;
+            border-bottom: 1px solid #ECE4D8;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #F5EFE6;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: #FDFBF8;
+        }
+
+        .thumb-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .status-confirmed {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-pending {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .status-cancelled {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-right: 4px;
+            transition: opacity 0.15s;
+        }
+
+        .btn-success { background: #E8F5E9; color: #2E7D32; }
+        .btn-danger { background: #FFEBEE; color: #C62828; }
+        .btn-call { background: #F3ECE1; color: var(--gold-primary); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 24, 18, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #FFFFFF;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            padding: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border: 1px solid var(--gold-border);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid #DFD5C6;
+            background: #FAF7F2;
+            padding: 0 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--gold-primary);
+            background: #FFFFFF;
+        }
+
+        /* Database reset box */
+        .reset-box {
+            background: #FFFBF5;
+            border: 1.5px dashed var(--gold-primary);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .reset-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .reset-box p {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 18px;
+            line-height: 1.5;
+        }
+
+        .btn-reset {
+            background: #D32F2F;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(211, 47, 47, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #2A2521;
+            color: #FFFFFF;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            z-index: 2000;
+        }
+
+        .toast.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <nav class="admin-nav">
+        <a href="/admin" class="nav-brand">
+            <div class="brand-crest">
+                <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="16.5" fill="#141419" stroke="url(#goldGradAdm)" stroke-width="1.8"/>
+                    <path d="M12 14.5L14.5 17.5L18 13.5L21.5 17.5L24 14.5L22.5 20.5H13.5L12 14.5Z" fill="url(#goldGradAdm)"/>
+                    <path d="M13 22.5H23V23.8C23 24.6 22.3 25.2 21.5 25.2H14.5C13.7 25.2 13 24.6 13 23.8V22.5Z" fill="url(#goldGradAdm)"/>
+                    <circle cx="18" cy="12" r="1.3" fill="#FFF8E7"/>
+                    <circle cx="12" cy="13" r="1.1" fill="#FFF8E7"/>
+                    <circle cx="24" cy="13" r="1.1" fill="#FFF8E7"/>
+                    <defs>
+                        <linearGradient id="goldGradAdm" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FCEABB"/>
+                            <stop offset="50%" stop-color="#D4AF37"/>
+                            <stop offset="100%" stop-color="#996515"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <span class="brand-title">TuyBox</span>
+            <span class="brand-badge">Boshqaruv Paneli</span>
+        </a>
+
+        <div class="nav-right">
+            <button class="btn-gold" onclick="openAddModal()">
+                <i class="fa-solid fa-plus"></i> Yangi Joy Qo'shish
+            </button>
+            <a href="/" target="_blank" class="btn-view-app">
+                <i class="fa-solid fa-mobile-screen"></i> Mini Appni Ochish ↗
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon"><i class="fa-solid fa-landmark-dome"></i></div>
+                <div class="kpi-info">
+                    <h4>Jami Joylar & Xizmatlar</h4>
+                    <div class="kpi-value" id="stat-services">--</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="kpi-info">
+                    <h4>Jami Buyurtmalar</h4>
+                    <div class="kpi-value" id="stat-bookings">--</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.15); color: #D97706;"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div class="kpi-info">
+                    <h4>Kutilayotgan Arizalar</h4>
+                    <div class="kpi-value" id="stat-pending">--</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.15); color: #059669;"><i class="fa-solid fa-vault"></i></div>
+                <div class="kpi-info">
+                    <h4>Tasdiqlangan Byudjet</h4>
+                    <div class="kpi-value" id="stat-revenue">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="switchAdminTab('services')" id="tab-btn-services">
+                <i class="fa-solid fa-landmark-dome"></i> To'yxona va Xizmatlar
+            </button>
+            <button class="tab-btn" onclick="switchAdminTab('bookings')" id="tab-btn-bookings">
+                <i class="fa-solid fa-clipboard-list"></i> Mijozlar Bronlari
+            </button>
+            <button class="tab-btn" onclick="switchAdminTab('database')" id="tab-btn-database">
+                <i class="fa-solid fa-database"></i> Baza va Tizim Sozlamalari
+            </button>
+        </div>
+
+        <!-- TAB 1: SERVICES -->
+        <div class="content-card" id="tab-content-services">
+            <div class="card-header-flex">
+                <h3 class="card-title">Barcha To'yxonalar va Xizmatlar</h3>
+                <span style="font-size: 13px; color: var(--text-muted);" id="services-count">Yuklanmoqda...</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rasm</th>
+                            <th>Nomi</th>
+                            <th>Toifasi</th>
+                            <th>Narxi</th>
+                            <th>Tumani</th>
+                            <th>Telefon</th>
+                            <th>Holati</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="services-tbody">
+                        <tr><td colspan="8" style="text-align: center; padding: 30px;">Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 2: BOOKINGS -->
+        <div class="content-card" id="tab-content-bookings" style="display: none;">
+            <div class="card-header-flex">
+                <h3 class="card-title">Mijozlar Buyurtmalari va So'rovlari</h3>
+                <span style="font-size: 13px; color: var(--text-muted);" id="bookings-count">Yuklanmoqda...</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kod</th>
+                            <th>Mijoz</th>
+                            <th>Telefon</th>
+                            <th>Xizmat Nomi</th>
+                            <th>Sanasi</th>
+                            <th>Mehmonlar</th>
+                            <th>Narxi</th>
+                            <th>Holat</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookings-tbody">
+                        <tr><td colspan="9" style="text-align: center; padding: 30px;">Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: DATABASE SETTINGS -->
+        <div class="content-card" id="tab-content-database" style="display: none;">
+            <div class="card-header-flex">
+                <h3 class="card-title">Ma'lumotlar Bazasi va Tizimni 0 Qilish</h3>
+            </div>
+
+            <div class="reset-box">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 36px; color: #D32F2F; margin-bottom: 12px;"></i>
+                <h4>Ma'lumotlar Bazasini 0 Qilish va Qayta Tiklash</h4>
+                <p>
+                    Ushbu tugmani bosish butun bazani tozalaydi va eng saralangan 8 ta hashamatli to'yxonalar, restoranlar, san'atkorlar va foto studiyalarni yangidan yuklaydi.
+                </p>
+                <button class="btn-reset" onclick="triggerResetDatabase()">
+                    <i class="fa-solid fa-rotate"></i> Bazani 0 Qilish va Qayta Tiklash
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL: ADD SERVICE -->
+    <div class="modal-overlay" id="add-modal">
+        <div class="modal-box">
+            <h3 class="card-title" style="margin-bottom: 16px;">Yangi Xizmat / Joy Qo'shish</h3>
+            
+            <div class="form-group">
+                <label class="form-label">To'yxona yoki Xizmat Nomi</label>
+                <input type="text" id="m-title" class="form-control" placeholder="Masalan: Grand Royal Palace">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Toifasi</label>
+                <select id="m-category" class="form-control">
+                    <option value="toyxonalar">To'yxonalar va Saroylar</option>
+                    <option value="restoranlar">Restoranlar va Banket Zallari</option>
+                    <option value="sanatkorlar">San'atkorlar va Jonli Ijro</option>
+                    <option value="foto-video">Foto va Video Studiyalar</option>
+                    <option value="dekoratsiya">Dekoratsiya va Gullar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Boshlang'ich Narxi (so'm)</label>
+                <input type="number" id="m-price" class="form-control" placeholder="45000000">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tumani</label>
+                <input type="text" id="m-district" class="form-control" placeholder="Yakkasaroy">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Aloqa Telefoni</label>
+                <input type="tel" id="m-phone" class="form-control" placeholder="+998901234567">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Rasm Havolasi (URL)</label>
+                <input type="url" id="m-img" class="form-control" placeholder="https://images.unsplash.com/...">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-gold" style="flex: 1;" onclick="submitNewServiceAdmin()">Saqlash</button>
+                <button class="action-btn" style="background: #EAE3D5; color: #2A2521; padding: 10px 18px;" onclick="closeAddModal()">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" style="color: #4CAF50;"></i>
+        <span id="toast-text">Muvaffaqiyatli bajarildi!</span>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-btn-${tab}`).classList.add('active');
+
+            document.getElementById('tab-content-services').style.display = tab === 'services' ? 'block' : 'none';
+            document.getElementById('tab-content-bookings').style.display = tab === 'bookings' ? 'block' : 'none';
+            document.getElementById('tab-content-database').style.display = tab === 'database' ? 'block' : 'none';
+
+            if (tab === 'services') loadServices();
+            if (tab === 'bookings') loadBookings();
+        }
+
+        // Load stats
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/v1/admin/stats');
+                const data = await res.json();
+                document.getElementById('stat-services').textContent = data.total_services;
+                document.getElementById('stat-bookings').textContent = data.total_bookings;
+                document.getElementById('stat-pending').textContent = data.pending_bookings;
+                document.getElementById('stat-revenue').textContent = data.total_revenue.toLocaleString('uz-UZ') + " so'm";
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Load services
+        async function loadServices() {
+            try {
+                const res = await fetch('/api/v1/admin/services');
+                const items = await res.json();
+                document.getElementById('services-count').textContent = `${items.length} ta xizmat mavjud`;
+
+                const tbody = document.getElementById('services-tbody');
+                if (items.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px;">Hozircha xizmatlar mavjud emas</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = items.map(s => `
+                    <tr>
+                        <td><img src="${s.image}" class="thumb-img" alt="${s.title}"></td>
+                        <td><strong>${s.title}</strong></td>
+                        <td>${s.category}</td>
+                        <td><strong style="color: var(--gold-primary);">${s.price.toLocaleString('uz-UZ')} so'm</strong></td>
+                        <td>${s.district}</td>
+                        <td><a href="tel:${s.phone}" class="btn-call" title="Qo'ng'iroq"><i class="fa-solid fa-phone"></i></a> ${s.phone}</td>
+                        <td>
+                            <span class="status-pill ${s.is_active ? 'status-confirmed' : 'status-cancelled'}">
+                                ${s.is_active ? 'Faol' : 'Nofaol'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn ${s.is_active ? 'btn-danger' : 'btn-success'}" onclick="toggleService(${s.id})">
+                                ${s.is_active ? 'O\'chirish' : 'Yoqish'}
+                            </button>
+                            <button class="action-btn btn-danger" onclick="deleteService(${s.id})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Load bookings
+        async function loadBookings() {
+            try {
+                const res = await fetch('/api/v1/admin/bookings');
+                const items = await res.json();
+                document.getElementById('bookings-count').textContent = `${items.length} ta buyurtma mavjud`;
+
+                const tbody = document.getElementById('bookings-tbody');
+                if (items.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 30px;">Hozircha buyurtmalar yo\'q</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = items.map(b => `
+                    <tr>
+                        <td><strong>${b.code}</strong></td>
+                        <td>${b.customer_name}</td>
+                        <td><a href="tel:${b.customer_phone}" class="btn-call"><i class="fa-solid fa-phone"></i></a> ${b.customer_phone}</td>
+                        <td><strong>${b.service_title}</strong></td>
+                        <td>${b.event_date}</td>
+                        <td>${b.guest_count} kishi</td>
+                        <td><strong style="color: var(--gold-primary);">${b.total_price.toLocaleString('uz-UZ')} so'm</strong></td>
+                        <td>
+                            <span class="status-pill status-${b.status}">
+                                ${b.status === 'confirmed' ? 'Tasdiqlandi' : (b.status === 'pending' ? 'Kutilmoqda' : 'Bekor qilindi')}
+                            </span>
+                        </td>
+                        <td>
+                            ${b.status !== 'confirmed' ? `<button class="action-btn btn-success" onclick="updateBookingStatus(${b.id}, 'confirmed')"><i class="fa-solid fa-check"></i> Tasdiqlash</button>` : ''}
+                            ${b.status !== 'cancelled' ? `<button class="action-btn btn-danger" onclick="updateBookingStatus(${b.id}, 'cancelled')"><i class="fa-solid fa-xmark"></i> Bekor qilish</button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function toggleService(id) {
+            await fetch(`/api/v1/admin/services/${id}/toggle`, { method: 'PATCH' });
+            showToast("Holat o'zgartirildi!");
+            loadServices();
+            loadStats();
+        }
+
+        async function deleteService(id) {
+            if (!confirm("Haqiqatan ham ushbu xizmatni o'chirmoqchimisiz?")) return;
+            await fetch(`/api/v1/admin/services/${id}`, { method: 'DELETE' });
+            showToast("Xizmat o'chirildi!");
+            loadServices();
+            loadStats();
+        }
+
+        async function updateBookingStatus(id, status) {
+            await fetch(`/api/v1/admin/bookings/${id}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+            showToast("Bron holati yangilandi!");
+            loadBookings();
+            loadStats();
+        }
+
+        async function triggerResetDatabase() {
+            if (!confirm("DIQQAT! Butun baza 0 qilinadi va saralangan 8 ta yangi to'yxonalar qayta yuklanadi. Rozimisiz?")) return;
+            
+            showToast("Baza 0 qilinmoqda, iltimos kuting...");
+            try {
+                const res = await fetch('/api/v1/admin/reset-database', { method: 'POST' });
+                const data = await res.json();
+                showToast(data.message || "Baza muvaffaqiyatli yangilandi!");
+                loadStats();
+                loadServices();
+                loadBookings();
+            } catch (e) {
+                alert("Xatolik yuz berdi: " + e.message);
+            }
+        }
+
+        // Modal controls
+        function openAddModal() {
+            document.getElementById('add-modal').classList.add('active');
+        }
+
+        function closeAddModal() {
+            document.getElementById('add-modal').classList.remove('active');
+        }
+
+        async function submitNewServiceAdmin() {
+            const title = document.getElementById('m-title').value.trim();
+            const category_slug = document.getElementById('m-category').value;
+            const price = document.getElementById('m-price').value.trim();
+            const district = document.getElementById('m-district').value.trim();
+            const phone = document.getElementById('m-phone').value.trim();
+            const image_url = document.getElementById('m-img').value.trim();
+
+            if (!title || !phone) {
+                alert("Iltimos, nom va telefon raqamini kiriting!");
+                return;
+            }
+
+            await fetch('/api/v1/admin/services', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title,
+                    category_slug,
+                    price: price ? parseFloat(price) : 35000000,
+                    district: district || 'Toshkent',
+                    phone,
+                    image_url: image_url || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800'
+                })
+            });
+
+            closeAddModal();
+            showToast("Yangi joy muvaffaqiyatli qo'shildi!");
+            loadServices();
+            loadStats();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 3500);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            loadServices();
+        });
+    </script>
+</body>
+</html>

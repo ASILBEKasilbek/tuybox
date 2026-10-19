@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Tez orada{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" 
+     style="height: 100vh; background: linear-gradient(135deg, #1e3c72, #2a5298); overflow: hidden;">
+    
+    <div class="scene">
+        <div class="card-3d text-center p-5">
+            <h1 class="mb-4 layer" data-depth="50">🚀 Tez orada ishga tushadi!</h1>
+            <p class="mb-4 layer" data-depth="30">Biz siz uchun ajoyib sahifa ustida ishlayapmiz. Sabrlik bilan kuting.</p>
+            <a href="#" class="btn btn-primary btn-lg layer" data-depth="70">Yangiliklar uchun bog'laning</a>
+        </div>
+    </div>
+
+</div>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.scene {
+  perspective: 1200px;
+}
+
+.card-3d {
+  position: relative;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px;
+  color: #fff;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s ease;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+
+/* Neon gradient border */
+.card-3d::before {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc, #ff9900);
+  background-size: 300% 300%;
+  animation: gradientMove 5s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Sarlavha */
+.card-3d h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffdd57;
+  text-shadow: 0 0 15px rgba(255,221,87,0.7);
+}
+
+/* Tugma */
+.card-3d .btn {
+  border-radius: 30px;
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  border: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-3d .btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+</style>
+
+<script>
+// 3D effekt + ichki qatlamlarga chuqurlik
+const card = document.querySelector(".card-3d");
+const layers = document.querySelectorAll(".layer");
+
+document.addEventListener("mousemove", (e) => {
+  let x = (window.innerWidth / 2 - e.pageX) / 25;
+  let y = (window.innerHeight / 2 - e.pageY) / 25;
+  card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+
+  layers.forEach(layer => {
+    const depth = layer.getAttribute("data-depth");
+    let moveX = (e.pageX - window.innerWidth / 2) * (depth / 1000);
+    let moveY = (e.pageY - window.innerHeight / 2) * (depth / 1000);
+    layer.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
+  });
+});
+</script>
+{% endblock %}

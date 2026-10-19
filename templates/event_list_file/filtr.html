@@ -1,0 +1,155 @@
+{% load custom_filters %}
+{% with uid=uid|default:"1" %}
+<div class="filter-container p-3 p-md-4 shadow-sm rounded-4 bg-white h-100">
+
+  <!-- Title -->
+  <h5 class="fw-bold text-primary mb-3 d-flex align-items-center gap-2">
+    <i class="bi bi-funnel-fill"></i> Filtrlash
+  </h5>
+
+  <!-- Toggle Accordion Button -->
+  <button class="btn fw-semibold mb-3 shadow-sm rounded-3 text-dark toggle-accordion-btn d-flex align-items-center justify-content-between w-100" 
+          type="button" data-bs-toggle="collapse" data-bs-target="#filterAccordion_{{ uid }}" 
+          aria-expanded="false" aria-controls="filterAccordion_{{ uid }}">
+      <span class="filterToggleText">Filtrlashni ko‘rsatish</span>
+      <i class="filterToggleIcon bi bi-chevron-down"></i>
+  </button>
+
+  <!-- Form -->
+  <form method="get" id="filter-form-{{ uid }}" class="d-flex flex-column gap-3">
+
+    <input type="hidden" name="event_type" id="event-type-input-{{ uid }}" value="{{ request.GET.event_type }}">
+
+    <!-- Search -->
+    <div>
+      <label class="form-label small text-muted mb-1">Qidirish</label>
+      <div class="input-group shadow-sm">
+        <span class="input-group-text border-0 bg-light"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" 
+               class="form-control rounded-end px-3 py-2 border-0 modern-input" 
+               placeholder="Masalan: to‘y xizmatlari" 
+               value="{{ request.GET.q }}">
+      </div>
+    </div>
+
+    <!-- Accordion Filters -->
+    <div class="accordion collapse" id="filterAccordion_{{ uid }}">
+
+      <!-- Price -->
+      <div class="accordion-item mb-2 shadow-sm rounded-3 border-0">
+        <h6 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold text-dark" 
+                  type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse_{{ uid }}" aria-expanded="false">
+            💰 Narx oralig‘i 
+            <i class="bi bi-chevron-down ms-auto rotate-icon"></i>
+          </button>
+        </h6>
+        <div id="priceCollapse_{{ uid }}" class="accordion-collapse collapse" data-bs-parent="#filterAccordion_{{ uid }}">
+          <div class="accordion-body d-flex flex-column gap-2 small p-2">
+            {% for pr in "under_500,500_999,1000_1499,1500_1999,2000_plus"|split:"," %}
+            <div class="form-check custom-check">
+              <input class="form-check-input" type="radio" name="price_range" id="price_{{ pr }}_{{ uid }}" value="{{ pr }}" 
+                     {% if request.GET.price_range == pr %}checked{% endif %} >
+              <label class="form-check-label fw-medium" for="price_{{ pr }}_{{ uid }}">
+                {% if pr == "under_500" %}$500 dan past{% elif pr == "500_999" %}$500 - $999
+                {% elif pr == "1000_1499" %}$1000 - $1499{% elif pr == "1500_1999" %}$1500 - $1999
+                {% else %}$2000+{% endif %}
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- City -->
+      <div class="accordion-item mb-2 shadow-sm rounded-3 border-0">
+        <h6 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold text-dark" 
+                  type="button" data-bs-toggle="collapse" data-bs-target="#cityCollapse_{{ uid }}" aria-expanded="false">
+            📍 Shahar 
+            <i class="bi bi-chevron-down ms-auto rotate-icon"></i>
+          </button>
+        </h6>
+        <div id="cityCollapse_{{ uid }}" class="accordion-collapse collapse" data-bs-parent="#filterAccordion_{{ uid }}">
+          <div class="accordion-body p-2">
+            <select name="city" class="form-select rounded-3 shadow-sm border-0 modern-select">
+              <option value="">Barchasi</option>
+              <option value="tashkent" {% if request.GET.city == "tashkent" %}selected{% endif %}>Toshkent</option>
+              <option value="samarkand" {% if request.GET.city == "samarkand" %}selected{% endif %}>Samarqand</option>
+              <option value="bukhara" {% if request.GET.city == "bukhara" %}selected{% endif %}>Buxoro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Music Genres -->
+      <div class="accordion-item mb-2 shadow-sm rounded-3 border-0">
+        <h6 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold text-dark" 
+                  type="button" data-bs-toggle="collapse" data-bs-target="#genreCollapse_{{ uid }}" aria-expanded="false">
+            🎶 Musiqa janrlari 
+            <i class="bi bi-chevron-down ms-auto rotate-icon"></i>
+          </button>
+        </h6>
+        <div id="genreCollapse_{{ uid }}" class="accordion-collapse collapse" data-bs-parent="#filterAccordion_{{ uid }}">
+          <div class="accordion-body d-flex flex-column gap-2 small p-2" style="max-height:250px; overflow-y:auto;">
+            {% for genre in genres %}
+            <div class="form-check custom-check">
+              <input class="form-check-input" type="checkbox" name="genres" id="genre_{{ forloop.counter }}_{{ uid }}" value="{{ genre }}" {% if genre in selected_genres %}checked{% endif %}>
+              <label class="form-check-label fw-medium" for="genre_{{ forloop.counter }}_{{ uid }}">{{ genre }}</label>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex flex-column gap-2 mt-3">
+      <button type="submit" class="btn btn-gradient w-100 fw-semibold py-2 rounded-3">
+        <i class="bi bi-check2-circle"></i> Filtrlash
+      </button>
+      <a href="?" class="btn btn-outline-secondary w-100 fw-semibold py-2 rounded-3 shadow-sm">
+        <i class="bi bi-x-circle"></i> Tozalash
+      </a>
+    </div>
+
+  </form>
+</div>
+{% endwith %}
+
+<!-- Custom CSS -->
+<style>
+.filter-container {transition: box-shadow 0.3s;}
+.filter-container:hover {box-shadow: 0 6px 20px rgba(0,0,0,0.15);}
+.accordion-button {background-color: #f8fafc;transition: background-color 0.3s;}
+.accordion-button:hover {background-color: #edf2f7;}
+.rotate-icon {transition: transform 0.3s ease;}
+.accordion-button[aria-expanded="true"] .rotate-icon {transform: rotate(180deg);}
+.modern-input:focus, .modern-select:focus {outline: none;box-shadow: 0 0 0 3px rgba(78,142,247,0.3);}
+.custom-check .form-check-input {width: 1.2rem;height: 1.2rem;accent-color: #4e8ef7;cursor: pointer;border-radius: 6px;}
+.btn-gradient {background: linear-gradient(90deg,#4e8ef7,#1a6efb,#0040ff);color: #fff;transition: transform 0.2s, box-shadow 0.2s;}
+.btn-gradient:hover {transform: scale(1.03);box-shadow: 0 4px 12px rgba(30,110,251,0.4);}
+.accordion-button::after {
+  display: none !important;
+}
+
+</style>
+
+<!-- JS for toggle text -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".toggle-accordion-btn").forEach(function(btn) {
+    const text = btn.querySelector(".filterToggleText");
+    const icon = btn.querySelector(".filterToggleIcon");
+    btn.addEventListener("click", function () {
+      setTimeout(() => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        text.textContent = expanded ? "Filtrlashni yashirish" : "Filtrlashni ko‘rsatish";
+        icon.className = expanded ? "filterToggleIcon bi bi-chevron-up" : "filterToggleIcon bi bi-chevron-down";
+      }, 200);
+    });
+  });
+});
+</script>

@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block title %}Tadbirlar ro‘yxati{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+
+    {% include "categoriya/categoriyalar.html" %}
+
+    <!-- {% include "landing/header.html" %} -->
+    {% include "categoriya/filtr.html" %}
+
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="col-12 col-md-9">
+            <!-- SORT DROPDOWN -->
+            <div class="d-flex justify-content-end mb-3">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
+                        Tartiblash
+                    </button>
+                    <ul class="dropdown-menu shadow">
+                        <li><a class="dropdown-item" href="?sort=popular{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}">🔥 Ommabop</a></li>
+                        <li><a class="dropdown-item" href="?sort=cheap{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}">💸 Arzon</a></li>
+                        <li><a class="dropdown-item" href="?sort=expensive{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}">💎 Qimmat</a></li>
+                        <li><a class="dropdown-item" href="?sort=top-rated{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}">⭐ Yuqori baholangan</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ================= CARD GRID ================= -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+                {% for service in services %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm hover-shadow">
+                        {% if service.image1 %}
+                        <img src="{{ service.image1.url }}" class="card-img-top" alt="{{ service.title }}" loading="lazy">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold mb-2">{{ service.title }}</h6>
+                            <p class="text-muted small mb-3">{{ service.description|truncatewords:12 }}</p>
+                            <a href="{% url 'service_detail' slug=service.slug %}" 
+                               class="btn btn-outline-primary btn-sm w-100">Batafsil →</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">Hech qanday xizmat topilmadi.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- ================= PAGINATION ================= -->
+            {% if services.has_other_pages %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if services.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ services.previous_page_number }}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.min_rating %}&min_rating={{ request.GET.min_rating }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">Oldingi</a>
+                    </li>
+                    {% endif %}
+                    {% for num in services.paginator.page_range %}
+                    <li class="page-item {% if services.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.min_rating %}&min_rating={{ request.GET.min_rating }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">{{ num }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if services.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ services.next_page_number }}{% if request.GET.event_type %}&event_type={{ request.GET.event_type }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.min_rating %}&min_rating={{ request.GET.min_rating }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">Keyingi</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= STYLES ================= -->
+<style>
+    
+/* Base styles */
+body {
+    overscroll-behavior: none;
+}
+
+/* Category buttons */
+.event-type-btn.active, .event-type-btn:hover {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(13,110,253,0.3);
+}
+
+/* Card styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-img-top {
+    height: 160px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 16px;
+}
+.hover-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Pagination */
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 4px;
+    color: #0d6efd;
+}
+.pagination .page-item.active .page-link {
+    background: #0d6efd;
+    border-color: #0d6efd;
+}
+.pagination .page-link:hover {
+    background: #e9ecef;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sticky-top { position: relative; top: auto !important; }
+    .card-img-top { height: 140px; }
+    .card-body { padding: 12px; }
+    .form-floating input { font-size: 14px; }
+    .btn-sm { font-size: 0.85rem; }
+}
+
+/* High-density displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+}
+</style>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const filterForm = document.getElementById('filter-form');
+    const filterContainer = document.querySelector('#filter-results'); // Natijalarni chiqaradigan joy
+
+    // 🔹 Form ichidagi barcha input o'zgarishini kuzatamiz
+    filterForm.addEventListener('change', () => {
+        applyFilters();
+    });
+
+    // 🔹 Event type tugmalari uchun delegation
+    document.body.addEventListener('click', e => {
+        if (e.target.matches('.event-type-btn')) {
+            const eventTypeId = e.target.dataset.eventTypeId;
+            document.getElementById('event-type-input').value = eventTypeId;
+
+            // Aktiv class qo‘yish
+            document.querySelectorAll('.event-type-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            applyFilters();
+        }
+    });
+
+    // 🔹 AJAX orqali filterlarni yuborish
+    async function applyFilters() {
+        const formData = new FormData(filterForm);
+        const queryString = new URLSearchParams(formData).toString();
+
+        try {
+            const response = await fetch(`?${queryString}`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const html = await response.text();
+
+            // Faqat natijalar qismi yangilanadi
+            if (filterContainer) {
+                filterContainer.innerHTML = html;
+            } else {
+                // Agar alohida container yo‘q bo‘lsa, fallback qilib sahifani reload qilamiz
+                window.location.search = queryString;
+            }
+        } catch (error) {
+            console.error('Filter xatolik:', error);
+        }
+    }
+});
+</script>
+
+{% endblock %}

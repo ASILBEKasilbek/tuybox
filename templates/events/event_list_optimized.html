@@ -1,0 +1,426 @@
+{% extends 'base_optimized.html' %}
+{% load static %}
+
+{% block title %}Xizmatlar ro'yxati - Tuyxona{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Category pill styles */
+    .category-bar {
+        position: sticky;
+        top: 80px;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .event-type-btn {
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+    
+    .event-type-btn:hover,
+    .event-type-btn.active {
+        background: linear-gradient(135deg, #0d6efd, #6610f2) !important;
+        color: white !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+    }
+    
+    /* Filter sidebar */
+    .filter-sidebar {
+        position: sticky;
+        top: 140px;
+        max-height: calc(100vh - 160px);
+        overflow-y: auto;
+    }
+    
+    /* Service grid */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    /* Loading skeleton */
+    .skeleton-card {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s ease-in-out infinite;
+        border-radius: 1rem;
+        height: 400px;
+    }
+    
+    @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row g-4">
+        <!-- Category Pills -->
+        <div class="col-12">
+            <div class="category-bar">
+                <div class="d-flex align-items-center gap-2 overflow-auto px-3" id="event-type-bar">
+                    <a href="{% url 'event_list' %}" class="btn btn-light border rounded-pill px-4 shadow-sm fw-semibold">
+                        <i class="bi bi-globe2 me-2"></i>Barchasi
+                    </a>
+                    {% for event_type in event_types %}
+                        <button type="button" 
+                                class="btn btn-light border event-type-btn rounded-pill px-4 shadow-sm fw-semibold" 
+                                data-event-type-id="{{ event_type.id }}"
+                                onclick="filterByEventType({{ event_type.id }})">
+                            {{ event_type.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Filter -->
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="glass-card p-4 filter-sidebar">
+                <h5 class="fw-bold text-dark mb-4">
+                    <i class="bi bi-funnel-fill text-primary me-2"></i>
+                    Filtrlar
+                </h5>
+                
+                <form method="get" id="filterForm" class="d-flex flex-column gap-3">
+                    <!-- Search -->
+                    <div class="form-floating">
+                        <input type="text" 
+                               name="q" 
+                               id="searchInput"
+                               class="form-control" 
+                               placeholder="Qidirish..." 
+                               value="{{ request.GET.q }}">
+                        <label for="searchInput">
+                            <i class="bi bi-search me-2"></i>Qidirish
+                        </label>
+                    </div>
+                    
+                    <!-- Price Range -->
+                    <div>
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-currency-dollar text-success me-2"></i>Narx oralig'i
+                        </label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" 
+                                       name="min_price" 
+                                       class="form-control" 
+                                       placeholder="Min" 
+                                       value="{{ request.GET.min_price }}">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" 
+                                       name="max_price" 
+                                       class="form-control" 
+                                       placeholder="Max" 
+                                       value="{{ request.GET.max_price }}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div>
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-star-fill text-warning me-2"></i>Minimal reyting
+                        </label>
+                        <select name="min_rating" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="4" {% if request.GET.min_rating == "4" %}selected{% endif %}>
+                                ⭐⭐⭐⭐ va yuqori
+                            </option>
+                            <option value="3" {% if request.GET.min_rating == "3" %}selected{% endif %}>
+                                ⭐⭐⭐ va yuqori
+                            </option>
+                            <option value="2" {% if request.GET.min_rating == "2" %}selected{% endif %}>
+                                ⭐⭐ va yuqori
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <!-- Verified Only -->
+                    <div class="form-check">
+                        <input class="form-check-input" 
+                               type="checkbox" 
+                               name="verified" 
+                               id="verifiedCheck"
+                               {% if request.GET.verified %}checked{% endif %}>
+                        <label class="form-check-label" for="verifiedCheck">
+                            <i class="bi bi-patch-check-fill text-primary me-2"></i>
+                            Faqat tasdiqlangan
+                        </label>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-filter me-2"></i>Filtr
+                        </button>
+                        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Mobile Filter Toggle -->
+        <div class="d-lg-none col-12">
+            <button class="btn btn-primary w-100" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#mobileFilter">
+                <i class="bi bi-funnel me-2"></i>Filtrlarni ochish
+            </button>
+            
+            <div class="collapse mt-3" id="mobileFilter">
+                <div class="glass-card p-4">
+                    <h5 class="fw-bold text-dark mb-4">
+                        <i class="bi bi-funnel-fill text-primary me-2"></i>
+                        Filtrlar
+                    </h5>
+                    
+                    <form method="get" class="d-flex flex-column gap-3">
+                        <div class="form-floating">
+                            <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ request.GET.q }}">
+                            <label><i class="bi bi-search me-2"></i>Qidirish</label>
+                        </div>
+                        
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" name="min_price" class="form-control" placeholder="Min narx" value="{{ request.GET.min_price }}">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="max_price" class="form-control" placeholder="Max narx" value="{{ request.GET.max_price }}">
+                            </div>
+                        </div>
+                        
+                        <select name="min_rating" class="form-select">
+                            <option value="">Reyting tanlang</option>
+                            <option value="4" {% if request.GET.min_rating == "4" %}selected{% endif %}>⭐⭐⭐⭐+</option>
+                            <option value="3" {% if request.GET.min_rating == "3" %}selected{% endif %}>⭐⭐⭐+</option>
+                        </select>
+                        
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-filter me-2"></i>Filtrlash
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <!-- Sort & View Options -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div class="text-muted">
+                    <i class="bi bi-list-check me-2"></i>
+                    <span id="resultCount">{{ page_obj.paginator.count }}</span> ta xizmat topildi
+                </div>
+                
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" 
+                            type="button" 
+                            data-bs-toggle="dropdown">
+                        <i class="bi bi-sort-down me-2"></i>Tartiblash
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li><a class="dropdown-item" href="?sort=new">🆕 Yangilar</a></li>
+                        <li><a class="dropdown-item" href="?sort=popular">🔥 Ommabop</a></li>
+                        <li><a class="dropdown-item" href="?sort=top-rated">⭐ Eng yuqori reytingli</a></li>
+                        <li><a class="dropdown-item" href="?sort=cheap">💸 Arzondan qimmati</a></li>
+                        <li><a class="dropdown-item" href="?sort=expensive">💎 Qimmatdan arzoni</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="services-grid" id="servicesGrid">
+                {% for service in services %}
+                    <div class="glass-card service-card fade-in" style="animation-delay: {{ forloop.counter0|add:"0.1" }}s">
+                        <div class="position-relative">
+                            {% if service.image1 %}
+                                <img src="{{ service.image1.url }}" 
+                                     alt="{{ service.title }}" 
+                                     class="service-card-img"
+                                     loading="lazy">
+                            {% else %}
+                                <div class="service-card-img bg-secondary d-flex align-items-center justify-center">
+                                    <i class="bi bi-image fs-1 text-white"></i>
+                                </div>
+                            {% endif %}
+                            
+                            {% if service.is_verified %}
+                                <span class="service-card-badge bg-primary">
+                                    <i class="bi bi-patch-check-fill"></i> Tasdiqlangan
+                                </span>
+                            {% endif %}
+                            
+                            <div class="service-card-overlay"></div>
+                        </div>
+                        
+                        <div class="service-card-body">
+                            <h5 class="service-card-title">
+                                <a href="{% url 'service_detail' service.slug %}" class="text-decoration-none text-dark">
+                                    {{ service.title }}
+                                </a>
+                            </h5>
+                            
+                            <p class="service-card-description">
+                                {{ service.description|truncatewords:15 }}
+                            </p>
+                            
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <img src="{{ service.provider.profile.avatar.url|default:'/static/img/default-avatar.png' }}" 
+                                     alt="{{ service.provider.username }}" 
+                                     class="rounded-circle" 
+                                     width="32" 
+                                     height="32"
+                                     loading="lazy">
+                                <small class="text-muted">{{ service.provider.username }}</small>
+                            </div>
+                            
+                            <div class="service-card-footer">
+                                <div>
+                                    <div class="service-card-price">
+                                        {% if service.price %}
+                                            {{ service.price|floatformat:0 }} so'm
+                                        {% else %}
+                                            <span class="text-muted">Kelishiladi</span>
+                                        {% endif %}
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-eye me-1"></i>{{ service.view_count }}
+                                    </small>
+                                </div>
+                                
+                                <div class="service-card-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="fw-bold">{{ service.rating_avg|floatformat:1 }}</span>
+                                    <small class="text-muted">({{ service.rating_count }})</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-inbox fs-1 text-muted"></i>
+                        <p class="text-muted mt-3">Hech qanday xizmat topilmadi</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav aria-label="Sahifalash" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filter by event type with AJAX
+    function filterByEventType(eventTypeId) {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('event_type', eventTypeId);
+        window.location.href = currentUrl.toString();
+    }
+    
+    // Lazy loading for images
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        }
+    });
+    
+    // Auto-submit form on filter change
+    document.querySelectorAll('#filterForm select, #filterForm input[type="checkbox"]').forEach(element => {
+        element.addEventListener('change', function() {
+            document.getElementById('filterForm').submit();
+        });
+    });
+    
+    // Save scroll position
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('scrollPosition', window.scrollY);
+    });
+    
+    window.addEventListener('load', function() {
+        const scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition));
+            sessionStorage.removeItem('scrollPosition');
+        }
+    });
+</script>
+{% endblock %}

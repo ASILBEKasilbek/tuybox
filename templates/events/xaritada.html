@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}📍 Xizmatlarni xaritada ko‘rish{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center text-gradient fw-bold" style="font-size:2rem;">
+        📍 Xizmatlarni xaritada ko‘rish
+    </h2>
+
+    <!-- Xarita -->
+    <div id="map" 
+         style="height: 550px; border-radius: 20px; 
+                box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+                border: 2px solid #0d6efd;">
+    </div>
+</div>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Marker Cluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<style>
+    /* Gradient title */
+    .text-gradient {
+        background: linear-gradient(45deg, #0d6efd, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Popup card */
+    .popup-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        width: 230px;
+    }
+    .popup-card img {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+        display: block;
+    }
+    .popup-card .content {
+        padding: 10px;
+    }
+    .popup-card h6 {
+        font-size: 15px;
+        font-weight: 700;
+        margin: 0 0 5px 0;
+        color: #0d6efd;
+    }
+    .popup-card p {
+        font-size: 12px;
+        margin: 0;
+        color: #444;
+    }
+    .popup-card .price {
+        margin-top: 6px;
+        font-weight: 600;
+        color: #198754;
+    }
+    .popup-card .btn {
+        margin-top: 8px;
+        border-radius: 30px;
+        font-size: 12px;
+        padding: 4px 12px;
+        transition: all 0.2s ease-in-out;
+    }
+    .popup-card .btn:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var map = L.map('map').setView([41.2995, 69.2401], 12);
+
+    // OSM tile
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    var markers = L.markerClusterGroup();
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLat = position.coords.latitude;
+            var userLng = position.coords.longitude;
+
+            // Foydalanuvchi joylashuvi
+            L.marker([userLat, userLng], {
+                title: "Sizning joyingiz",
+                icon: L.icon({
+                    iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                    iconSize: [42,42]
+                })
+            }).addTo(map).bindPopup("<b>📍 Siz shu joydasiz</b>").openPopup();
+
+            map.setView([userLat, userLng], 14);
+
+            // Xizmatlarni olish
+            fetch(`/api/nearest_service/?lat=${userLat}&lng=${userLng}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) { alert(data.error); return; }
+
+                    data.services.forEach(s => {
+                        var detailUrl = `/service/${s.slug}/`;
+
+                        var popupContent = `
+                            <div class="popup-card">
+                                ${s.image ? 
+                                    `<img src="${s.image}" alt="${s.title}">` : 
+                                    `<div style="width:100%;height:130px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#888;">
+                                        📷 Rasm yo‘q
+                                     </div>`
+                                }
+                                <div class="content">
+                                    <h6>${s.title}</h6>
+                                    <p>${s.description ? s.description.slice(0,70) + '…' : ''}</p>
+                                    <p class="price">💰 ${s.price ? s.price + " so'm" : 'Noma’lum'}</p>
+                                    <div style="text-align:right;">
+                                        <a href="${detailUrl}" class="btn btn-sm btn-outline-primary">Batafsil →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        var m = L.marker([s.lat, s.lng], {
+                            title: s.title,
+                            icon: L.icon({
+                                iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+                                iconSize: [36,36]
+                            })
+                        }).bindPopup(popupContent);
+
+                        markers.addLayer(m);
+                    });
+
+                    map.addLayer(markers);
+                })
+                .catch(err => console.error("Xatolik:", err));
+        });
+    } else {
+        alert("Brauzeringiz geolokatsiyani qo‘llab-quvvatlamaydi.");
+    }
+});
+</script>
+{% endblock %}

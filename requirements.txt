@@ -1,0 +1,77 @@
+aiofiles==24.1.0
+aiogram==3.22.0
+aiohappyeyeballs==2.6.1
+aiohttp==3.12.15
+aiosignal==1.4.0
+annotated-types==0.7.0
+asgiref==3.9.1
+attrs==25.3.0
+certifi==2025.8.3
+charset-normalizer==3.4.3
+Django==5.2.6
+django-jazzmin==3.0.1
+django-widget-tweaks==1.5.0
+dotenv==0.9.9
+frozenlist==1.7.0
+gunicorn==23.0.0
+idna==3.10
+magic-filter==1.0.12
+multidict==6.6.4
+packaging==25.0
+pillow==11.3.0
+propcache==0.3.2
+pydantic==2.11.9
+pydantic_core==2.33.2
+python-dotenv==1.1.1
+requests==2.32.5
+sqlparse==0.5.3
+typing-inspection==0.4.1
+typing_extensions==4.15.0
+urllib3==2.5.0
+yarl==1.20.1
+
+# Performance & Caching
+django-redis==5.4.0
+redis==5.2.1
+django-cacheops==7.0.2
+
+# Database Optimization
+psycopg2-binary==2.9.10
+django-db-connection-pool==1.2.4
+
+# Image Optimization
+django-imagekit==5.0.0
+pilkit==3.0
+
+# API & REST
+djangorestframework==3.15.2
+django-cors-headers==4.6.0
+django-filter==25.1
+
+# Compression & Minification
+django-compressor==4.5.1
+django-htmlmin==0.11.0
+
+# Monitoring & Performance
+django-debug-toolbar==4.4.6
+django-silk==5.3.0
+
+# Security
+django-ratelimit==4.1.0
+django-defender==0.9.7
+
+# Celery for async tasks
+celery==5.4.0
+django-celery-beat==2.7.0
+django-celery-results==2.5.1
+
+# Search
+django-haystack==3.3.0
+whoosh==2.7.4
+
+# PWA Support
+django-progressive-web-app==0.2.0
+
+# Additional utilities
+django-extensions==3.2.3
+sorl-thumbnail==12.11.0

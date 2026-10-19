@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+
+{% block title %}Tadbirlar ro‘yxati{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <!-- ================= KATEGORIYA PILL BAR ================= -->
+        <div class="col-12 mb-3">
+            <h6 class="mb-2 fw-bold text-primary">Tadbir turlari</h6>
+            <div class="category-bar overflow-auto overflow-y-hidden text-nowrap px-2 py-3">
+                <div id="event-type-bar" class="d-inline-flex gap-2">
+                    <a href="{% url 'event_list' %}" 
+                       class="btn btn-light border rounded-pill px-3 shadow-sm fw-semibold">
+                        🌐 Barchasi
+                    </a>
+                    {% for event_type in event_types %}
+                        <button type="button" 
+                                class="btn btn-light border event-type-btn rounded-pill px-3 shadow-sm fw-semibold" 
+                                data-event-type-id="{{ event_type.id }}">
+                            {{ event_type.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SIDEBAR ================= -->
+        <div class="col-md-3 mb-4 d-md-block d-none">
+            <div class="border rounded-3 shadow-sm p-3 bg-white sticky-top" style="top:80px;">
+                <h6 class="fw-bold text-primary mb-3">🔎 Filtrlash</h6>
+                <form method="get" class="d-flex flex-column gap-3">
+                    <div class="form-floating">
+                        <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ request.GET.q }}" aria-label="Qidirish">
+                        <label>🔍 Qidirish</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="min_price" class="form-control" placeholder="Minimal narx" value="{{ request.GET.min_price }}" aria-label="Minimal narx">
+                        <label>💵 Minimal narx</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="max_price" class="form-control" placeholder="Maksimal narx" value="{{ request.GET.max_price }}" aria-label="Maksimal narx">
+                        <label>💵 Maksimal narx</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" name="min_rating" class="form-control" min="1" max="5" value="{{ request.GET.min_rating }}" aria-label="Minimal baho">
+                        <label>⭐ Minimal baho</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2 w-100 shadow-sm">Filtrlash</button>
+                </form>
+            </div>
+        </div>
+        <!-- Mobile Collapsible Filter -->
+        <div class="d-md-none mb-3">
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+                🔎 Filtrlarni ochish
+            </button>
+            <div class="collapse mt-3" id="filterCollapse">
+                <div class="border rounded-3 shadow-sm p-3 bg-white">
+                    <h6 class="fw-bold text-primary mb-3">🔎 Filtrlash</h6>
+                    <form method="get" class="d-flex flex-column gap-3">
+                        <div class="form-floating">
+                            <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ request.GET.q }}" aria-label="Qidirish">
+                            <label>🔍 Qidirish</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="number" name="min_price" class="form-control" placeholder="Minimal narx" value="{{ request.GET.min_price }}" aria-label="Minimal narx">
+                            <label>💵 Minimal narx</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="number" name="max_price" class="form-control" placeholder="Maksimal narx" value="{{ request.GET.max_price }}" aria-label="Maksimal narx">
+                            <label>💵 Maksimal narx</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="number" name="min_rating" class="form-control" min="1" max="5" value="{{ request.GET.min_rating }}" aria-label="Minimal baho">
+                            <label>⭐ Minimal baho</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2 w-100 shadow-sm">Filtrlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="col-md-9">
+            <!-- SORT DROPDOWN -->
+            <div class="d-flex justify-content-end mb-3">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tartiblash
+                    </button>
+                    <ul class="dropdown-menu shadow">
+                        <li><a class="dropdown-item" href="?sort=popular">🔥 Ommabop</a></li>
+                        <li><a class="dropdown-item" href="?sort=cheap">💸 Arzon</a></li>
+                        <li><a class="dropdown-item" href="?sort=expensive">💎 Qimmat</a></li>
+                        <li><a class="dropdown-item" href="?sort=top-rated">⭐ Yuqori baholangan</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ================= SUBCATEGORY HORIZONTAL CAROUSEL ================= -->
+            {% for event_type in event_types %}
+            <div class="subcategory-panel {% if forloop.first %}show{% endif %}" data-event-type-id="{{ event_type.id }}">
+                <div class="subcategory-horizontal-scroll d-flex gap-4 overflow-auto pb-3">
+                    {% for service_category in event_type.service_categories.all %}
+                    <div class="subcategory-column" style="min-width:250px;">
+                        <h6 class="text-center mb-3 fw-semibold text-secondary">{{ service_category.name }}</h6>
+                        <div class="vertical-carousel-wrapper position-relative">
+                            <button class="carousel-btn prev shadow-sm" data-carousel-id="carousel-{{ service_category.id }}" aria-label="Previous slide">▲</button>
+                            <div class="vertical-carousel swiper-container" id="carousel-{{ service_category.id }}">
+                                <div class="swiper-wrapper">
+                                    {% for service in service_category.services.all %}
+                                    <div class="swiper-slide carousel-card hover-shadow">
+                                        {% if service.provider.profile.image %}
+                                        <img src="{{ service.provider.profile.image.url }}" alt="{{ service.title }}" loading="lazy">
+                                        {% endif %}
+                                        <div class="carousel-card-body">
+                                            <h6 class="fw-bold">{{ service.title }}</h6>
+                                            <p class="text-muted small">{{ service.description|truncatewords:12 }}</p>
+                                            <a href="{% url 'service_detail' slug=service.slug %}" 
+                                               class="btn btn-outline-primary btn-sm">Batafsil →</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <button class="carousel-btn next shadow-sm" data-carousel-id="carousel-{{ service_category.id }}" aria-label="Next slide">▼</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= NO-JS FALLBACK ================= -->
+<noscript>
+    <style>.subcategory-panel { display: block; }</style>
+    <p class="text-center text-muted">JavaScript is required to use the interactive carousel. Please enable JavaScript or view the static list below.</p>
+</noscript>
+
+<!-- ================= STYLES ================= -->
+<style>
+/* Root Variables */
+:root {
+    --primary: #0d6efd;
+    --secondary: #6c757d;
+    --accent: #1e90ff;
+    --background: #f5f7fa;
+    --card-bg: #ffffff;
+}
+
+/* Body */
+body {
+    background: linear-gradient(135deg, var(--background) 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Category Pill Bar */
+.category-bar {
+    background: linear-gradient(to right, #e9f0ff, #d0e3ff);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+.category-bar::-webkit-scrollbar { display: none; }
+.event-type-btn {
+    transition: all 0.3s ease;
+    background: #fff;
+    border: 1px solid var(--primary);
+}
+.event-type-btn.active, .event-type-btn:hover {
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    color: white;
+    border-color: transparent;
+    transform: scale(1.05);
+}
+
+/* Subcategory Panels */
+.subcategory-panel { display: none; }
+.subcategory-panel.show { display: block; }
+.subcategory-horizontal-scroll {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.subcategory-column { min-width: 250px; scroll-snap-align: start; }
+.subcategory-horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+.subcategory-horizontal-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+.subcategory-horizontal-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Carousel Card */
+.carousel-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin: 10px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.carousel-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.carousel-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.carousel-card-body {
+    padding: 15px;
+    background: #fafafa;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    background: rgba(13, 110, 253, 0.8);
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    z-index: 20;
+}
+.carousel-btn:hover { background: var(--accent); }
+.carousel-btn.prev { top: -12px; }
+.carousel-btn.next { bottom: -12px; }
+
+/* Button Micro-Interactions */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+.btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+/* Loading State */
+.btn-primary.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sticky-top { position: relative; top: auto; }
+    .subcategory-column { min-width: 200px; }
+}
+</style>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Event type buttons
+    const buttons = document.querySelectorAll('.event-type-btn');
+    const subPanels = document.querySelectorAll('.subcategory-panel');
+    subPanels.forEach(p => p.classList.remove('show'));
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const typeId = this.dataset.eventTypeId;
+            subPanels.forEach(p => p.classList.remove('show'));
+            const panel = document.querySelector(`.subcategory-panel[data-event-type-id="${typeId}"]`);
+            if (panel) panel.classList.add('show');
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    if (buttons.length > 0) {
+        buttons[0].classList.add("active");
+        const firstPanel = document.querySelector(`.subcategory-panel[data-event-type-id="${buttons[0].dataset.eventTypeId}"]`);
+        if (firstPanel) firstPanel.classList.add("show");
+    }
+
+    // Initialize Swiper for vertical carousels
+    document.querySelectorAll('.vertical-carousel').forEach(carousel => {
+        new Swiper(carousel, {
+            direction: 'vertical',
+            slidesPerView: 1,
+            spaceBetween: 10,
+            loop: true,
+            autoplay: { delay: 5000, disableOnInteraction: true },
+            navigation: {
+                nextEl: `.carousel-btn.next[data-carousel-id="${carousel.id}"]`,
+                prevEl: `.carousel-btn.prev[data-carousel-id="${carousel.id}"]`,
+            },
+        });
+    });
+
+    // Filter button loading state
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function() {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.classList.add('loading');
+            btn.textContent = 'Yuklanmoqda...';
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                btn.textContent = 'Filtrlash';
+            }, 2000); // Simulate loading
+        });
+    });
+});
+</script>
+{% endblock %}
