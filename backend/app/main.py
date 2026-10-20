@@ -158,6 +158,13 @@ async def admin_dashboard():
 async def google_verification():
     return HTMLResponse("google-site-verification: googleaf9d9192877b85e2.html", status_code=200)
 
+@app.api_route("/favicon.ico", methods=["GET", "HEAD"])
+async def favicon_ico():
+    ico_path = os.path.join(static_dir, "favicon.ico")
+    if os.path.exists(ico_path):
+        return FileResponse(path=ico_path, media_type="image/x-icon")
+    return HTMLResponse("", status_code=404)
+
 @app.api_route("/robots.txt", methods=["GET", "HEAD"])
 async def robots_txt():
     robots_path = os.path.join(static_dir, "robots.txt")
