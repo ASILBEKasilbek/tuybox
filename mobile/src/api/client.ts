@@ -1,6 +1,6 @@
-// Tuyxona API Client: FastAPI backend bilan to'liq asinxron aloqa
+// TuyBor API Client: FastAPI backend bilan to'liq asinxron aloqa
 
-const BASE_URL = 'http://localhost:8000/api/v1';
+const BASE_URL = 'https://tuybor.uz/api/v1';
 
 let authToken: string | null = null;
 

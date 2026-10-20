@@ -8,33 +8,38 @@ export const BudgetCalculatorScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Text style={styles.pageTitle}>💍 To'y Byudjeti Kalkulyatori</Text>
+        <View style={styles.badgeRow}>
+          <Text style={styles.badgeText}>👑 SMART ALLOCATION</Text>
+        </View>
+        <Text style={styles.pageTitle}>To'y Byudjeti Kalkulyatori</Text>
         <Text style={styles.pageSubtitle}>
-          Mavjud pulingizga eng munosib to'yxona, san'atkor va jamoani yig'ing
+          Mavjud pulingizga eng munosib to'yxona, san'atkor va jamoani optimal yig'ing
         </Text>
       </View>
 
       <BudgetPlannerWidget />
 
       <LuxuryCard style={styles.tipsCard}>
-        <Text style={styles.tipsTitle}>💡 Antigravity Smart Maslahatlar</Text>
+        <Text style={styles.tipsTitle}>💡 TuyBor Smart Maslahatlari</Text>
         <Text style={styles.tipItem}>
-          • To'yxonani qish va bahor mavsumlarida band qilsangiz, 10% dan 20% gacha tejash mumkin.
+          • To'yxonani qish va bahor oylarida band qilsangiz, 15% dan 25% gacha chegirma olishingiz mumkin.
         </Text>
         <Text style={styles.tipItem}>
-          • Foto va video studiyalarni «Hammasi ichida» to'plami bilan olish alohida buyurtma berishdan ko'ra arzonroq tushadi.
+          • Foto va video studiyalarni «Hammasi ichida (All-Inclusive)» to'plami bilan olish alohida buyurtma berishdan 20% arzonroq tushadi.
         </Text>
         <Text style={styles.tipItem}>
-          • Platforma orqali rasmiylashtirilgan har bir shartnoma 100% Escrow xavfsiz depozit bilan kafolatlanadi.
+          • TuyBor orqali rasmiylashtirilgan har bir shartnoma 100% kafolatlangan va double-booking (sanalarning to'qnashishi) xavfi yo'q.
         </Text>
       </LuxuryCard>
 
       <View style={styles.ctaWrapper}>
         <GoldButton
-          title="Shu byudjetga to'y paketini yig'ish"
+          title="Shu Byudjetga To'y Paketini Yig'ish →"
           onPress={() => {}}
         />
       </View>
+
+      <View style={styles.bottomSpacer} />
     </ScrollView>
   );
 };
@@ -42,43 +47,69 @@ export const BudgetCalculatorScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#FAF8F5',
     paddingHorizontal: 16,
-    paddingTop: 50,
+    paddingTop: 48,
   },
   header: {
     marginBottom: 16,
   },
-  pageTitle: {
-    fontSize: 22,
+  badgeRow: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#FFF9E5',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(229, 169, 18, 0.4)',
+    marginBottom: 8,
+  },
+  badgeText: {
+    fontSize: 10,
     fontWeight: '800',
-    color: '#111827',
+    color: '#8A5506',
+    letterSpacing: 0.8,
+  },
+  pageTitle: {
+    fontSize: 23,
+    fontWeight: '900',
+    color: '#110A03',
   },
   pageSubtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: '#7C6B5C',
     marginTop: 4,
     lineHeight: 18,
   },
   tipsCard: {
-    marginVertical: 12,
-    backgroundColor: '#FFFBEB',
-    borderColor: 'rgba(212, 175, 55, 0.4)',
+    marginVertical: 14,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1.5,
+    borderColor: 'rgba(229, 169, 18, 0.35)',
+    borderRadius: 20,
+    padding: 18,
+    shadowColor: '#8A5506',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 14,
+    elevation: 2,
   },
   tipsTitle: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#92400E',
-    marginBottom: 8,
+    fontWeight: '800',
+    color: '#4E2C00',
+    marginBottom: 10,
   },
   tipItem: {
     fontSize: 13,
-    color: '#78350F',
+    color: '#5C4A3A',
     lineHeight: 20,
-    marginBottom: 6,
+    marginBottom: 8,
   },
   ctaWrapper: {
-    marginVertical: 20,
-    marginBottom: 60,
+    marginVertical: 12,
+  },
+  bottomSpacer: {
+    height: 90,
   }
 });

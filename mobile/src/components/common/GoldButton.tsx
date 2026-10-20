@@ -34,7 +34,7 @@ export const GoldButton: React.FC<GoldButtonProps> = ({
     return (
       <TouchableOpacity activeOpacity={0.85} onPress={handlePress} style={[styles.touchable, style]}>
         <LinearGradient
-          colors={['#F3E5AB', '#D4AF37', '#AA7C11']}
+          colors={['#FFF9E5', '#FDE074', '#F5C232', '#D49B1E']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.gradient}

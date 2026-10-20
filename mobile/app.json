@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "TuyBor",
+    "slug": "tuybor",
+    "version": "1.0.4",
+    "orientation": "portrait",
+    "icon": "../backend/static/android-chrome-512x512.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "../backend/static/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FAF8F5"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "uz.tuybor.app"
+    },
+    "android": {
+      "package": "uz.tuybor.app",
+      "versionCode": 4,
+      "adaptiveIcon": {
+        "foregroundImage": "../backend/static/android-chrome-512x512.png",
+        "backgroundColor": "#1A1006"
+      }
+    },
+    "web": {
+      "favicon": "../backend/static/favicon-48x48.png"
+    }
+  }
+}

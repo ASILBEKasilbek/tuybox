@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { COLORS } from './src/theme/colors';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ServiceDetailScreen } from './src/screens/ServiceDetailScreen';
 import { BudgetCalculatorScreen } from './src/screens/BudgetCalculatorScreen';
 import { DigitalInvitationScreen } from './src/screens/DigitalInvitationScreen';
+import { ChatScreen } from './src/screens/ChatScreen';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'home' | 'budget' | 'invites'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'budget' | 'invites' | 'chat'>('home');
   const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
 
   const renderScreen = () => {
@@ -33,6 +34,8 @@ export default function App() {
         return <BudgetCalculatorScreen />;
       case 'invites':
         return <DigitalInvitationScreen />;
+      case 'chat':
+        return <ChatScreen />;
       default:
         return null;
     }
@@ -40,39 +43,53 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar style="dark" backgroundColor="#FFFFFF" />
       
       {/* Screen Body */}
       <View style={styles.body}>
         {renderScreen()}
       </View>
 
-      {/* Luxury Bottom Navigation Bar */}
+      {/* 🏛️ Floating Palace Gold Bottom Navigation Bar */}
       {selectedServiceId === null && (
-        <View style={styles.tabBar}>
-          <TouchableOpacity
-            style={styles.tabItem}
-            onPress={() => setActiveTab('home')}
-          >
-            <Text style={[styles.tabIcon, activeTab === 'home' && styles.tabIconActive]}>🏰</Text>
-            <Text style={[styles.tabLabel, activeTab === 'home' && styles.tabLabelActive]}>Xizmatlar</Text>
-          </TouchableOpacity>
+        <View style={styles.tabBarWrapper}>
+          <View style={styles.tabBar}>
+            <TouchableOpacity
+              style={[styles.tabItem, activeTab === 'home' && styles.tabItemActive]}
+              onPress={() => setActiveTab('home')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.tabIcon}>🏰</Text>
+              <Text style={[styles.tabLabel, activeTab === 'home' && styles.tabLabelActive]}>Xizmatlar</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.tabItem}
-            onPress={() => setActiveTab('budget')}
-          >
-            <Text style={[styles.tabIcon, activeTab === 'budget' && styles.tabIconActive]}>💍</Text>
-            <Text style={[styles.tabLabel, activeTab === 'budget' && styles.tabLabelActive]}>Byudjet AI</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tabItem, activeTab === 'budget' && styles.tabItemActive]}
+              onPress={() => setActiveTab('budget')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.tabIcon}>🧮</Text>
+              <Text style={[styles.tabLabel, activeTab === 'budget' && styles.tabLabelActive]}>Byudjet AI</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.tabItem}
-            onPress={() => setActiveTab('invites')}
-          >
-            <Text style={[styles.tabIcon, activeTab === 'invites' && styles.tabIconActive]}>💌</Text>
-            <Text style={[styles.tabLabel, activeTab === 'invites' && styles.tabLabelActive]}>Taklifnoma</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tabItem, activeTab === 'invites' && styles.tabItemActive]}
+              onPress={() => setActiveTab('invites')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.tabIcon}>💌</Text>
+              <Text style={[styles.tabLabel, activeTab === 'invites' && styles.tabLabelActive]}>Taklifnoma</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.tabItem, activeTab === 'chat' && styles.tabItemActive]}
+              onPress={() => setActiveTab('chat')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.tabIcon}>💬</Text>
+              <Text style={[styles.tabLabel, activeTab === 'chat' && styles.tabLabelActive]}>Konsyerj</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </SafeAreaView>
@@ -82,44 +99,60 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#FAF8F5',
   },
   body: {
     flex: 1,
   },
+  tabBarWrapper: {
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? 24 : 12,
+    left: 16,
+    right: 16,
+  },
   tabBar: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(212, 175, 55, 0.2)',
-    paddingVertical: 10,
-    paddingBottom: 20,
+    borderRadius: 28,
+    borderWidth: 1.5,
+    borderColor: 'rgba(229, 169, 18, 0.45)',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
     justifyContent: 'space-around',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    elevation: 8,
+    alignItems: 'center',
+    shadowColor: '#8A5506',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.16,
+    shadowRadius: 24,
+    elevation: 10,
   },
   tabItem: {
     alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    minWidth: 70,
+  },
+  tabItemActive: {
+    backgroundColor: '#FFF9E5',
+    borderWidth: 1,
+    borderColor: '#E5A912',
+    shadowColor: '#E5A912',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
   },
   tabIcon: {
-    fontSize: 22,
-    opacity: 0.6,
-  },
-  tabIconActive: {
-    opacity: 1,
-    transform: [{ scale: 1.1 }],
+    fontSize: 20,
+    marginBottom: 2,
   },
   tabLabel: {
-    fontSize: 11,
-    color: '#6B7280',
-    marginTop: 4,
-    fontWeight: '500',
+    fontSize: 10.5,
+    color: '#8E7B6B',
+    fontWeight: '600',
   },
   tabLabelActive: {
-    color: COLORS.gold[700],
-    fontWeight: '700',
+    color: '#4E2C00',
+    fontWeight: '800',
   }
 });
