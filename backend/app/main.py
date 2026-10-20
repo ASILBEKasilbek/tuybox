@@ -154,13 +154,40 @@ async def admin_dashboard():
             return HTMLResponse(content=f.read(), status_code=200)
     return HTMLResponse("<h1>TuyBox Admin Panel</h1>", status_code=200)
 
+@app.api_route("/robots.txt", methods=["GET", "HEAD"])
+async def robots_txt():
+    robots_path = os.path.join(static_dir, "robots.txt")
+    if os.path.exists(robots_path):
+        return FileResponse(path=robots_path, media_type="text/plain")
+    return HTMLResponse("User-agent: *\nAllow: /\n", media_type="text/plain")
+
+@app.api_route("/sitemap.xml", methods=["GET", "HEAD"])
+async def sitemap_xml():
+    sitemap_path = os.path.join(static_dir, "sitemap.xml")
+    if os.path.exists(sitemap_path):
+        return FileResponse(path=sitemap_path, media_type="application/xml")
+    return HTMLResponse("<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://tuybor.uz/</loc></url></urlset>", media_type="application/xml")
+
+@app.api_route("/app", methods=["GET", "HEAD"], response_class=HTMLResponse)
+async def marketplace_app():
+    app_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
+    if os.path.exists(app_path):
+        with open(app_path, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read(), status_code=200)
+    return HTMLResponse("<h1>TuyBor Web Ilova</h1>", status_code=200)
+
 @app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 async def root():
-    landing_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
+    landing_path = os.path.join(os.path.dirname(__file__), "templates", "landing.html")
     if os.path.exists(landing_path):
         with open(landing_path, "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read(), status_code=200)
-    return HTMLResponse("<h1>TuyBox Platform</h1>")
+    # Fallback to index.html if landing.html not found
+    fallback_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
+    if os.path.exists(fallback_path):
+        with open(fallback_path, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read(), status_code=200)
+    return HTMLResponse("<h1>TuyBor Platform</h1>")
 
 @app.get("/api/health")
 async def health():
