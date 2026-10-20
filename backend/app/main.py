@@ -154,6 +154,10 @@ async def admin_dashboard():
             return HTMLResponse(content=f.read(), status_code=200)
     return HTMLResponse("<h1>TuyBox Admin Panel</h1>", status_code=200)
 
+@app.api_route("/googleaf9d9192877b85e2.html", methods=["GET", "HEAD"], response_class=HTMLResponse)
+async def google_verification():
+    return HTMLResponse("google-site-verification: googleaf9d9192877b85e2.html", status_code=200)
+
 @app.api_route("/robots.txt", methods=["GET", "HEAD"])
 async def robots_txt():
     robots_path = os.path.join(static_dir, "robots.txt")
