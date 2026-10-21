@@ -1,0 +1,44 @@
+{
+  "packageName": "uz.tuybor.app",
+  "appName": "TuyBor — To'y & Tantana Ekotizimi",
+  "inAppProducts": [
+    {
+      "productId": "uz.tuybor.vip.pass",
+      "type": "inapp_managed",
+      "status": "active",
+      "title": "TuyBor Royal VIP Pass (Bir martalik)",
+      "description": "Cheksiz 24K Gold to'y taklifnomalari, AI byudjet tahlili, mehmonlar QR nazorati va shaxsiy to'y konsyerji",
+      "defaultPrice": {
+        "currency": "USD",
+        "units": "4",
+        "nanos": 990000000
+      },
+      "regionalPricing": {
+        "UZ": {
+          "currency": "UZS",
+          "price": "65000"
+        }
+      }
+    }
+  ],
+  "subscriptions": [
+    {
+      "productId": "uz.tuybor.vip.monthly",
+      "status": "active",
+      "title": "TuyBor Royal VIP Oylik Obuna",
+      "description": "Barcha VIP imtiyozlar va saroylar uchun 20% chegirmalar (oylik yangilanadi)",
+      "billingPeriod": "P1M",
+      "defaultPrice": {
+        "currency": "USD",
+        "units": "1",
+        "nanos": 990000000
+      },
+      "regionalPricing": {
+        "UZ": {
+          "currency": "UZS",
+          "price": "25000"
+        }
+      }
+    }
+  ]
+}

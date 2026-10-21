@@ -41,6 +41,8 @@ Thumbs.db
 *.idsig
 node_modules/
 .expo/
+dist/
+mobile/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
