@@ -273,7 +273,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   closeBtn: {
-    size: 38,
     width: 38,
     height: 38,
     borderRadius: 19,

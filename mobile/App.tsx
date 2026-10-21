@@ -61,7 +61,7 @@ export default function App() {
       </View>
 
       {/* 🏛️ Floating Palace Gold Bottom Navigation Bar */}
-      {selectedServiceId === null && activeTab !== 'vip' && (
+      {selectedServiceId === null && (
         <View style={styles.tabBarWrapper}>
           <View style={styles.tabBar}>
             <TouchableOpacity

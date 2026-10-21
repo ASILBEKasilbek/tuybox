@@ -36,6 +36,10 @@ export const COLORS = {
     border: 'rgba(212, 175, 55, 0.15)',
   },
 
+  // Status Tokens
+  emerald: '#059669',
+  crimson: '#DC2626',
+
   // Emotsional & Status Ranglar
   status: {
     verified: '#E5A912',
