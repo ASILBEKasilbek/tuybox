@@ -7,10 +7,12 @@ import { ServiceDetailScreen } from './src/screens/ServiceDetailScreen';
 import { BudgetCalculatorScreen } from './src/screens/BudgetCalculatorScreen';
 import { DigitalInvitationScreen } from './src/screens/DigitalInvitationScreen';
 import { ChatScreen } from './src/screens/ChatScreen';
+import { PremiumScreen } from './src/screens/PremiumScreen';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'home' | 'budget' | 'invites' | 'chat'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'budget' | 'vip' | 'invites' | 'chat'>('home');
   const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
+  const [isVipMember, setIsVipMember] = useState<boolean>(false);
 
   const renderScreen = () => {
     if (selectedServiceId !== null) {
@@ -28,14 +30,22 @@ export default function App() {
           <HomeScreen
             onSelectService={(id) => setSelectedServiceId(id)}
             onOpenBudget={() => setActiveTab('budget')}
+            onOpenPremium={() => setActiveTab('vip')}
           />
         );
       case 'budget':
         return <BudgetCalculatorScreen />;
+      case 'vip':
+        return (
+          <PremiumScreen
+            onBack={() => setActiveTab('home')}
+            onSuccessPurchase={() => setIsVipMember(true)}
+          />
+        );
       case 'invites':
         return <DigitalInvitationScreen />;
       case 'chat':
-        return <ChatScreen />;
+        return <ChatScreen onBack={() => setActiveTab('home')} />;
       default:
         return null;
     }
@@ -51,7 +61,7 @@ export default function App() {
       </View>
 
       {/* 🏛️ Floating Palace Gold Bottom Navigation Bar */}
-      {selectedServiceId === null && (
+      {selectedServiceId === null && activeTab !== 'vip' && (
         <View style={styles.tabBarWrapper}>
           <View style={styles.tabBar}>
             <TouchableOpacity
@@ -70,6 +80,17 @@ export default function App() {
             >
               <Text style={styles.tabIcon}>🧮</Text>
               <Text style={[styles.tabLabel, activeTab === 'budget' && styles.tabLabelActive]}>Byudjet AI</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.tabItem, styles.tabItemVip, activeTab === 'vip' && styles.tabItemActive]}
+              onPress={() => setActiveTab('vip')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.tabIcon}>👑</Text>
+              <Text style={[styles.tabLabel, styles.tabLabelVip, activeTab === 'vip' && styles.tabLabelActive]}>
+                {isVipMember ? 'VIP Faol' : 'VIP Pass'}
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -128,10 +149,10 @@ const styles = StyleSheet.create({
   },
   tabItem: {
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-    minWidth: 70,
+    paddingVertical: 5,
+    paddingHorizontal: 6,
+    borderRadius: 18,
+    minWidth: 58,
   },
   tabItemActive: {
     backgroundColor: '#FFF9E5',
@@ -142,17 +163,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
   },
+  tabItemVip: {
+    backgroundColor: '#FFFDF5',
+    borderWidth: 1,
+    borderColor: 'rgba(229, 169, 18, 0.45)',
+  },
   tabIcon: {
-    fontSize: 20,
+    fontSize: 19,
     marginBottom: 2,
   },
   tabLabel: {
-    fontSize: 10.5,
+    fontSize: 10,
     color: '#8E7B6B',
     fontWeight: '600',
   },
   tabLabelActive: {
     color: '#4E2C00',
+    fontWeight: '800',
+  },
+  tabLabelVip: {
+    color: '#8A5506',
     fontWeight: '800',
   }
 });

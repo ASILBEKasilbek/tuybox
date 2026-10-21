@@ -30,6 +30,12 @@ export const COLORS = {
     cardShadow: 'rgba(138, 85, 6, 0.08)',
   },
 
+  porcelain: {
+    bg: '#FAF8F5',
+    card: '#FFFFFF',
+    border: 'rgba(212, 175, 55, 0.15)',
+  },
+
   // Emotsional & Status Ranglar
   status: {
     verified: '#E5A912',

@@ -9,11 +9,13 @@ import { BudgetPlannerWidget } from '../components/budget/BudgetPlannerWidget';
 interface HomeScreenProps {
   onSelectService: (serviceId: number) => void;
   onOpenBudget: () => void;
+  onOpenPremium?: () => void;
 }
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenBudget }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenBudget, onOpenPremium }) => {
   const [selectedCat, setSelectedCat] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [favorites, setFavorites] = useState<number[]>([1]);
 
   const categories = [
     { id: 'all', name: 'Barchasi', icon: '✨' },
@@ -31,9 +33,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
     { name: 'Sherzod & Kamola', icon: '💎', status: 'Prezident' },
   ];
 
-  const featuredServices = [
+  const allServices = [
     {
       id: 1,
+      catId: 'venues',
       title: 'Versal Grand Ballroom (500 kishi)',
       category: "To'yxona",
       price: 45000000,
@@ -46,6 +49,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
     },
     {
       id: 2,
+      catId: 'venues',
+      title: 'Oqsaroy Palace & Crystal Hall (600 kishi)',
+      category: "To'yxona",
+      price: 55000000,
+      city: 'Toshkent, Mirobod',
+      rating: 4.98,
+      reviewsCount: 210,
+      image: 'https://images.unsplash.com/photo-1544077960-604201fe74bc?q=80&w=800',
+      distanceKm: 3.8,
+      badgeText: "QIROLLIK SAROYI",
+    },
+    {
+      id: 3,
+      catId: 'music',
       title: "Jonli Ijro Ansambli & Xonandalar",
       category: "San'atkor",
       price: 15000000,
@@ -57,7 +74,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
       badgeText: "ENG KO'P BUYURTMA",
     },
     {
-      id: 3,
+      id: 4,
+      catId: 'music',
+      title: "Shahzod Vokal Guruhi & DJ Live Show",
+      category: "San'atkor",
+      price: 12000000,
+      city: 'Toshkent & Samarqand',
+      rating: 4.88,
+      reviewsCount: 65,
+      image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800',
+      distanceKm: 1.5,
+      badgeText: "MODERN SHOW",
+    },
+    {
+      id: 5,
+      catId: 'photo',
       title: "Gold Premium Foto & Video Studiya",
       category: "Foto & Video",
       price: 12000000,
@@ -67,8 +98,63 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
       image: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=800',
       distanceKm: 1.8,
       badgeText: "DRON & LOVE STORY",
+    },
+    {
+      id: 6,
+      catId: 'photo',
+      title: "Royal Cinematography 4K & Dron Studio",
+      category: "Foto & Video",
+      price: 18000000,
+      city: 'Toshkent',
+      rating: 4.96,
+      reviewsCount: 112,
+      image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800',
+      distanceKm: 2.9,
+      badgeText: "HOLLYWOOD SIFAT",
+    },
+    {
+      id: 7,
+      catId: 'decor',
+      title: "Zardo'zi & Gullar Arkasi (Palace Decor)",
+      category: "Dekoratsiya",
+      price: 9000000,
+      city: 'Toshkent',
+      rating: 4.92,
+      reviewsCount: 78,
+      image: 'https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=800',
+      distanceKm: 3.2,
+      badgeText: "TABIIY GULLAR",
+    },
+    {
+      id: 8,
+      catId: 'auto',
+      title: "Mercedes-Maybach S-Class Oq Kortej",
+      category: "Kortej",
+      price: 6500000,
+      city: 'Toshkent shahar',
+      rating: 4.99,
+      reviewsCount: 95,
+      image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=800',
+      distanceKm: 2.1,
+      badgeText: "VIP KORTEJ",
     }
   ];
+
+  const filteredServices = allServices.filter((item) => {
+    const matchesCat = selectedCat === 'all' || item.catId === selectedCat;
+    const matchesSearch =
+      !searchQuery.trim() ||
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.city.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
+
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -88,6 +174,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
         </View>
 
         <View style={styles.headerActions}>
+          <TouchableOpacity style={styles.vipBadgeBtn} onPress={onOpenPremium} activeOpacity={0.8}>
+            <Text style={styles.vipBadgeText}>👑 VIP</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.citySelector}>
             <Text style={styles.cityText}>📍 Toshkent ▾</Text>
           </TouchableOpacity>
@@ -98,17 +187,44 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
         </View>
       </View>
 
+      {/* 💍 Wedding Countdown Widget */}
+      <View style={styles.countdownCard}>
+        <View style={styles.countdownHeader}>
+          <View style={styles.countdownBadge}>
+            <Text style={styles.countdownBadgeText}>💍 TO'Y REJASI</Text>
+          </View>
+          <Text style={styles.countdownDaysText}>24 kun qoldi</Text>
+        </View>
+        <Text style={styles.countdownTitle}>Asilbek & Madina Nikoh Oqshomi</Text>
+        <Text style={styles.countdownDate}>📅 15-Noyabr, 2026 • Versal Grand Ballroom</Text>
+
+        <View style={styles.progressBarWrapper}>
+          <View style={[styles.progressBarFill, { width: '75%' }]} />
+        </View>
+        <View style={styles.progressLabelRow}>
+          <Text style={styles.progressLabel}>Tayyorgarlik 75% yakunlandi</Text>
+          <TouchableOpacity onPress={onOpenBudget}>
+            <Text style={styles.progressActionLink}>Byudjet nazorati →</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       {/* 🔍 Luxury Search Bar */}
       <View style={styles.searchSection}>
         <View style={styles.searchBox}>
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
-            placeholder="San'atkor, to'yxona yoki xizmat qidirish..."
+            placeholder="San'atkor, to'yxona yoki kortej qidirish..."
             placeholderTextColor="#8E7B6B"
             value={searchQuery}
             onChangeText={setSearchQuery}
             style={styles.searchInput}
           />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={() => setSearchQuery('')} style={{ marginRight: 6 }}>
+              <Text style={{ fontSize: 13, color: '#8E7B6B' }}>✕</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.filterBtn}>
             <Text style={styles.filterBtnIcon}>⚡</Text>
           </TouchableOpacity>
@@ -119,21 +235,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
       <TouchableOpacity 
         style={styles.promoBanner}
         activeOpacity={0.9}
-        onPress={onOpenBudget}
+        onPress={onOpenPremium || onOpenBudget}
       >
         <View style={styles.promoContent}>
           <View style={styles.promoBadge}>
-            <Text style={styles.promoBadgeText}>24K OLTIN KAFOLAT</Text>
+            <Text style={styles.promoBadgeText}>👑 TUYBOR ROYAL VIP</Text>
           </View>
-          <Text style={styles.promoTitle}>To'y Byudjetini 20–30% Tejang</Text>
+          <Text style={styles.promoTitle}>Google Play VIP Pass • 20% Chegirma</Text>
           <Text style={styles.promoSubtitle}>
-            Double-bookingsiz shaffof narxlar va barcha xizmatchilar 1 joyda
+            AI Byudjet optimizatori, cheksiz taklifnomalar va shaxsiy to'y konsyerji
           </Text>
           <View style={styles.promoCtaRow}>
-            <Text style={styles.promoCtaText}>AI Kalkulyatorni ochish →</Text>
+            <Text style={styles.promoCtaText}>VIP Imtiyozlarni ko'rish →</Text>
           </View>
         </View>
-        <Text style={styles.promoDecorIcon}>💎</Text>
+        <Text style={styles.promoDecorIcon}>👑</Text>
       </TouchableOpacity>
 
       {/* 💍 Stories / Real Weddings Carousel */}
@@ -151,7 +267,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
         ))}
       </View>
 
-      {/* Categories */}
+      {/* Categories Bar */}
       <CategoryPillBar
         categories={categories}
         selectedId={selectedCat}
@@ -163,58 +279,87 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectService, onOpenB
         <BudgetPlannerWidget />
       </View>
 
-      {/* Featured Luxury Services */}
+      {/* Featured Luxury Services with Live Filter */}
       <View style={styles.sectionHeader}>
         <View>
-          <Text style={styles.sectionTitle}>👑 VIP & Eng Sara Xizmatlar</Text>
-          <Text style={styles.sectionSubtitle}>Tasdiqlangan narxlar va rasmiy shartnoma</Text>
+          <Text style={styles.sectionTitle}>
+            {selectedCat === 'all'
+              ? '👑 VIP & Eng Sara Xizmatlar'
+              : `👑 ${categories.find((c) => c.id === selectedCat)?.name || 'Xizmatlar'}`}
+          </Text>
+          <Text style={styles.sectionSubtitle}>
+            {filteredServices.length} ta tasdiqlangan rasmiy xizmat topildi
+          </Text>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.seeAllText}>Barchasi →</Text>
-        </TouchableOpacity>
+        {selectedCat !== 'all' && (
+          <TouchableOpacity onPress={() => setSelectedCat('all')}>
+            <Text style={styles.seeAllText}>Barchasini ko'rish</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.cardsList}>
-        {featuredServices.map((service) => (
-          <TouchableOpacity
-            key={service.id}
-            onPress={() => onSelectService(service.id)}
-            activeOpacity={0.92}
-          >
-            <LuxuryCard style={styles.serviceCard}>
-              <View style={styles.imageWrapper}>
-                <Image source={{ uri: service.image }} style={styles.cardImage} />
-                <View style={styles.imageOverlayBadge}>
-                  <Text style={styles.imageOverlayBadgeText}>{service.badgeText}</Text>
-                </View>
-              </View>
-
-              <View style={styles.cardContent}>
-                <View style={styles.tagRow}>
-                  <Text style={styles.categoryBadge}>{service.category}</Text>
-                  <BadgeVerified />
-                </View>
-
-                <Text style={styles.serviceTitle}>{service.title}</Text>
-                
-                <View style={styles.metaRow}>
-                  <LuxuryRating rating={service.rating} count={service.reviewsCount} />
-                  <Text style={styles.distanceText}>📍 {service.city}</Text>
-                </View>
-
-                <View style={styles.priceRow}>
-                  <View>
-                    <Text style={styles.priceLabel}>Rasmiy narxi:</Text>
-                    <Text style={styles.priceValue}>{service.price.toLocaleString()} so'm</Text>
+        {filteredServices.length === 0 ? (
+          <View style={styles.emptyCard}>
+            <Text style={styles.emptyIcon}>🔍</Text>
+            <Text style={styles.emptyTitle}>Hech narsa topilmadi</Text>
+            <Text style={styles.emptySubtitle}>Boshqa qidiruv so'zi kiritib ko'ring yoki toifalarni almashtiring.</Text>
+          </View>
+        ) : (
+          filteredServices.map((service) => {
+            const isFav = favorites.includes(service.id);
+            return (
+              <TouchableOpacity
+                key={service.id}
+                onPress={() => onSelectService(service.id)}
+                activeOpacity={0.92}
+              >
+                <LuxuryCard style={styles.serviceCard}>
+                  <View style={styles.imageWrapper}>
+                    <Image source={{ uri: service.image }} style={styles.cardImage} />
+                    <View style={styles.imageOverlayBadge}>
+                      <Text style={styles.imageOverlayBadgeText}>{service.badgeText}</Text>
+                    </View>
+                    <TouchableOpacity
+                      style={styles.favBtn}
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(service.id);
+                      }}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.favIcon}>{isFav ? '❤️' : '🤍'}</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={styles.viewBtn}>
-                    <Text style={styles.viewBtnText}>Band Qilish →</Text>
+
+                  <View style={styles.cardContent}>
+                    <View style={styles.tagRow}>
+                      <Text style={styles.categoryBadge}>{service.category}</Text>
+                      <BadgeVerified />
+                    </View>
+
+                    <Text style={styles.serviceTitle}>{service.title}</Text>
+                    
+                    <View style={styles.metaRow}>
+                      <LuxuryRating rating={service.rating} count={service.reviewsCount} />
+                      <Text style={styles.distanceText}>📍 {service.city}</Text>
+                    </View>
+
+                    <View style={styles.priceRow}>
+                      <View>
+                        <Text style={styles.priceLabel}>Rasmiy narxi:</Text>
+                        <Text style={styles.priceValue}>{service.price.toLocaleString()} so'm</Text>
+                      </View>
+                      <View style={styles.viewBtn}>
+                        <Text style={styles.viewBtnText}>Band Qilish →</Text>
+                      </View>
+                    </View>
                   </View>
-                </View>
-              </View>
-            </LuxuryCard>
-          </TouchableOpacity>
-        ))}
+                </LuxuryCard>
+              </TouchableOpacity>
+            );
+          })
+        )}
       </View>
 
       <View style={styles.bottomSpacer} />
@@ -289,6 +434,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
+  vipBadgeBtn: {
+    backgroundColor: '#FFF9E5',
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderColor: '#E5A912',
+    shadowColor: '#E5A912',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  vipBadgeText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#8A5506',
+    letterSpacing: 0.5,
+  },
   citySelector: {
     backgroundColor: '#FAF8F5',
     paddingHorizontal: 10,
@@ -324,6 +488,90 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 4,
     backgroundColor: '#EF4444',
+  },
+  countdownCard: {
+    marginHorizontal: 16,
+    marginTop: 14,
+    marginBottom: 6,
+    backgroundColor: '#1E140A',
+    borderRadius: 22,
+    padding: 16,
+    borderWidth: 1.5,
+    borderColor: '#E5A912',
+    shadowColor: '#E5A912',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.22,
+    shadowRadius: 14,
+    elevation: 4,
+  },
+  countdownHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  countdownBadge: {
+    backgroundColor: 'rgba(229, 169, 18, 0.2)',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E5A912',
+  },
+  countdownBadgeText: {
+    fontSize: 10.5,
+    fontWeight: '900',
+    color: '#F5C538',
+    letterSpacing: 0.8,
+  },
+  countdownDaysText: {
+    fontSize: 12.5,
+    fontWeight: '800',
+    color: '#FBF8F2',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 12,
+  },
+  countdownTitle: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 0.3,
+    marginBottom: 4,
+  },
+  countdownDate: {
+    fontSize: 12,
+    color: '#D4AF37',
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  progressBarWrapper: {
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: '#E5A912',
+    borderRadius: 4,
+  },
+  progressLabelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  progressLabel: {
+    fontSize: 11,
+    color: '#E0D0BE',
+    fontWeight: '600',
+  },
+  progressActionLink: {
+    fontSize: 11.5,
+    color: '#F5C538',
+    fontWeight: '800',
   },
   searchSection: {
     paddingHorizontal: 16,
@@ -613,6 +861,50 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
     fontWeight: '800',
     color: '#4E2C00',
+  },
+  favBtn: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  favIcon: {
+    fontSize: 16,
+  },
+  emptyCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
+    padding: 32,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(229, 169, 18, 0.25)',
+    marginVertical: 10,
+  },
+  emptyIcon: {
+    fontSize: 40,
+    marginBottom: 10,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#110A03',
+    marginBottom: 4,
+  },
+  emptySubtitle: {
+    fontSize: 12.5,
+    color: '#7C6B5C',
+    textAlign: 'center',
+    lineHeight: 18,
   },
   bottomSpacer: {
     height: 80,
