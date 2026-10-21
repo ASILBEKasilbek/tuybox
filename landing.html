@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>TuyBor — To'y va Tantanalarni Rejalash Platformasi | Barcha Xizmatchilar 1 Joyda</title>
     
     <!-- SEO Meta Tags -->
@@ -15,7 +15,10 @@
 
     <!-- Favicon & Touch Icons for Google, Apple, Android -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="48x48" href="/static/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
@@ -569,7 +572,7 @@
         /* ------------------------------------ */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
             gap: 28px;
         }
 
@@ -920,23 +923,233 @@
             gap: 14px;
         }
 
-        /* Responsive Media Queries */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .comparison-grid { grid-template-columns: 1fr; }
-            .showcase-grid { grid-template-columns: 1fr; }
-            .steps-grid { grid-template-columns: 1fr; }
-            .step-num { margin: 0 auto 16px; }
-            .app-callout { grid-template-columns: 1fr; padding: 40px 24px; text-align: center; }
-            .app-badges { justify-content: center; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
+        /* ------------------------------------ */
+        /* MOBILE MENU & DRAWER                 */
+        /* ------------------------------------ */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1.5px solid var(--gold-border);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(138, 85, 6, 0.1);
+            cursor: pointer;
+            gap: 5px;
+            padding: 0;
+            z-index: 1002;
+            transition: all 0.25s ease;
         }
 
-        @media (max-width: 600px) {
-            .footer-grid { grid-template-columns: 1fr; }
-            .hero-cta { flex-direction: column; width: 100%; }
-            .hero-cta .btn-gold, .hero-cta .btn-outline { width: 100%; justify-content: center; }
-            .trust-stats { gap: 20px; }
+        .mobile-toggle span {
+            display: block;
+            width: 20px;
+            height: 2.2px;
+            background: var(--gold-deep);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: translateY(7.2px) rotate(45deg);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: translateY(-7.2px) rotate(-45deg);
+        }
+
+        .mobile-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 10, 3, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(86vw, 360px);
+            height: 100%;
+            background: #FFFFFF;
+            background-image: var(--marble-url);
+            background-size: cover;
+            background-position: center;
+            z-index: 1999;
+            box-shadow: -15px 0 45px rgba(0, 0, 0, 0.25);
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-drawer.active {
+            right: 0;
+        }
+
+        .mobile-drawer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            margin-bottom: 22px;
+        }
+
+        .mobile-drawer-close {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold-border);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--gold-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-drawer-close:hover {
+            transform: rotate(90deg);
+            background: var(--gold-primary);
+        }
+
+        .mobile-drawer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 26px;
+        }
+
+        .mobile-drawer-links li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 16px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 15.5px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-drawer-links li a i {
+            width: 22px;
+            color: var(--gold-dark);
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .mobile-drawer-links li a:hover,
+        .mobile-drawer-links li a:active {
+            background: rgba(245, 197, 56, 0.16);
+            color: var(--gold-deep);
+            transform: translateX(4px);
+        }
+
+        .mobile-drawer-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        /* ------------------------------------ */
+        /* RESPONSIVE MEDIA QUERIES             */
+        /* ------------------------------------ */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
+            .comparison-grid { grid-template-columns: 1fr; gap: 20px; }
+            .showcase-grid { grid-template-columns: 1fr; gap: 14px; }
+            .steps-grid { grid-template-columns: 1fr; gap: 48px; margin-top: 50px; }
+            .step-num { margin: -50px auto 14px; }
+            .app-callout { grid-template-columns: 1fr; padding: 40px 24px; text-align: center; gap: 28px; }
+            .app-badges { justify-content: center; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .nav-actions .btn-outline { display: none; }
+            .hero { padding: 44px 0 36px; }
+            .hero-badge { font-size: 11.5px; padding: 6px 14px; max-width: 95%; line-height: 1.4; }
+            .hero h1 { font-size: clamp(26px, 7vw, 42px); line-height: 1.22; margin-bottom: 16px; }
+            .hero p.lead { font-size: 15px; line-height: 1.55; margin-bottom: 26px; }
+            .hero-cta { flex-direction: column; width: 100%; max-width: 380px; margin: 0 auto 34px; gap: 12px; }
+            .hero-cta .btn-gold, .hero-cta .btn-outline { width: 100%; justify-content: center; padding: 13px 20px; font-size: 14.5px; }
+            .trust-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; max-width: 360px; margin: 0 auto 40px; padding-top: 20px; }
+            .trust-num { font-size: 24px; }
+            .trust-label { font-size: 11.5px; text-align: center; line-height: 1.35; }
+            .section { padding: 50px 0; }
+            .section-header { margin-bottom: 30px; }
+            .section-header h2 { font-size: clamp(22px, 6vw, 32px); line-height: 1.25; }
+            .section-header p { font-size: 14.5px; }
+            .comp-card { padding: 22px 18px; border-radius: 18px; }
+            .features-grid { grid-template-columns: 1fr; gap: 16px; }
+            .feature-box { padding: 22px 18px; border-radius: 18px; }
+            .feat-icon-wrap { width: 48px; height: 48px; font-size: 20px; margin-bottom: 16px; }
+            .step-card { padding: 24px 18px; border-radius: 18px; }
+            .app-badges { flex-direction: column; width: 100%; align-items: stretch; }
+            .download-btn { width: 100%; justify-content: center; padding: 13px 20px; }
+            .faq-question { padding: 16px 18px; font-size: 15px; }
+            .faq-answer { padding: 0 18px 16px; font-size: 14px; }
+        }
+
+        @media (max-width: 520px) {
+            .container { padding: 0 16px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 26px; }
+            .footer-bottom { flex-direction: column; text-align: center; gap: 8px; font-size: 12.5px; }
+            .brand-logo img { width: 38px !important; height: 38px !important; }
+            .brand-name { font-size: 20px; letter-spacing: 1.5px; }
+            .brand-tag { font-size: 9px; }
+            .nav-actions { gap: 8px; }
+            .nav-actions .btn-gold { padding: 8px 14px; font-size: 13px; gap: 6px; }
+            .nav-actions .btn-gold i { font-size: 15px; }
+            .mobile-toggle { width: 38px; height: 38px; border-radius: 10px; }
+        }
+
+        @media (max-width: 380px) {
+            .container { padding: 0 12px; }
+            .navbar { padding: 8px 12px; }
+            .hero-badge { font-size: 10px; padding: 5px 10px; }
+            .hero h1 { font-size: 23px; }
+            .brand-name { font-size: 17px; letter-spacing: 1px; }
+            .nav-actions .btn-gold span { font-size: 12px; }
+            .nav-actions .btn-gold { padding: 7px 10px; }
+            .trust-stats { gap: 12px 8px; }
+            .trust-num { font-size: 20px; }
+            .comp-card { padding: 18px 14px; }
+            .feature-box { padding: 18px 14px; }
         }
     </style>
 </head>
@@ -973,10 +1186,55 @@
                         <i class="fa-brands fa-android"></i>
                         <span>Yuklab Olish</span>
                     </a>
+                    <button class="mobile-toggle" id="mobileToggle" aria-label="Menyu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Navigation Drawer & Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="mobile-drawer-top">
+            <div class="brand-logo">
+                <img src="/static/apple-touch-icon.png" alt="TuyBor Logo" style="width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--gold-border); object-fit: cover;">
+                <div class="brand-text">
+                    <span class="brand-name" style="font-size: 19px;">TUY<span>BOR</span></span>
+                    <span class="brand-tag" style="font-size: 9.5px;">To'y Ekotizimi</span>
+                </div>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Yopish">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <ul class="mobile-drawer-links">
+            <li><a href="#about"><i class="fa-solid fa-circle-info"></i> TuyBor Nima?</a></li>
+            <li><a href="#features"><i class="fa-solid fa-wand-magic-sparkles"></i> Imkoniyatlar</a></li>
+            <li><a href="#steps"><i class="fa-solid fa-list-check"></i> Qanday Ishlaydi?</a></li>
+            <li><a href="#app"><i class="fa-solid fa-mobile-screen-button"></i> Mobil Ilova</a></li>
+            <li><a href="#faq"><i class="fa-solid fa-circle-question"></i> Savol-Javob</a></li>
+            <li><a href="/pitch"><i class="fa-solid fa-crown"></i> Investor Pitch</a></li>
+        </ul>
+
+        <div class="mobile-drawer-actions">
+            <a href="/app" class="btn-outline" style="width: 100%; justify-content: center; padding: 13px 18px;">
+                <i class="fa-solid fa-globe"></i>
+                <span>Web Ilovaga Kirish</span>
+            </a>
+            <a href="/download" class="btn-gold" style="width: 100%; justify-content: center; padding: 14px 18px;">
+                <i class="fa-brands fa-android"></i>
+                <span>Android APK Yuklab Olish</span>
+            </a>
+            <a href="https://t.me/tuybor_uz" target="_blank" style="text-align: center; color: var(--gold-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; padding-top: 6px;">
+                <i class="fa-brands fa-telegram"></i> Telegram Kanalimiz
+            </a>
+        </div>
+    </div>
 
     <!-- ------------------------------------ -->
     <!-- HERO SECTION                         -->
@@ -1364,8 +1622,9 @@
         </div>
     </footer>
 
-    <!-- FAQ Accordion Script -->
+    <!-- FAQ Accordion & Mobile Menu Scripts -->
     <script>
+        // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 const item = q.parentElement;
@@ -1376,6 +1635,41 @@
                 if (!isActive) {
                     item.classList.add('active');
                 }
+            });
+        });
+
+        // Mobile Drawer Functionality
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileDrawerClose = document.getElementById('mobileDrawerClose');
+
+        function openMobileMenu() {
+            if (mobileDrawer && mobileOverlay) {
+                mobileDrawer.classList.add('active');
+                mobileOverlay.classList.add('active');
+                if (mobileToggle) mobileToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeMobileMenu() {
+            if (mobileDrawer && mobileOverlay) {
+                mobileDrawer.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                if (mobileToggle) mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (mobileToggle) mobileToggle.addEventListener('click', openMobileMenu);
+        if (mobileDrawerClose) mobileDrawerClose.addEventListener('click', closeMobileMenu);
+        if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close drawer on link click
+        document.querySelectorAll('.mobile-drawer-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
             });
         });
     </script>

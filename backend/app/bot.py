@@ -1,16 +1,17 @@
+import os
 import asyncio
 import httpx
 import logging
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("TuyxonaBot")
+logger = logging.getLogger("TuyBorBot")
 
-BOT_TOKEN = "8643800096:AAFRH_zRmRouQOWDHt0Q18DBi0w-iCPyG3c"
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "8805612543:AAEEVJ9jfSy7h-JTNSd2nK4_h4Cw3fCqpIk")
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
-WEB_APP_URL = "https://tuybox.asilbek.tech"
-LANDING_PAGE_URL = "https://tuybox.asilbek.tech/pitch"
-APK_DOWNLOAD_URL = "https://tuybox.asilbek.tech/download"
-LOGO_URL = "https://tuybox.asilbek.tech/static/logo.jpg"
+WEB_APP_URL = "https://tuybor.uz/app"
+LANDING_PAGE_URL = "https://tuybor.uz/"
+APK_DOWNLOAD_URL = "https://tuybor.uz/download"
+LOGO_URL = "https://tuybor.uz/static/apple-touch-icon.png"
 
 async def setup_bot_menu():
     """
@@ -21,7 +22,7 @@ async def setup_bot_menu():
         payload = {
             "menu_button": {
                 "type": "web_app",
-                "text": "TuyBox",
+                "text": "TuyBor Ilova",
                 "web_app": {
                     "url": WEB_APP_URL
                 }
@@ -32,26 +33,32 @@ async def setup_bot_menu():
 
 async def send_welcome_message(chat_id: int):
     caption = (
-        "Assalomu alaykum! 💍 **TuyBox** — O‘zbekistondagi eng qulay to‘y va marosimlar platformasiga xush kelibsiz!\n\n"
-        "✨ **TuyBox imkoniyatlari:**\n"
-        "• 🏰 **500+ Sara To‘yxonalar** va sanʼatkorlar katalogi;\n"
-        "• 📍 **Jonli Xarita** orqali eng yaqin to'yxonalarni topish va narxlarni solishtirish;\n"
-        "• 💰 **To‘y Byudjeti** kalkulyatori bilan xarajatlarni aniq hisoblash;\n"
-        "• 💌 **Raqamli to‘y taklifnomasi** yaratib, yaqinlarga ulashish!\n\n"
-        "Platformaga kirish yoki mobil ilova landing sahifasini ko'rish uchun quyidagi tugmalarni bosing 👇"
+        "Assalomu alaykum! 💍 **TuyBor** — O‘zbekistondagi eng yirik to‘y va tantanalar ekotizimiga xush kelibsiz!\n\n"
+        "✨ **TuyBor imkoniyatlari:**\n"
+        "• 🏰 **To‘yxonalar, San'atkorlar va Foto-Video** bazasi narxlari bilan;\n"
+        "• 📍 **Jonli Xarita** orqali eng maqbul to'yxonalarni solishtirish;\n"
+        "• 💰 **Aqlli Byudjet Kalkulyatori** orqali to'y xarajatlarini aniq hisoblash;\n"
+        "• 💌 **Eksklyuziv Raqamli Taklifnoma** yaratish va mehmonlarga ulashish!\n\n"
+        "Ilovadan foydalanish uchun quyidagi tugmalarni bosing 👇"
     )
 
     reply_markup = {
         "inline_keyboard": [
             [
                 {
-                    "text": "🚀 Kirish",
+                    "text": "🚀 TuyBor Web Ilovasi",
                     "web_app": {"url": WEB_APP_URL}
                 }
             ],
             [
                 {
-                    "text": "📲 APK Yuklab Olish",
+                    "text": "📲 Android APK Yuklab Olish",
+                    "url": APK_DOWNLOAD_URL
+                }
+            ],
+            [
+                {
+                    "text": "🌐 Rasmiy Veb-Sayt (tuybor.uz)",
                     "url": LANDING_PAGE_URL
                 }
             ]
@@ -95,7 +102,7 @@ async def start_bot_polling():
             logger.warning(f"Webhook tozalashda ogohlantirish: {e}")
 
         await setup_bot_menu()
-        logger.info("Tuyxona Telegram Bot ishga tushdi (@tuyboxbot)...")
+        logger.info("TuyBor Telegram Bot ishga tushdi (@tuyborbot)...")
         offset = 0
         while True:
             try:
@@ -118,14 +125,14 @@ async def start_bot_polling():
                                     f"{TELEGRAM_API_URL}/sendMessage",
                                     json={
                                         "chat_id": chat_id,
-                                        "text": f"📲 **TuyBox Android APK:**\n\nQuyidagi tugma orqali rasmiy landing sahifasidan APK faylini yuklab olishingiz mumkin 👇",
+                                        "text": f"📲 **TuyBor Android APK:**\n\nQuyidagi tugma orqali rasmiy saytdan APK faylini yuklab olishingiz mumkin 👇",
                                         "parse_mode": "Markdown",
                                         "reply_markup": {
                                             "inline_keyboard": [
                                                 [
                                                     {
                                                         "text": "📲 APK Yuklab Olish",
-                                                        "url": LANDING_PAGE_URL
+                                                        "url": APK_DOWNLOAD_URL
                                                     }
                                                 ]
                                             ]
